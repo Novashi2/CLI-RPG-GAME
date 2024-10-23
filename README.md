@@ -1,7 +1,1 @@
-Testing the readme for the what is a semicolon repository. 
-This is a repo for the What is a semicolon? team 
-Hello. This is a test by Robert.
-
-
-Doawg meet from fallouutc =)
-
+Stored here are the files for an in-progress CLI RPG game That will contain cumumulative story paths, bosses, characters, items, and an ending.
