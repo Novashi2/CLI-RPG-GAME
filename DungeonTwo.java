@@ -1,4 +1,4 @@
-public class General {
+public class DungeonTwo {
     public static void main(String[] args) {
         
     }

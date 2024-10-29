@@ -1,1 +1,5 @@
-// This is a file for the dragon final boss
+public class Dragon {
+    public static void main(String[] args) {
+        
+    }
+}
