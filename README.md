@@ -4,5 +4,5 @@ Specific dungeon sections that each member worked on:
 
 Blake - 1 
 Jackson - 2 
-Robert - 3 
+Sudoweilder - 3
 Novashi - 4 
