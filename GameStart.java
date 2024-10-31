@@ -68,7 +68,7 @@ public class GameStart {
 	//verifies input after verifying that value is an integer
 	while(dungeonChoice != 1 && dungeonChoice != 2) {
 	    System.out.print(error);
-	    	//ensure that user enters integer first time
+	    //ensure that user enters integer first time
 	    if (!console.hasNextInt()){
 		console.nextLine();
 	    } else dungeonChoice = console.nextInt();
