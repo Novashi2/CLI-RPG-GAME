@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.util.HashMap;
 
 public class GameStart {
     public static void main(String[] args) {
@@ -12,10 +13,9 @@ public class GameStart {
         int spiderHealth = 30;
         int dragonHealth = 100;
         int skeletonHealth = 30;
-
-        // Damage 
-        int peaDamage = 45; //peaShooter
-        int swordDamage = 35; 
+	
+	String[] playerWeapons = []; //initiates weapons array. Not sure if we want to add the weapons or have the player choose.
+        // Damage  //the sword and peashooter damage has been moved into the weapons file. 
         int wandDamage = 25; //add effects?
         int dragonDamage = 15;
         int skeletonDamage = 15;
