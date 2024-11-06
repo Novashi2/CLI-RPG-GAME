@@ -1,12 +1,15 @@
 import java.util.Scanner;
 import java.util.HashMap;
+import java.util.Random;
 
 public class GameStart {
     public static void main(String[] args) {
 
         //instantiates a new Scanner object
         Scanner console = new Scanner(System.in);
-
+        //instantiates a new Random object
+        Random r = new Random(); 
+        
         //placeholder ints
         // Health
         int playerHealth = 150;
@@ -14,7 +17,7 @@ public class GameStart {
         int dragonHealth = 100;
         int skeletonHealth = 30;
 	
-	String[] playerWeapons = []; //initiates weapons array. Not sure if we want to add the weapons or have the player choose.
+	//String[] playerWeapons = []; //initiates weapons array. Not sure if we want to add the weapons or have the player choose.
         // Damage  //the sword and peashooter damage has been moved into the weapons file. 
         int wandDamage = 25; //add effects?
         int dragonDamage = 15;
@@ -22,23 +25,19 @@ public class GameStart {
 
 
 
-        System.out.print("First message");
+        System.out.println("First message");
 
 	// gathers information on which path the player will take	
         int dungeonChoice = getDungeonChoice(console);
 
-
-        //main game loop, game keeps going if the player's health is above 0
-        while(playerHealth>0) { // This will need to be changed. The player health should be checked after each turn at a minimum. 
-				// It may be better to put this while playerHealth > 0 in every individual loop.
-            
-
+        //we can check health at the end of every turn
+        while(playerHealth>0) { 
             if  (dungeonChoice == 1) {
                 //call dungeon 1
                 //call dungeon 2
             } else if(dungeonChoice == 2) {
                 //call dungeon 3
-                //call dungeon 4
+                DungeonFour.theFourthDungeon(console, r); //calls the fourth dungeon method and passes through scanner and random objects
 	    }
 	    break;
         }

@@ -1,5 +1,5 @@
 // This file is for text that will be printed.
-
+import java.util.Scanner;
 public class Text{
     
 
@@ -21,7 +21,7 @@ public class Text{
 
 	while (!choice.toLowerCase().equals("mineshaft") && !choice.toLowerCase().equals("tunnel")){//possibly switch to do while loop
 	    System.out.print("Please enter \"mineshaft\" or \"tunnel\": ");
-	    String choice = console.next();
+	    choice = console.next();
 	}
 
 	return choice;
