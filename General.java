@@ -6,13 +6,46 @@ public class General {
     public static void main(String[] args) {
         
     }
-
-    public static void dealEffects( String targetName, int targetHealth, HashMap<String, Integer> targetEffects){
+    
+    //this is the effects function used for NPCs 
+    public static int dealEffects( String targetName, int targetHealth, HashMap<String, Integer> targetEffects){
 	if (targetEffects.contains("burn") || targetEffects.get("burn") > 0){
-	    targetEfffect.
-
-	System.out.println("Will be worked on soon");
+	    targetHealth =  burn("The " + targetName, targetHealth, targetEffects);
+	}
+	if (targetEffects.contains("poison") || targetEffects.get("poison") > 0){
+	    targerHealth = poison("The" + targetName, targetHealth, targetEffects);
+	}
+	    
+	return targetHealth;
+    }
+    
+    // this is the effects function used for the player
+    public static int dealEffects(int targetHealth, HashMap<String, Integer> targetEffects){
+	if (targetEffects.contains("burn") || targetEffects.get("burn") > 0){
+	    targetHealth =  burn("You" , targetHealth, targetEffects);
+	}
+	if (targetEffects.contains("poison") || targetEffects.get("poison") > 0){
+	    targerHealth = poison("You ", targetHealth, targetEffects);
+	}
+	    
+	return targetHealth;
     }
 
-    // possibly add turn function?
+// methods needed to make other functions work. 
+    public static int burn(String target, int targetHealth, HashMap<String, Integer> targetEffects){
+	int damage = 3;
+	int targetHealth -= damage; 
+	targetEfffects.replace("burn", targetEffects.get("burn") -1);
+	System.out.print(target + " got burnt for " + damage + " damage.");
+	return targetHealth;
+    }
+
+    public static int poison(String target, int targetHealth, Hashmap<String, Integer> targeteffects>){
+	int poisonCounter = targetEffects.get("poison");
+	int damage = 5 * poisonCounter;
+	targetHealth -= damage;
+	System.out.print(target + " got poisoned for " + damage + " damage.");
+	targetEffects.replace("poison", poisonCounter - 1);
+	return targetHealth;
+    }
 }
