@@ -2,8 +2,11 @@ import java.util.Random;
 import java.util.HashMap;
 
 
-public class Weapons{
-
+public class Player{
+    
+    int health = 100; //will update file to so that we can have an interface that directly interacts with these variables.
+    int savePoint = 0;
+    
     public static void main(String[] args){
 	Random random = new Random();
 	System.out.print(peaShooter(100, "chicken", 5, random));
