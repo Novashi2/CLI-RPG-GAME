@@ -7,10 +7,11 @@ public class DungeonThree {
         
     }
 
-    public static boolean runDungeonThree(int playerHealth, HashMap<String, Integer> playerEffects, String[] playerWeapons,
-	    Scanner console){
+    public static boolean runDungeonThree(int playerHealth, HashMap<String, Integer> playerEffects, String[] playerWeapons, 
+		    Scanner console){
 	//just setting this up for now
-	choice = Text.dungeonThreeIntro(console);
+	String choice = Text.dungeonThreeIntro(console);
+	
 
 
     }
