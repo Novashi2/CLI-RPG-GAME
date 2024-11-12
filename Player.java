@@ -14,7 +14,6 @@ public class Player{
     
     public static void main(String[] args){
 	Random random = new Random();
-	System.out.print(peaShooter(100, "chicken", 5, random));
     }
 
 
