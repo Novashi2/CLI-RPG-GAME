@@ -1,4 +1,3 @@
-import java.util.Hashmap;
 import java.util.Scanner;
 
 

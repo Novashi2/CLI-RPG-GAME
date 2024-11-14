@@ -1,11 +1,13 @@
-// THis file stores enemy information built for OOP use.
+// This file stores information for enemy objects
+import java.util.Random;
+
 
 public class Enemy{
     
-    String name;
-    int health;
-    int burn;
-    int poison;
+    public static String name;
+    public static int health;
+    public static int burn;
+    public static int poison;
     
     // This function determines which attack function will be used by
     // comparing the name variable to different possinilitues
@@ -32,7 +34,7 @@ public class Enemy{
     }
 
     public static void spiderAttack(Random rand, Player player){
-	decider = rand.nextInt(100) + 1;
+	int decider = rand.nextInt(100) + 1;
 	if (decider <=10) spiderCacoon(player, rand);
 	else if (decider <= 55) spiderBite(player);
 	else spikeShot(player);
@@ -59,13 +61,12 @@ public class Enemy{
     public static void spiderCacoon(Player player, Random rand){
 	String message = "You are still trapped in the cocoon";
 
-	System.out.println("The spider has wrapped you in a silk cocoon.
-		You struggle to break free as the spider keeps attacking you.");
+	System.out.println("The spider has wrapped you in a silk cocoon. You struggle to break free as the spider keeps attacking you.");
 
 
 	spiderBite(player);
 
-	for (i = 0; i < rand.nextInt(5); i++){	    
+	for (int i = 0; i < rand.nextInt(5); i++){	    
 	    System.out.print(message);
 	    spiderBite(player);
 	    //possibly add a sleep command here
