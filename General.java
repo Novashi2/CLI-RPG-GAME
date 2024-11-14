@@ -6,8 +6,22 @@ public class General {
     public static void main(String[] args) {
         
     }
+
+
+
+
+
+
+
+
+
+
+    //OOP version of player turn function
+    public static void playerTurn(Player player, Enemy target, Scanner console){
+	System.out.print
+    }
     
-:    //this is the effects function used for NPCs 
+    //this is the effects function used for NPCs 
     public static int dealEffects( String targetName, int targetHealth, HashMap<String, Integer> targetEffects){
 	if (targetEffects.contains("burn") || targetEffects.get("burn") > 0){
 	    targetHealth =  burn("The " + targetName, targetHealth, targetEffects);

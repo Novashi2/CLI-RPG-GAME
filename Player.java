@@ -4,6 +4,7 @@ import java.util.Random;
 public class Player{
     
     String name;
+    String
     int health = 100; //will update file to so that we can have an interface that directly interacts with these variables.
     int savePoint = 0;
     int burn = 0;
@@ -15,6 +16,17 @@ public class Player{
     public static void main(String[] args){
 	Random random = new Random();
     }
+    
+
+
+    public static void playerAttack(Player player, String targetName, int targetHealth, Random random){
+	System.out.print
+    }
+
+    
+
+    
+
 
 
     // weapons programs without objects 
@@ -36,7 +48,7 @@ public class Player{
 	
     }
     
-    public static int wand ( String targetName, int targetHealth, HashMap targetEffects){
+    public static int wand ( String targetName, int targetHealth){
 	System.out.println("Will work on soon");
     }
 
@@ -61,5 +73,11 @@ public class Player{
 	} else System.out.println("You're out of ammunition")//possibly add this to the player attack function.
 
     }
+
+
+
+
+
+    
     
 }
