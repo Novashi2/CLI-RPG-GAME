@@ -4,13 +4,17 @@ import java.util.Scanner;
 
 public class Player{
     
+    // general data varibles
     public static String name;
-    public static String[] abilities = {"Peashooter", "Wand", "Sword", null, null, null, null};// null is added in case we want to give the
-										  	 // player weapons in programs later on.
     public static int health = 100; 
     public static int savePoint = 0;
-    public static int  burn = 0;
+
+    // effects varaibles
+    public static int burn = 0;
     public static int poison = 0;
+
+    // abilities variables
+    public static String[] abilities = {"Peashooter", "Wand", "Sword", null, null, null, null};// null slots added to expand skills
     public static int peashooterAmmo = 20;
     
     
@@ -24,7 +28,8 @@ public class Player{
     }
     
 
-
+    // This function prompts the user to enter a number that corresponds to an attack printed in the terminal and then uses that
+    // input to determine an attack.
     public static void attack(Enemy enemy, Random random, Scanner console){
 	int choice = -1;
 	System.out.println("Here are your abilities:\n");
@@ -54,13 +59,12 @@ public class Player{
 
 	if (abilities[choice].startsWith("Peashooter")) peashooter(enemy, random);
 	else if (abilities[choice].startsWith("Wand")) wand(enemy);
-	else if (abilities[choice].startsWith("Sword")) sword(enemy);
-
-
-	
+	else if (abilities[choice].startsWith("Sword")) sword(enemy);	
     }
 
-    
+
+
+
 /*------------------------------------- Below are weapons functions for the player.------------------------------------------------*/
 // weapons are called in the attack method
 
@@ -97,6 +101,24 @@ public class Player{
 
 
 
+/*------------------------------------------Here are the effects function for the player-------------------------------------------*/
+    // This function processes the effects variables.
+    public static void dealEffects(){
+	int damage;
+	if (burn > 0){
+	    damage = 3;
+	    burn --;
+	    health -= damage;
+	    System.out.println("You have been burnt for " + damage + " damage.");
+	}
+	if (poison > 0){
+	    damage = poison * 5;
+	    poison --;
+	    health -= damage;
+	    System.out.println("The poison in your body dealt " + damage + " damage to you.");
+	}
+	    
+    } 
 
     
     
