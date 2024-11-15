@@ -1,10 +1,23 @@
-import java.util.Hashmap;
 import java.util.Scanner;
 
 
 public class General {
     public static void main(String[] args) {
         
+    }
+
+
+
+
+
+
+
+
+
+
+    //OOP version of player turn function
+    public static void playerTurn(Player player, Enemy target, Scanner console){
+	System.out.print
     }
     
     //this is the effects function used for NPCs 
@@ -19,20 +32,9 @@ public class General {
 	return targetHealth;
     }
     
-    // this is the effects function used for the player
-    public static int dealEffects(int targetHealth, HashMap<String, Integer> targetEffects){
-	if (targetEffects.contains("burn") || targetEffects.get("burn") > 0){
-	    targetHealth =  burn("You" , targetHealth, targetEffects);
-	}
-	if (targetEffects.contains("poison") || targetEffects.get("poison") > 0){
-	    targerHealth = poison("You ", targetHealth, targetEffects);
-	}
-	    
-	return targetHealth;
-    }
 
 // methods needed to make other functions work. 
-    public static int burn(String target, int targetHealth, HashMap<String, Integer> targetEffects){
+    public static int burn(int counter, String name){
 	int damage = 3;
 	int targetHealth -= damage; 
 	targetEfffects.replace("burn", targetEffects.get("burn") -1);
@@ -40,7 +42,7 @@ public class General {
 	return targetHealth;
     }
 
-    public static int poison(String target, int targetHealth, Hashmap<String, Integer> targeteffects>){
+    public static int poison(int counter, String name){
 	int poisonCounter = targetEffects.get("poison");
 	int damage = 5 * poisonCounter;
 	targetHealth -= damage;
