@@ -1,10 +1,12 @@
 package Model;
 
-public class AdventurerTest {
+// Tester doen't work for now
+
+public class DungeonEntityTest {
     public static void main(String[] args) {
         // Create two adventurer objects
-        Adventurer hero = new Adventurer("Hero", 100, 15);
-        Adventurer monster = new Adventurer("Monster", 80, 10);
+        DungeonEntity hero = new DungeonEntity("Hero", 100, 15);
+        DungeonEntity monster = new DungeonEntity("Monster", 80, 10);
 
         // Test initial HP and damage values
         System.out.println("Initial HP of hero: " + hero.getHp());       // Expected: 100
