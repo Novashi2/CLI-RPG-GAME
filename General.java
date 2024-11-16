@@ -1,51 +1,35 @@
-import java.util.Hashmap;
 import java.util.Scanner;
-
+import java.util.Random;
 
 public class General {
     public static void main(String[] args) {
-        
-    }
-    
-    //this is the effects function used for NPCs 
-    public static int dealEffects( String targetName, int targetHealth, HashMap<String, Integer> targetEffects){
-	if (targetEffects.contains("burn") || targetEffects.get("burn") > 0){
-	    targetHealth =  burn("The " + targetName, targetHealth, targetEffects);
-	}
-	if (targetEffects.contains("poison") || targetEffects.get("poison") > 0){
-	    targerHealth = poison("The" + targetName, targetHealth, targetEffects);
-	}
-	    
-	return targetHealth;
-    }
-    
-    // this is the effects function used for the player
-    public static int dealEffects(int targetHealth, HashMap<String, Integer> targetEffects){
-	if (targetEffects.contains("burn") || targetEffects.get("burn") > 0){
-	    targetHealth =  burn("You" , targetHealth, targetEffects);
-	}
-	if (targetEffects.contains("poison") || targetEffects.get("poison") > 0){
-	    targerHealth = poison("You ", targetHealth, targetEffects);
-	}
-	    
-	return targetHealth;
+	Player player = new Player();
+	Random random = new Random();
+	Scanner console = new Scanner(System.in);
+	Enemy spider = new Enemy();
+	spider.setSpider();
+	battle(player, spider, random, console);
     }
 
-// methods needed to make other functions work. 
-    public static int burn(String target, int targetHealth, HashMap<String, Integer> targetEffects){
-	int damage = 3;
-	int targetHealth -= damage; 
-	targetEfffects.replace("burn", targetEffects.get("burn") -1);
-	System.out.print(target + " got burnt for " + damage + " damage.");
-	return targetHealth;
+    public static void battle(Player player, Enemy enemy, Random random, Scanner console){
+	
+	while (player.health > 0 && enemy.health > 0){
+	    //player.useItem(); -- function is not programmed yet, so it is commented out at the moment
+	    player.attack(enemy, random, console);
+	    enemy.dealEffects();
+	    enemy.attack(random, player);
+	    player.dealEffects();
+	}
+
+	if (player.health <= 0){
+	    System.out.println("You have been killed by the " + enemy.name + ".");
+	    System.exit(0); // This will likely be put in a player.death() method
+	}else{
+	    System.out.println("You have slain the " + enemy.name + ".");
+	    // possible add of drops here or in the funciton where the battle occurrs in?
+	}
     }
 
-    public static int poison(String target, int targetHealth, Hashmap<String, Integer> targeteffects>){
-	int poisonCounter = targetEffects.get("poison");
-	int damage = 5 * poisonCounter;
-	targetHealth -= damage;
-	System.out.print(target + " got poisoned for " + damage + " damage.");
-	targetEffects.replace("poison", poisonCounter - 1);
-	return targetHealth;
-    }
+	
+    
 }
