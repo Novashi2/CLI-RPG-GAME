@@ -10,15 +10,12 @@ public class GameStart {
         //instantiates a new Random object
         Random r = new Random(); 
         
-        //placeholder ints
-        // Health
-        int playerHealth = 150;
-        int spiderHealth = 30;
+	Player player = new Player();
+        // Health that has not been moved out yet.
         int dragonHealth = 100;
         int skeletonHealth = 30;
 	
-	//String[] playerWeapons = []; //initiates weapons array. Not sure if we want to add the weapons or have the player choose.
-        // Damage  //the sword and peashooter damage has been moved into the weapons file. 
+        // Damage   
         int wandDamage = 25; //add effects?
         int dragonDamage = 15;
         int skeletonDamage = 15;
