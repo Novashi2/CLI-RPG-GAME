@@ -1,53 +1,35 @@
 import java.util.Scanner;
-
+import java.util.Random;
 
 public class General {
     public static void main(String[] args) {
-        
+	Player player = new Player();
+	Random random = new Random();
+	Scanner console = new Scanner(System.in);
+	Enemy spider = new Enemy();
+	spider.setSpider();
+	battle(player, spider, random, console);
     }
 
-
-
-
-
-
-
-
-
-
-    //OOP version of player turn function
-    public static void playerTurn(Player player, Enemy target, Scanner console){
-	System.out.print
-    }
-    
-    //this is the effects function used for NPCs 
-    public static int dealEffects( String targetName, int targetHealth, HashMap<String, Integer> targetEffects){
-	if (targetEffects.contains("burn") || targetEffects.get("burn") > 0){
-	    targetHealth =  burn("The " + targetName, targetHealth, targetEffects);
+    public static void battle(Player player, Enemy enemy, Random random, Scanner console){
+	
+	while (player.health > 0 && enemy.health > 0){
+	    //player.useItem(); -- function is not programmed yet, so it is commented out at the moment
+	    player.attack(enemy, random, console);
+	    enemy.dealEffects();
+	    enemy.attack(random, player);
+	    player.dealEffects();
 	}
-	if (targetEffects.contains("poison") || targetEffects.get("poison") > 0){
-	    targerHealth = poison("The" + targetName, targetHealth, targetEffects);
+
+	if (player.health <= 0){
+	    System.out.println("You have been killed by the " + enemy.name + ".");
+	    System.exit(0); // This will likely be put in a player.death() method
+	}else{
+	    System.out.println("You have slain the " + enemy.name + ".");
+	    // possible add of drops here or in the funciton where the battle occurrs in?
 	}
-	    
-	return targetHealth;
     }
+
+	
     
-
-// methods needed to make other functions work. 
-    public static int burn(int counter, String name){
-	int damage = 3;
-	int targetHealth -= damage; 
-	targetEfffects.replace("burn", targetEffects.get("burn") -1);
-	System.out.print(target + " got burnt for " + damage + " damage.");
-	return targetHealth;
-    }
-
-    public static int poison(int counter, String name){
-	int poisonCounter = targetEffects.get("poison");
-	int damage = 5 * poisonCounter;
-	targetHealth -= damage;
-	System.out.print(target + " got poisoned for " + damage + " damage.");
-	targetEffects.replace("poison", poisonCounter - 1);
-	return targetHealth;
-    }
 }

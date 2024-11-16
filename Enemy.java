@@ -4,30 +4,50 @@ import java.util.Random;
 
 public class Enemy{
     
+    //
     public static String name;
     public static int health;
-    public static int burn;
-    public static int poison;
+
+    // effects variables
+    public static int burn = 0;
+    public static int poison = 0;
     
+
+
+/*----------------------------------------------------General Enemy Data-----------------------------------------------------------*/
+    
+
     // This function determines which attack function will be used by
     // comparing the name variable to different possinilitues
     public static void attack(Random rand, Player player){
-	if (name.equals("spider")) spiderAttack(rand, player);
-	
+	if (name.equals("spider")) spiderAttack(rand, player);	
+    }
+
+
+
+    // Although there are still effects for the enemy, I don't believe that they will become large enough to give it its own section.
+    // Therefore, the dealEffects function is int the general section of this file.
+    public static void dealEffects(){
+	int damage;
+	if (burn > 0){
+	    damage = 3;
+	    burn --;
+	    health -= damage;
+	    System.out.println("You have been burnt for " + damage + " damage.");
+	}
+	if (poison > 0){
+	    damage = poison * 5;
+	    poison --;
+	    health -= damage;
+	    System.out.println("The poison in your body dealt " + damage + " damage to you.");
+	}
     }
 
 
 
 
 
-
-
-
-
-
-
-
-    // This section codes a spider option for the enemy 
+/*---------------------------------------This section contains information for the spider type-------------------------------------*/
     public static void setSpider(){
 	health = 50;
 	name = "spider";
@@ -38,7 +58,6 @@ public class Enemy{
 	if (decider <=10) spiderCacoon(player, rand);
 	else if (decider <= 55) spiderBite(player);
 	else spikeShot(player);
-
     }
 
     public static void spiderBite(Player player){
