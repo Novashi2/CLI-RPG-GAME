@@ -21,13 +21,16 @@ public class General {
 	    player.dealEffects();
 	}
 
+	if (enemy.health <= 0) {
+	    System.out.println("You have been killed by the " + enemy.name + ".");
+	    // Possible drop
+	}
+
 	if (player.health <= 0){
 	    System.out.println("You have been killed by the " + enemy.name + ".");
 	    System.exit(0); // This will likely be put in a player.death() method
-	}else{
-	    System.out.println("You have slain the " + enemy.name + ".");
-	    // possible add of drops here or in the funciton where the battle occurrs in?
 	}
+	
     }
 
 	
