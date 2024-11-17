@@ -1,5 +1,7 @@
 import java.util.Random;
 import java.util.Scanner;
+import java.io.File;
+import java.io.FileNotFoundException;
 
 
 public class Player{
@@ -101,7 +103,7 @@ public class Player{
 
 
 
-/*------------------------------------------Here are the effects function for the player-------------------------------------------*/
+/*-----------------------------------------Here are the effects functions for the player-------------------------------------------*/
     // This function processes the effects variables.
     public static void dealEffects(){
 	int damage;
@@ -120,6 +122,96 @@ public class Player{
 	    
     } 
 
-    
-    
+
+/*----------------------------Constructor for player object and necessary functions--KEEP AT END-----------------------------------*/
+    public static void newPlayer(Scanner console){
+	System.out.print("Enter the name you want your character to have: ");
+	name = console.nextLine();
+	
+	// input verification
+	while (name.indexOf(" ") != -1){
+	    System.out.print("Your name must have no spaces. Please try again: ");
+	    name = console.nextLine();
+	}
+    }
+
+
+
+    public Player(Scanner console) throws FileNotFoundException{
+	File playerFile = new File("Player.txt");
+	Scanner playerData = new Scanner(playerFile);
+	Scanner playerAssigner = new Scanner(playerFile);
+
+	int playerLines = 2;
+
+	// prints welcome ASCII art
+	General.printText("Printable_Text.txt", 0);
+	
+	// checks to see if data is in file. If so, then the program prompts the user on whether he or she wants to pull up a profile
+	if (playerData.hasNext()){
+	    System.out.print("Do you have a profile on this computer? (y/n): ");
+	    char choice = (console.next()).charAt(0);
+	    
+	    // what happens if a player wants to pull a character out of the player file.
+	    if (choice == 'y'){
+		System.out.print("Here are the stored characters:");
+		int playerCounter = 0; // counts how many players are stored in the file
+
+		// lists the names of all players in the file
+		while (playerData.hasNextLine()){
+		    Scanner characterData = new Scanner(playerData.nextLine());
+		    playerCounter++;
+
+		    // This is a loop that was added to deal with multiple lines of storage that will appear in later versions
+		    for (int i = 1; i < playerLines; i++) playerData.nextInt(); 
+
+		    String name = characterData.next();
+		    System.out.println(playerCounter + ". " + name);
+		}
+		
+		System.out.print("Select the number for the character you want to play: ");
+		
+		// data verification for the player option
+		while (!console.hasNextInt()){
+		    console.nextLine();
+		    System.out.print("Please enter a number from the options above: ");
+		}
+
+		int selection = console.nextInt();
+		
+		while (selection >= playerCounter || selection < 1 || !console.hasNextInt()){
+		    System.out.print("Please enter a number from the options above: ");
+		    if (console.hasNextInt()) selection = console.nextInt();
+		    else console.nextLine();
+		}
+
+		// The next set of lines assign the player data in the file to the player object that is being created
+		for (int i = 1; i < playerCounter; i++){
+		    for (int j = 0; j < playerLines; j ++){
+			console.nextLine();
+		    }
+		}
+		
+
+		// general information is assigned assigned to the object in the lines below
+		playerData = new Scanner(console.nextLine());
+		name = playerData.next();
+		health = playerData.nextInt();
+		savePoint = playerData.nextInt();
+		poison = playerData.nextInt();
+		burn = playerData.nextInt();
+		peashooterAmmo = playerData.nextInt();
+		
+		// assigns abilities based on what is in the file
+		Scanner abilitiesData = new Scanner(console.nextLine());
+		int abilitiesCounter = 0;
+		while (abilitiesData.hasNext()){
+		    abilities[abilitiesCounter] = abilitiesData.next();
+		    abilitiesCounter++;
+		}
+	    }else newPlayer(console);
+	}else newPlayer(console);
+
+    }
+
 }
