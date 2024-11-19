@@ -7,32 +7,23 @@ import java.io.FileNotFoundException;
 public class Player{
     
     // general data varibles
-    public static String name;
-    public static int health = 100; 
-    public static int savePoint = 0;
+    public String name;
+    public int health = 100; 
+    public int savePoint = 0;
 
     // effects varaibles
-    public static int burn = 0;
-    public static int poison = 0;
+    public int burn = 0;
+    public int poison = 0;
 
     // abilities variables
-    public static String[] abilities = {"Peashooter", "Wand", "Sword", null, null, null, null};// null slots added to expand skills
-    public static int peashooterAmmo = 20;
+    public String[] abilities = {"Peashooter", "Wand", "Sword", null, null, null, null};// null slots added to expand skills
+    public int peashooterAmmo = 20;
     
     
     
-    public static void main(String[] args){
-	Random random = new Random();
-	Scanner console = new Scanner(System.in);
-	Enemy spider = new Enemy();
-	spider.setSpider();
-	attack(spider, random, console);
-    }
-    
-
     // This function prompts the user to enter a number that corresponds to an attack printed in the terminal and then uses that
     // input to determine an attack.
-    public static void attack(Enemy enemy, Random random, Scanner console){
+    public void attack(Enemy enemy, Random random, Scanner console){
 	int choice = -1;
 	System.out.println("Here are your abilities:\n");
 	
@@ -49,6 +40,7 @@ public class Player{
 	while(!console.hasNextInt()){
 	    System.out.print("You must type in one of the corresponding numbers in the list above. Please try again: ");
 	    console.next();
+	    console.nextLine();
 	}
 	
 	choice = console.nextInt() - 1;
@@ -56,11 +48,14 @@ public class Player{
 	while(choice < 0 || choice > moveCounter){
 	    System.out.print("You must type in one of the corresponding numbers in the list above. Please try again: ");
 	    if (console.hasNextInt()) choice = console.nextInt();
-	    else console.next();
+	    else {
+		console.next();
+		console.nextLine();
+	    }
 	}
 
 	if (abilities[choice].startsWith("Peashooter")) peashooter(enemy, random);
-	else if (abilities[choice].startsWith("Wand")) wand(enemy);
+	else if (abilities[choice].startsWith("Wand")) wand(enemy, random);
 	else if (abilities[choice].startsWith("Sword")) sword(enemy);	
     }
 
@@ -72,7 +67,7 @@ public class Player{
 
 
     // The peashooter function uses a random object to decude whether the player will or won't hit the enemy. 
-    public static void peashooter(Enemy enemy, Random random){
+    public void peashooter(Enemy enemy, Random random){
     	int damage = 45;
 	int hitNumber = random.nextInt(100);
 	
@@ -89,12 +84,27 @@ public class Player{
 
 
     // The wand function adds a random negative effect to the enemy.
-    public static void wand (Enemy enemy){
-	System.out.println("Will work on soon");
+    public void wand (Enemy enemy, Random random){ // if we have time, it may be intersting to add more effects, like mind control
+	int decider = random.nextInt(1,101);
+	int baseDamage = 25;
+	if (decider <= 30){ // bonus damage
+	    System.out.println("You dealt 90 damage to the " + enemy.name);
+	    enemy.health -= 90;
+	} else if (decider <= 66){// burn attack
+	    int burnCounter = decider - 10;
+	    System.out.println("You dealt " + baseDamage + " damage and burnt the " + enemy.name + ".");
+	    enemy.burn += burnCounter;
+	    enemy.health -= baseDamage;
+	} else { // poison attack
+	    int poisonCounter = decider - 66;
+	    System.out.println("You dealt " + baseDamage + "damage and poisoned the " + enemy.name + ".");
+	    enemy.poison += poisonCounter;
+	    enemy.health -= baseDamage;
+	}
     }
     
     
-    public static void sword (Enemy enemy){ //possibly add something interesting to this part of the code?
+    public void sword (Enemy enemy){ //possibly add something interesting to this part of the code?
 	int damage = 35;
 	System.out.println("You dealt " + damage + " damage to the " + enemy.name);
 	enemy.health -= damage;
@@ -105,7 +115,7 @@ public class Player{
 
 /*-----------------------------------------Here are the effects functions for the player-------------------------------------------*/
     // This function processes the effects variables.
-    public static void dealEffects(){
+    public void dealEffects(){
 	int damage;
 	if (burn > 0){
 	    damage = 3;
@@ -124,7 +134,7 @@ public class Player{
 
 
 /*----------------------------Constructor for player object and necessary functions--KEEP AT END-----------------------------------*/
-    public static void newPlayer(Scanner console){
+    public void newPlayer(Scanner console){
 	System.out.print("Enter the name you want your character to have: ");
 	name = console.nextLine();
 	
@@ -138,10 +148,10 @@ public class Player{
 
 
     public Player(Scanner console) throws FileNotFoundException{
-	File playerFile = new File("Player.txt");
+	File playerFile = new File("Players.txt");
 	Scanner playerData = new Scanner(playerFile);
-	Scanner playerAssigner = new Scanner(playerFile);
-
+	String[][] playerInfo = new String[2][10000]; // 100 is present because it is an impossibly high number that nobody is likely
+					      // to hit
 	int playerLines = 2;
 
 	// prints welcome ASCII art
@@ -154,47 +164,40 @@ public class Player{
 	    
 	    // what happens if a player wants to pull a character out of the player file.
 	    if (choice == 'y'){
-		System.out.print("Here are the stored characters:");
+		System.out.println("Here are the stored characters:\n");
 		int playerCounter = 0; // counts how many players are stored in the file
 
 		// lists the names of all players in the file
 		while (playerData.hasNextLine()){
-		    Scanner characterData = new Scanner(playerData.nextLine());
+
+		    for (int i = 0; i < playerLines; i++){
+			playerInfo[i][playerCounter] = playerData.nextLine();
+		    }
+
+		    String name = playerInfo[0][playerCounter].substring(0, playerInfo[0][playerCounter].indexOf(' '));
 		    playerCounter++;
-
-		    // This is a loop that was added to deal with multiple lines of storage that will appear in later versions
-		    for (int i = 1; i < playerLines; i++) playerData.nextInt(); 
-
-		    String name = characterData.next();
 		    System.out.println(playerCounter + ". " + name);
 		}
 		
+		System.out.println();
 		System.out.print("Select the number for the character you want to play: ");
 		
-		// data verification for the player option
 		while (!console.hasNextInt()){
-		    console.nextLine();
+		    console.next();
 		    System.out.print("Please enter a number from the options above: ");
 		}
 
 		int selection = console.nextInt();
-		
-		while (selection >= playerCounter || selection < 1 || !console.hasNextInt()){
+		console.nextLine();
+
+		while (selection > playerCounter || selection < 1){
 		    System.out.print("Please enter a number from the options above: ");
 		    if (console.hasNextInt()) selection = console.nextInt();
 		    else console.nextLine();
 		}
 
-		// The next set of lines assign the player data in the file to the player object that is being created
-		for (int i = 1; i < playerCounter; i++){
-		    for (int j = 0; j < playerLines; j ++){
-			console.nextLine();
-		    }
-		}
-		
-
 		// general information is assigned assigned to the object in the lines below
-		playerData = new Scanner(console.nextLine());
+		playerData = new Scanner(playerInfo[0][selection - 1]);
 		name = playerData.next();
 		health = playerData.nextInt();
 		savePoint = playerData.nextInt();
@@ -202,8 +205,8 @@ public class Player{
 		burn = playerData.nextInt();
 		peashooterAmmo = playerData.nextInt();
 		
-		// assigns abilities based on what is in the file
-		Scanner abilitiesData = new Scanner(console.nextLine());
+		// assigns abilities based on what is in the file. assertion made that the abilities array has enough feilds.
+		Scanner abilitiesData = new Scanner(playerInfo[1][selection - 1]);
 		int abilitiesCounter = 0;
 		while (abilitiesData.hasNext()){
 		    abilities[abilitiesCounter] = abilitiesData.next();
