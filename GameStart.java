@@ -1,9 +1,9 @@
 import java.util.Scanner;
-import java.util.HashMap;
 import java.util.Random;
+import java.io.FileNotFoundException;
 
 public class GameStart {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException{
 
         //instantiates a new Scanner object
         Scanner console = new Scanner(System.in);
@@ -22,30 +22,27 @@ public class GameStart {
 
 
 
-        System.out.println("First message");
 
 	// gathers information on which path the player will take	
         int dungeonChoice = getDungeonChoice(console);
 
-        //we can check health at the end of every turn
-        while(playerHealth>0) { 
-            if  (dungeonChoice == 1) {
-                //call dungeon 1
+        // This funciotn is an infinite loop because the battle function and dragon fight will end the game.
+        while (true) { 
+            if  (player.savePoint == 0) {
+                // introduce player to game and get path choice
+	    }else if (player.savePoint == 1){
+		// dungeon 1
+	    } else if(player.savePoint == 2){
                 //call dungeon 2
-            } else if(dungeonChoice == 2) {
-                //call dungeon 3
-                DungeonFour.theFourthDungeon(console, r); //calls the fourth dungeon method and passes through scanner and random objects
+	    }else if (player.savePoint == 3){
+		// call dungeon 3
+	    } else if (player.savePoint == 4) {
+                DungeonFour.theFourthDungeon(console, r); //calls the fourth dungeon method with scanner and random objects
+	    } else if (player.savePoint == 5) {
+		// call dragon fight
 	    }
 	    break;
         }
-
-        if (playerHealth>0) {
-            System.out.println("You win!");
-        } 
-        else {
-            System.out.println("You died!");
-        }
-	
     }
 
     public static int getDungeonChoice(Scanner console){

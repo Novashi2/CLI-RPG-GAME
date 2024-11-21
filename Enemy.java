@@ -10,14 +10,14 @@ public class Enemy{
     public int health;
 
     // effects variables
-    public static int burn;
-    public static int poison;
+    public int burn = 0;
+    public int poison = 0;
 
 	//Enemy constructor 
-	public Enemy(String name, int health) {
-		this.name = name;
-		this.health = health; 
-	} 
+    public Enemy(String name, int health) {
+	this.name = name;
+    	this.health = health; 
+    } 
     
 
 
@@ -26,7 +26,7 @@ public class Enemy{
 
     // This function determines which attack function will be used by
     // comparing the name variable to different possinilitues
-    public static void attack(Random rand, Player player){
+    public void attack(Random rand, Player player){
 	if (name.equals("spider")) spiderAttack(rand, player);	
     }
 
@@ -34,7 +34,7 @@ public class Enemy{
 
     // Although there are still effects for the enemy, I don't believe that they will become large enough to give it its own section.
     // Therefore, the dealEffects function is int the general section of this file.
-    public static void dealEffects(){
+    public void dealEffects(){
 	int damage;
 	if (burn > 0){
 	    damage = 3;
@@ -55,36 +55,36 @@ public class Enemy{
 
 
 /*---------------------------------------This section contains information for the spider type-------------------------------------*/
-    public static void setSpider(){
+    public void setSpider(){
 	health = 50;
 	name = "spider";
     }
 
-    public static void spiderAttack(Random rand, Player player){
+    public void spiderAttack(Random rand, Player player){
 	int decider = rand.nextInt(100) + 1;
 	if (decider <=10) spiderCacoon(player, rand);
 	else if (decider <= 55) spiderBite(player);
 	else spikeShot(player);
     }
 
-    public static void spiderBite(Player player){
+    public void spiderBite(Player player){
 	int damage = 15;
 	player.health -= damage;
 	System.out.println("The spider bit you and dealt " + damage + " damage. \nYou are now poisoned.");
-	Player.poison += 3;
+	player.poison += 3;
     }
     
-    public static void spikeShot(Player player){
+    public void spikeShot(Player player){
 	int damage = 10;
 	player.health -= damage;
-	Player.poison += 5;
+	player.poison += 5;
 	System.out.println("The spider spat a spine and dealt " + damage + " damage. You are now poisoned");
 
 
 
     }
 
-    public static void spiderCacoon(Player player, Random rand){
+    public void spiderCacoon(Player player, Random rand){
 	String message = "You are still trapped in the cocoon";
 
 	System.out.println("The spider has wrapped you in a silk cocoon. You struggle to break free as the spider keeps attacking you.");
