@@ -4,13 +4,20 @@ import java.util.Random;
 
 public class Enemy{
     
-    //
-    public static String name;
-    public static int health;
+	
+    //enemy fields
+    public String name;
+    public int health;
 
     // effects variables
-    public static int burn = 0;
-    public static int poison = 0;
+    public static int burn;
+    public static int poison;
+
+	//Enemy constructor 
+	public Enemy(String name, int health) {
+		this.name = name;
+		this.health = health; 
+	} 
     
 
 
