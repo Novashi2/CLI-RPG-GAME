@@ -2,7 +2,7 @@ import java.util.Random;
 import java.util.Scanner;
 import java.io.File;
 import java.io.FileNotFoundException;
-
+import java.io.PrintStream;
 
 public class Player{
     
@@ -10,6 +10,7 @@ public class Player{
     public String name;
     public int health = 100; 
     public int savePoint = 0;
+    int index;
 
     // effects varaibles
     public int burn = 0;
@@ -131,8 +132,22 @@ public class Player{
 	}
 	    
     } 
+/*----------These functions are the ones that end the game once a player dies, wants to exit at a savepoint, or wins---------------*/
 
+    public void kill(Enemy enemy) throws FileNotFoundException{
+	File dragonServants = new File("DragonServants.txt");
+	PrintStream servantPrinter = new PrintStream(dragonServants);
+	Scanner servantReader = new Scanner(dragonServants);
 
+	System.out.println("You were slain by the " + enemy.name + ".");
+	System.out.println("As you die, you feel the Elder Dragon's power turning you into a part of the dungeon.");
+	
+	String[] dragonServantsLines = new String[100];
+	// array magic goes here
+		
+
+	System.exit(0);
+    }
 /*----------------------------Constructor for player object and necessary functions--KEEP AT END-----------------------------------*/
     public void newPlayer(Scanner console){
 	System.out.print("Enter the name you want your character to have: ");
@@ -144,7 +159,6 @@ public class Player{
 	    name = console.nextLine();
 	}
     }
-
 
 
     public Player(Scanner console) throws FileNotFoundException{
@@ -161,6 +175,7 @@ public class Player{
 	if (playerData.hasNext()){
 	    System.out.print("Do you have a profile on this computer? (y/n): ");
 	    char choice = (console.next()).charAt(0);
+	    console.nextLine();
 	    
 	    // what happens if a player wants to pull a character out of the player file.
 	    if (choice == 'y'){
@@ -193,7 +208,10 @@ public class Player{
 		while (selection > playerCounter || selection < 1){
 		    System.out.print("Please enter a number from the options above: ");
 		    if (console.hasNextInt()) selection = console.nextInt();
-		    else console.nextLine();
+		    else{
+			console.next();
+			console.nextLine();
+		    }
 		}
 
 		// general information is assigned assigned to the object in the lines below
@@ -204,7 +222,9 @@ public class Player{
 		poison = playerData.nextInt();
 		burn = playerData.nextInt();
 		peashooterAmmo = playerData.nextInt();
-		
+		index = selection - 1;
+
+		    
 		// assigns abilities based on what is in the file. assertion made that the abilities array has enough feilds.
 		Scanner abilitiesData = new Scanner(playerInfo[1][selection - 1]);
 		int abilitiesCounter = 0;
@@ -215,6 +235,7 @@ public class Player{
 	    }else newPlayer(console);
 	}else newPlayer(console);
 
-    }
+	System.out.println("\nWelcome, " + name + ".\n");
 
+    }
 }
