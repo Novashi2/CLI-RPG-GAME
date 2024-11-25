@@ -82,8 +82,6 @@ public class Enemy{
 	player.poison += 5;
 	System.out.println("The spider spat a spine and dealt " + damage + " damage. You are now poisoned");
 
-
-
     }
 
     public void spiderCacoon(Player player, Random rand){
@@ -99,7 +97,6 @@ public class Enemy{
 	    spiderBite(player);
 	    //possibly add a sleep command here
 	}
-
     }
 
 
@@ -107,7 +104,6 @@ public class Enemy{
     
 
     
-
 
 
 }

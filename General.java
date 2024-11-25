@@ -24,8 +24,7 @@ public class General {
 	}
 
 	if (player.health <= 0){
-	    System.out.println("You have been killed by the " + enemy.name + ".");
-	    System.exit(0); // This will likely be put in a player.death() method
+	    player.kill(enemy);
 	}
 	
     }

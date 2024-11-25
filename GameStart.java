@@ -3,7 +3,7 @@ import java.util.Random;
 import java.io.FileNotFoundException;
 
 public class GameStart {
-    public static void main(String[] args) throws FileNotFoundException{
+    public static void main(String[] args) throws FileNotFoundException, InterruptedException{
 
         //instantiates a new Scanner object
         Scanner console = new Scanner(System.in);

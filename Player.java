@@ -12,7 +12,7 @@ public class Player{
     public String name;
     public int health = 100; 
     public int savePoint = 0;
-    int index;
+    private int index = -1;
 
     // effects varaibles
     public int burn = 0;
@@ -167,8 +167,76 @@ public class Player{
 
 	System.exit(0);
     }
+    
+    // This method updates the savePoint variable, saves the player information to the Players.txt file, and prompts the player on 
+    // whether he or she wants to exit the game. 
+    public void save(int savePoint, Scanner console) throws FileNotFoundException, InterruptedException {
+	File playerFile = new File("Players.txt");
+	Scanner playerReader = new Scanner(playerFile);
+	PrintStream playerWriter = new PrintStream(playerFile);
+	
+	this.savePoint = savePoint; // sets savePoint to the correct value
+
+	// the next few lines write the player information to the PLAYERS.txt file. 
+	String[][] playerData = new String[PLAYER_LINES][10000];
+
+	int playerIndex = 0;
+	while (playerReader.hasNextLine()){
+	    for (int i = 0; i < PLAYER_LINES; i++){
+		playerData[i][playerIndex] = playerReader.nextLine();
+	    }
+	    playerIndex++;
+	}
+	
+	if (index != -1) index = playerIndex; // prevents the player from being written twice in the same file or overwriting data
+
+	// stores general data line in the array
+	playerData[0][index] = name + " " + health + " " + savePoint + " " + poison + " " + burn + " " + peashooterAmmo;
+	
+	// stores the abilities line in the array
+	playerData[1][index] = abilities[0];
+	
+	boolean atEndOfAbilities = false;
+	int abilitiesIndex = 1;
+	while (!atEndOfAbilities){
+	    playerData[1][index] += abilities[abilitiesIndex];
+	    abilitiesIndex ++;
+	    atEndOfAbilities = abilitiesIndex == abilities.length || abilities[abilitiesIndex] == null;
+	}
+
+
+	// Writes everything to the file
+	for (int i = 0; i < playerIndex; i++){
+	    for (int j = 0; j < PLAYER_LINES; j++){
+		playerWriter.println(playerData[j][i]);
+	    }
+	}
+	
+	// sees if user wants to exit the game
+	System.out.print("You have reached a savepoint. Do you want to continue? (y/n): ");
+	
+	char response = console.next().toLowerCase().charAt(0);
+	
+	while (response != 'y' && response != 'n'){
+	    System.out.print("Please type \"y\" or \"n\": ");
+	    response = console.next().toLowerCase().charAt(0);
+	}
+
+	if (response == 'y') {
+	    System.out.println("You are exiting the game,\n");
+	    System.exit(0);
+	} else {
+	    System.out.println("You have chosen to continue...\n");
+	    Thread.sleep(5000);
+	}
+    }
+	    
+
+
+
+
 /*----------------------------Constructor for player object and necessary functions--KEEP AT END-----------------------------------*/
-    public void newPlayer(Scanner console){
+    private void newPlayer(Scanner console){
 	System.out.print("Enter the name you want your character to have: ");
 	name = console.nextLine();
 	
@@ -183,7 +251,7 @@ public class Player{
     public Player(Scanner console) throws FileNotFoundException{
 	File playerFile = new File("Players.txt");
 	Scanner playerData = new Scanner(playerFile);
-	String[][] playerInfo = new String[2][10000]; // 10000 is present because it is an impossibly high number that nobody is 
+	String[][] playerInfo = new String[PLAYER_LINES][10000]; // 10000 is present because it is an impossibly high number that nobody is 
 						      // likely to hit
 
 
