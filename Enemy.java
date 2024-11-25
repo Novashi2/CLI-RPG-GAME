@@ -6,7 +6,9 @@ public class Enemy{
     
 	
     //enemy fields
-    public String name;
+    public String title; // name enemy may hav ehad before if it was a player
+    public String type; // what the enemy is
+    public String name; // total name
     public int health;
 
     // effects variables
@@ -14,8 +16,8 @@ public class Enemy{
     public int poison = 0;
 
 	//Enemy constructor 
-    public Enemy(String name, int health) {
-	this.name = name;
+    public Enemy(String type, int health) {
+	this.type = type;
     	this.health = health; 
     } 
     
@@ -25,9 +27,9 @@ public class Enemy{
     
 
     // This function determines which attack function will be used by
-    // comparing the name variable to different possinilitues
+    // comparing the type variable to different possinilitues
     public void attack(Random rand, Player player){
-	if (name.equals("spider")) spiderAttack(rand, player);	
+	if (type.equals("spider")) spiderAttack(rand, player);	
     }
 
 
@@ -57,7 +59,7 @@ public class Enemy{
 /*---------------------------------------This section contains information for the spider type-------------------------------------*/
     public void setSpider(){
 	health = 50;
-	name = "spider";
+	type = "spider";
     }
 
     public void spiderAttack(Random rand, Player player){
@@ -80,8 +82,6 @@ public class Enemy{
 	player.poison += 5;
 	System.out.println("The spider spat a spine and dealt " + damage + " damage. You are now poisoned");
 
-
-
     }
 
     public void spiderCacoon(Player player, Random rand){
@@ -97,7 +97,6 @@ public class Enemy{
 	    spiderBite(player);
 	    //possibly add a sleep command here
 	}
-
     }
 
 
@@ -105,7 +104,6 @@ public class Enemy{
     
 
     
-
 
 
 }

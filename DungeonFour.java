@@ -77,7 +77,7 @@ public class DungeonFour {
         Enemy mimic = new Enemy ("mimic", 50);
         if(yesno(s)){
         System.out.println("The trapdoor was a mimic!"); 
-        General.battle(player, mimic, r, s);
+        General.battle(player, mimic, r, s); // to do this, add an attack line to the Enemy.attack function
         System.out.println("You make it out safely, with nothing even being in the mimic's room");
         }
         else{

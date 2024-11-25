@@ -3,7 +3,7 @@ import java.util.Random;
 import java.io.FileNotFoundException;
 
 public class GameStart {
-    public static void main(String[] args) throws FileNotFoundException{
+    public static void main(String[] args) throws FileNotFoundException, InterruptedException{
 
         //instantiates a new Scanner object
         Scanner console = new Scanner(System.in);
@@ -16,7 +16,6 @@ public class GameStart {
         int skeletonHealth = 30;
 	
         // Damage   
-        int wandDamage = 25; //add effects?
         int dragonDamage = 15;
         int skeletonDamage = 15;
 
@@ -37,7 +36,7 @@ public class GameStart {
 	    }else if (player.savePoint == 3){
 		// call dungeon 3
 	    } else if (player.savePoint == 4) {
-                DungeonFour.theFourthDungeon(console, r); //calls the fourth dungeon method with scanner and random objects
+                DungeonFour.theFourthDungeon(console, r, player); //calls the fourth dungeon method with scanner and random objects
 	    } else if (player.savePoint == 5) {
 		// call dragon fight
 	    }
