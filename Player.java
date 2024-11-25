@@ -1,11 +1,13 @@
 import java.util.Random;
 import java.util.Scanner;
+import java.util.Arrays;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintStream;
 
 public class Player{
     
+    public static final int PLAYER_LINES = 2;
     // general data varibles
     public String name;
     public int health = 100; 
@@ -141,10 +143,27 @@ public class Player{
 
 	System.out.println("You were slain by the " + enemy.name + ".");
 	System.out.println("As you die, you feel the Elder Dragon's power turning you into a part of the dungeon.");
+	// printDeathImage(enemy.type) will come later
+
+
+	String[] dragonServantLines = new String[100];
 	
-	String[] dragonServantsLines = new String[100];
-	// array magic goes here
-		
+	// puts current information in the file in the array
+	int i = 0;
+	while (servantReader.hasNextLine()){
+	    if (i == dragonServantLines.length){
+		dragonServantLines = Arrays.copyOf(dragonServantLines, dragonServantLines.length + 100);
+	    }
+	    dragonServantLines[i] = servantReader.nextLine();
+	    i++;
+	}
+
+	// adds player data to DragonServants.txt
+	dragonServantLines[i] = name + " " + enemy.type;
+
+	for (int j = 0; j < i; j++){
+	    servantPrinter.println(dragonServantLines[i]);
+	}
 
 	System.exit(0);
     }
@@ -164,9 +183,9 @@ public class Player{
     public Player(Scanner console) throws FileNotFoundException{
 	File playerFile = new File("Players.txt");
 	Scanner playerData = new Scanner(playerFile);
-	String[][] playerInfo = new String[2][10000]; // 100 is present because it is an impossibly high number that nobody is likely
-					      // to hit
-	int playerLines = 2;
+	String[][] playerInfo = new String[2][10000]; // 10000 is present because it is an impossibly high number that nobody is 
+						      // likely to hit
+
 
 	// prints welcome ASCII art
 	General.printText("Printable_Text.txt", 0);
@@ -185,7 +204,7 @@ public class Player{
 		// lists the names of all players in the file
 		while (playerData.hasNextLine()){
 
-		    for (int i = 0; i < playerLines; i++){
+		    for (int i = 0; i < PLAYER_LINES; i++){
 			playerInfo[i][playerCounter] = playerData.nextLine();
 		    }
 
