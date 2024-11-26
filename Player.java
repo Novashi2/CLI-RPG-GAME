@@ -8,7 +8,7 @@ import java.io.PrintStream;
 public class Player{
     
     public static final int PLAYER_LINES = 2;
-    // general data varibles
+    // general data variables
     public String name;
     public int health = 100; 
     public int savePoint = 0;
@@ -76,7 +76,7 @@ public class Player{
 	
 	if (peashooterAmmo > 0){
 	    if (hitNumber < 50){
-		System.out.println("You dealt " + damage + " damage to the " + enemy.name);
+		System.out.println("You dealt " + damage + " damage to" + enemy.name);
 		enemy.health -= damage;
 	    } else System.out.println("You missed.");
 

@@ -123,6 +123,5 @@ public class DungeonFour {
 
     
 
-    player.savePoint = 5; //sets dungeon to the dragon battle
     }
 }

@@ -19,7 +19,7 @@ public class General {
 	}
 
 	if (enemy.health <= 0) {
-	    System.out.println("You slain the " + enemy.name + ".");
+	    System.out.println("You have slain the " + enemy.name + ".");
 	    // Possible drop
 	}
 

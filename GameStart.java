@@ -29,16 +29,20 @@ public class GameStart {
 		player.savePoint = -1 + 2 * getDungeonChoice(console); // Determines the next path that the player will go down.
 	    }else if (player.savePoint == 1){
 		// dungeon 1
+		player.save(2)
 	    } else if(player.savePoint == 2){
                 //call dungeon 2
+		player.save(5);
 	    }else if (player.savePoint == 3){
 		DungeonThree.run(player, r, console);
+		player.save(4)
 	    } else if (player.savePoint == 4) {
                 DungeonFour.theFourthDungeon(console, r, player); //calls the fourth dungeon method with scanner and random objects
+		player.save(5)
 	    } else if (player.savePoint == 5) {
 		// call dragon fight
 	    }
-	    break;
+	    //break;
         }
     }
 

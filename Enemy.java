@@ -19,7 +19,26 @@ public class Enemy{
     public Enemy(String type, int health) {
 	this.type = type;
     	this.health = health; 
+
+	buildName(type, null);
     } 
+
+    public Enemy(String type, String title){
+	this.type = type;
+	this.title = title;
+	
+	buildName(type, title);
+
+	if (type.equals("spider")) setSpider();
+    }
+
+    public void buildName(String type, String title){
+	if (title == null){
+	    this.name = "the " + type;
+	}else {
+	    this.name = title + " the " + type;
+	}
+    }
     
 
 
@@ -29,7 +48,11 @@ public class Enemy{
     // This function determines which attack function will be used by
     // comparing the type variable to different possinilitues
     public void attack(Random rand, Player player){
-	if (type.equals("spider")) spiderAttack(rand, player);	
+	if (type.equals("spider")) spiderAttack(rand, player);
+	else if (type.equals("mimic")) {
+	    player.health -= 5;
+	    System.out.println(name + "dealt 5 damage to you.");
+	}
     }
 
 

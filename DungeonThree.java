@@ -13,9 +13,11 @@ public class DungeonThree {
 	System.out.print("Do you want to go down the mine shaft (1) or continue walking foward (2)? ");
 
 	int choice = General.pickPath(console);
+	
+	Enemy spider = new Enemy("Spider", null);
 
 
-	player.savePoint = 4;
+
     }
     // current dungeon
     // enter--sudden death pathway or continue
