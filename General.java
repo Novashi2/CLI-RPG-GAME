@@ -8,7 +8,7 @@ public class General {
     }
     
     // This is the battle function for the program.
-    public static void battle(Player player, Enemy enemy, Random random, Scanner console){
+    public static void battle(Player player, Enemy enemy, Random random, Scanner console) throws FileNotFoundException{
 	
 	while (player.health > 0 && enemy.health > 0){
 	    //player.useItem(); -- function is not programmed yet, so it is commented out at the moment
@@ -54,5 +54,28 @@ public class General {
 		text = inputFile.nextLine();
 	    }
 	}
+    }
+    
+    // This function 
+    public static int pickPath(Scanner console){
+	String error = "Please answer with \"1\" or \"2\": ";
+
+	// checks for integer as next input
+	while (!console.hasNextInt()){
+	    console.nextLine();
+	    System.out.print(error);
+	}
+
+	int choice = console.nextInt();
+
+	//verifies input after verifying that value is an integer
+	while(choice != 1 && choice != 2) {
+	    System.out.print(error);
+	    //ensure that user enters integer first time
+	    if (!console.hasNextInt()){
+		console.nextLine();
+	    } else choice = console.nextInt();
+	}
+	return choice;
     }
 }

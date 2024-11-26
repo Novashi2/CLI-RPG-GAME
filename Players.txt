@@ -1,2 +1,2 @@
 Steve 100 0 0 0 100
-peashooter wand sword
+Peashooter Wand Sword

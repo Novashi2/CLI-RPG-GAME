@@ -20,21 +20,19 @@ public class GameStart {
         int skeletonDamage = 15;
 
 
+	
+	General.printText("Printable_text.txt", 1);
 
-
-	// gathers information on which path the player will take	
-        int dungeonChoice = getDungeonChoice(console);
-
-        // This funciotn is an infinite loop because the battle function and dragon fight will end the game.
+        // This function is an infinite loop because the battle function and dragon fight will end the game.
         while (true) { 
             if  (player.savePoint == 0) {
-                // introduce player to game and get path choice
+		player.savePoint = -1 + 2 * getDungeonChoice(console); // Determines the next path that the player will go down.
 	    }else if (player.savePoint == 1){
 		// dungeon 1
 	    } else if(player.savePoint == 2){
                 //call dungeon 2
 	    }else if (player.savePoint == 3){
-		// call dungeon 3
+		DungeonThree.run(player, r, console);
 	    } else if (player.savePoint == 4) {
                 DungeonFour.theFourthDungeon(console, r, player); //calls the fourth dungeon method with scanner and random objects
 	    } else if (player.savePoint == 5) {
@@ -45,27 +43,15 @@ public class GameStart {
     }
 
     public static int getDungeonChoice(Scanner console){
-	int dungeonChoice = 0;
-	String prompt = "Do you want to go down path 1 or 2? ";
-	String error = "Please answer with \"1\" or \"2\": ";
+	System.out.println("\tYou follow the map that was given to you to the lair's enterance. When you look up from the map,");
+	System.out.println("you see the cliff face of a mountain with a cave entrance. You enter into the cave. Inside, there are ");
+	System.out.println("signs of the remains of the battles that were fought before. In front of you, there are two tunnels.");
+	System.out.println("You hear a roar come from the first tunnel, while the second as a sign that reads \"Only darkness lies");
+	System.out.println("past this point\"...");
+	System.out.println();
 
+        System.out.print("Do you want to go down the first path (1) or the second path (2)? ");
 
-        System.out.print(prompt);
-	//ensure that user enters integer first time
-	while (!console.hasNextInt()){
-	    console.nextLine();
-	    System.out.print(error);
-	}
-	dungeonChoice = console.nextInt();
-	//verifies input after verifying that value is an integer
-	while(dungeonChoice != 1 && dungeonChoice != 2) {
-	    System.out.print(error);
-	    //ensure that user enters integer first time
-	    if (!console.hasNextInt()){
-		console.nextLine();
-	    } else dungeonChoice = console.nextInt();
-	    
-	}
-	return dungeonChoice;
+	return General.pickPath(console);
     }
 }
