@@ -10,3 +10,8 @@
                                     |___/                                       
 
 break(0 in printText function and introduction to program on top)
+	The Elder Dragon has awoken and plagued the land of Oslikh. The world's best heros
+went to slay the dragon, but none have returned. It has become your responsibility to slay
+the Elder Dragon and repair the land with the mountain's core, which is part of the Dragon's hoard.
+
+break(1 in printText, gives lore for the story)
