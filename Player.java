@@ -8,7 +8,7 @@ import java.io.PrintStream;
 public class Player{
     
     public static final int PLAYER_LINES = 2;
-    // general data varibles
+    // general data variables
     public String name;
     public int health = 100; 
     public int savePoint = 0;
@@ -76,7 +76,7 @@ public class Player{
 	
 	if (peashooterAmmo > 0){
 	    if (hitNumber < 50){
-		System.out.println("You dealt " + damage + " damage to the " + enemy.name);
+		System.out.println("You dealt " + damage + " damage to" + enemy.name);
 		enemy.health -= damage;
 	    } else System.out.println("You missed.");
 
@@ -138,10 +138,9 @@ public class Player{
 
     public void kill(Enemy enemy) throws FileNotFoundException{
 	File dragonServants = new File("DragonServants.txt");
-	PrintStream servantPrinter = new PrintStream(dragonServants);
 	Scanner servantReader = new Scanner(dragonServants);
 
-	System.out.println("You were slain by the " + enemy.name + ".");
+	System.out.println("You were slain by " + enemy.name + ".");
 	System.out.println("As you die, you feel the Elder Dragon's power turning you into a part of the dungeon.");
 	// printDeathImage(enemy.type) will come later
 
@@ -160,8 +159,10 @@ public class Player{
 
 	// adds player data to DragonServants.txt
 	dragonServantLines[i] = name + " " + enemy.type;
+	System.out.println(Arrays.toString(dragonServantLines));	
 
-	for (int j = 0; j < i; j++){
+	PrintStream servantPrinter = new PrintStream(dragonServants);
+	for (int j = 0; j <= i; j++){
 	    servantPrinter.println(dragonServantLines[i]);
 	}
 
@@ -173,10 +174,9 @@ public class Player{
     public void save(int savePoint, Scanner console) throws FileNotFoundException, InterruptedException {
 	File playerFile = new File("Players.txt");
 	Scanner playerReader = new Scanner(playerFile);
-	PrintStream playerWriter = new PrintStream(playerFile);
 	
 	this.savePoint = savePoint; // sets savePoint to the correct value
-
+	
 	// the next few lines write the player information to the PLAYERS.txt file. 
 	String[][] playerData = new String[PLAYER_LINES][10000];
 
@@ -187,29 +187,32 @@ public class Player{
 	    }
 	    playerIndex++;
 	}
-	
-	if (index != -1) index = playerIndex; // prevents the player from being written twice in the same file or overwriting data
 
+
+	if (index == -1) index = playerIndex; // prevents the player from being written twice in the same file or overwriting data
 	// stores general data line in the array
 	playerData[0][index] = name + " " + health + " " + savePoint + " " + poison + " " + burn + " " + peashooterAmmo;
 	
 	// stores the abilities line in the array
-	playerData[1][index] = abilities[0];
+	playerData[1][index] = abilities[0] + " ";
 	
 	boolean atEndOfAbilities = false;
 	int abilitiesIndex = 1;
 	while (!atEndOfAbilities){
-	    playerData[1][index] += abilities[abilitiesIndex];
+	    playerData[1][index] += abilities[abilitiesIndex] + " ";
 	    abilitiesIndex ++;
 	    atEndOfAbilities = abilitiesIndex == abilities.length || abilities[abilitiesIndex] == null;
 	}
+	
 
 
+	PrintStream playerWriter = new PrintStream(playerFile);
 	// Writes everything to the file
-	for (int i = 0; i < playerIndex; i++){
+	for (int i = 0; i <= playerIndex; i++){
 	    for (int j = 0; j < PLAYER_LINES; j++){
 		playerWriter.println(playerData[j][i]);
 	    }
+	    if (playerData[0][i + 1] == null) i = playerIndex + 1;
 	}
 	
 	// sees if user wants to exit the game
@@ -222,8 +225,8 @@ public class Player{
 	    response = console.next().toLowerCase().charAt(0);
 	}
 
-	if (response == 'y') {
-	    System.out.println("You are exiting the game,\n");
+	if (response == 'n') {
+	    System.out.println("You are exiting the game.\n");
 	    System.exit(0);
 	} else {
 	    System.out.println("You have chosen to continue...\n");
@@ -251,8 +254,8 @@ public class Player{
     public Player(Scanner console) throws FileNotFoundException{
 	File playerFile = new File("Players.txt");
 	Scanner playerData = new Scanner(playerFile);
-	String[][] playerInfo = new String[PLAYER_LINES][10000]; // 10000 is present because it is an impossibly high number that nobody is 
-						      // likely to hit
+	String[][] playerInfo = new String[PLAYER_LINES][10000]; // 10000 is present because it is an impossibly high number that 
+								 // nobody is likely to hit
 
 
 	// prints welcome ASCII art
