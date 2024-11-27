@@ -138,10 +138,9 @@ public class Player{
 
     public void kill(Enemy enemy) throws FileNotFoundException{
 	File dragonServants = new File("DragonServants.txt");
-	PrintStream servantPrinter = new PrintStream(dragonServants);
 	Scanner servantReader = new Scanner(dragonServants);
 
-	System.out.println("You were slain by the " + enemy.name + ".");
+	System.out.println("You were slain by " + enemy.name + ".");
 	System.out.println("As you die, you feel the Elder Dragon's power turning you into a part of the dungeon.");
 	// printDeathImage(enemy.type) will come later
 
@@ -160,8 +159,10 @@ public class Player{
 
 	// adds player data to DragonServants.txt
 	dragonServantLines[i] = name + " " + enemy.type;
+	System.out.println(Arrays.toString(dragonServantLines));	
 
-	for (int j = 0; j < i; j++){
+	PrintStream servantPrinter = new PrintStream(dragonServants);
+	for (int j = 0; j <= i; j++){
 	    servantPrinter.println(dragonServantLines[i]);
 	}
 
