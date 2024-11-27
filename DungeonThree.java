@@ -14,7 +14,7 @@ public class DungeonThree {
 
 	int choice = General.pickPath(console);
 	
-	Enemy spider = new Enemy("Spider", null);
+	Enemy spider = new Enemy("Spider", null, null);
 
 
 
