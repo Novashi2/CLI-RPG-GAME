@@ -21,11 +21,12 @@ public class GameStart {
 
 
 	
-	General.printText("Printable_text.txt", 1);
+
 
         // This function is an infinite loop because the battle function and dragon fight will end the game.
         while (true) { 
             if  (player.savePoint == 0) {
+		General.printText("Printable_text.txt", 1);
 		player.savePoint = -1 + 2 * getDungeonChoice(console); // Determines the next path that the player will go down.
 	    }else if (player.savePoint == 1){
 		// dungeon 1
