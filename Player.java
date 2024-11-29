@@ -19,6 +19,7 @@ public class Player{
     public int poison = 0;
 
     // abilities variables
+    Inventory inventory = new Inventory();
     public String[] abilities = {"Peashooter", "Wand", "Sword", null, null, null, null};// null slots added to expand skills
     public Enemy[] servants = new Enemy[0]; // will be worked on later
     public int peashooterAmmo = 20;
