@@ -44,7 +44,7 @@ public class Enemy extends Entity{
     
 
 
-/*----------------------------------------------------General Enemy Data-----------------------------------------------------------*/
+/*-----------------------------------------------General Enemy Functions-----------------------------------------------------------*/
     
 
     // This function determines which attack function will be used by
@@ -58,6 +58,18 @@ public class Enemy extends Entity{
 	    player.health -= 5;
 	    System.out.println(name + "dealt 5 damage to you.");
 	} 
+	
+	// servant attack
+	if (servants.length > 0){
+	    int firstNumber = rand.nextInt(servants.length);
+	    Enemy firstServant = servants[firstNumber];
+	    firstServant.attack(rand, player, console);
+	    if (servants.length > 1){
+		int secondNumber = rand.nextInt(servants.length);
+		while (secondNumber == firstNumber) secondNumber rand.nextInt(servants.length);
+		secondServant = servants[secondNumber];
+		secondServant.attack;
+	    }
     }
 
 

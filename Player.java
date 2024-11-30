@@ -16,7 +16,6 @@ public class Player extends Entity{
     // abilities variables
     Inventory inventory = new Inventory();
     public String[] abilities = {"Peashooter", "Wand", "Sword", null, null, null, null};// null slots added to expand skills
-    public Enemy[] servants = new Enemy[0]; // will be worked on later
     public int peashooterAmmo = 20;
     
     
@@ -36,26 +35,24 @@ public class Player extends Entity{
 	System.out.println("\nPeashooter ammo: " + peashooterAmmo);
 	System.out.print("Enter the number in front of the attack you want to use: ");
 	
-	while(!console.hasNextInt()){
-	    System.out.print("You must type in one of the corresponding numbers in the list above. Please try again: ");
-	    console.next();
-	    console.nextLine();
-	}
-	
-	choice = console.nextInt() - 1;
-	
-	while(choice < 0 || choice > moveCounter){
-	    System.out.print("You must type in one of the corresponding numbers in the list above. Please try again: ");
-	    if (console.hasNextInt()) choice = console.nextInt();
-	    else {
-		console.next();
-		console.nextLine();
-	    }
-	}
+	choice = General.getInt(console, 1, moveCounter);
 
 	if (abilities[choice].startsWith("Peashooter")) peashooter(enemy, random);
 	else if (abilities[choice].startsWith("Wand")) wand(enemy, random);
 	else if (abilities[choice].startsWith("Sword")) sword(enemy);	
+	
+	// servant attack
+	if (servants.length > 0){
+	    int firstNumber = rand.nextInt(servants.length);
+	    Enemy firstServant = servants[firstNumber];
+	    firstServant.attack(rand, player, console);
+	    if (servants.length > 1){
+		int secondNumber = rand.nextInt(servants.length);
+		while (secondNumber == firstNumber) secondNumber rand.nextInt(servants.length);
+		secondServant = servants[secondNumber];
+		secondServant.attack;
+	    }
+	
     }
 
 
@@ -126,6 +123,12 @@ public class Player extends Entity{
 	    poison --;
 	    health -= damage;
 	    System.out.println("The poison in your body dealt " + damage + " damage to you.");
+	}
+	if (regeneration > 0){
+	    int bonusHealth = 5 * regeneration;
+	    regeneration --;
+	    health += bonusHealth;
+	    System.out.println(name + " regenerated " + bonusHealth + " health.");
 	}
 	    
     } 
