@@ -5,25 +5,19 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintStream;
 
-public class Player{
+public class Player extends Entity{
     
     public static final int PLAYER_LINES = 2;
+
     // general data variables
-    public String name;
-    public int health = 100; 
     public int savePoint = 0;
     private int index = -1;
-
-    // effects varaibles
-    public int burn = 0;
-    public int poison = 0;
 
     // abilities variables
     Inventory inventory = new Inventory();
     public String[] abilities = {"Peashooter", "Wand", "Sword", null, null, null, null};// null slots added to expand skills
     public Enemy[] servants = new Enemy[0]; // will be worked on later
     public int peashooterAmmo = 20;
-    
     
     
     // This function prompts the user to enter a number that corresponds to an attack printed in the terminal and then uses that
@@ -63,7 +57,6 @@ public class Player{
 	else if (abilities[choice].startsWith("Wand")) wand(enemy, random);
 	else if (abilities[choice].startsWith("Sword")) sword(enemy);	
     }
-
 
 
 

@@ -10,19 +10,6 @@ public class Inventory{
     int size = 0; // stores data of first null instance in the
     public final int MAX_UNIQUE_ITEMS = 20; // maximum number of item types identified by the game 
 
-/*    public static void main(String[] args){
-
-	Inventory inventory = new Inventory();
-	inventory.addItem("Alexander");
-	inventory.addItem("pizza");
-	inventory.addItem("apple");
-	inventory.addItem("Annika");
-	inventory.addItem("Irina");
-
-	inventory.print();
-    }
-*/
-
     // Adds an item given an item name. It is assumed that the correct item name is entered.
     public void addItem(String itemName, Scanner console){
 	if (size == items.length){

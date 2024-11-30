@@ -14,7 +14,7 @@ public class General {
 	    //player.useItem(); -- function is not programmed yet, so it is commented out at the moment
 	    player.attack(enemy, random, console);
 	    enemy.dealEffects();
-	    enemy.attack(random, player);
+	    enemy.attack(random, player, console);
 	    player.dealEffects();
 	}
 
