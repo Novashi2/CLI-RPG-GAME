@@ -30,12 +30,10 @@ public class Inventory{
 	    int j = -1;
 	   
 	    while (!itemFound && !atEndOfItemsFound){
-	
 		j++;
 		atEndOfItemsFound = itemsFound[j] == null || j == itemsFound.length; 
 		if (!atEndOfItemsFound) itemFound = itemsFound[j].equals(items[i]);
 	    }
-	  
 	    // the conditional below checks to see if the item was not found in the itemsFound array. If it was not found, then the
 	    // item is added to the next empty element in the array.
 	    if (!itemFound) itemsFound[j] = items[i];
@@ -65,7 +63,7 @@ public class Inventory{
     }
 
 
-    public void useItem(Scanner console){
+    public void useItem(Scanner console, Player player){
 	String[] itemsFound = new String[MAX_UNIQUE_ITEMS];	
 	int[] lastItemIndexSeen = new int[MAX_UNIQUE_ITEMS];
 	int[] itemAmount = new int[MAX_UNIQUE_ITEMS];
@@ -89,11 +87,41 @@ public class Inventory{
 	}
 	items[items.length - 1] = null;
 
-	//uses item--will be added once items populate the section below
+	// figures out which item function to use
+	if (item.equals("health potion")) potion("health", player);
+	else if(item.equals("poison potion")) potion("health", player);
+	else if (item.equals("fire potion")) potion("fire", player);
+	else if (item.equals("regeneration potion")) potion("regeneration", player);
+	else if (item.equals("general potion")) potion("everything", player);
+
+
 	size--;
     }
 	
 	
 /*-----------------------------------------Below this point are item functions-----------------------------------------------------*/
-
+    public void potion(String type, Player player){
+	int healthIncrement = 40;
+	int effectsIncrement = 20;
+	boolean doEverything = type.equals("everything");
+	if (type.equals("health") || doEverything){
+	    player.health += healthIncrement;
+	    System.out.println("You were healed for " + healthIncrement + " health");
+	}
+	if (type.equals("poison") || doEverything){
+	    player.poison -= effectsIncrement;
+	    if (player.poison > 0) System.out.println("You were cured fo some of your poison");
+	    else System.out.println("You gained poison resistance");
+	}
+	if (type.equals("burn") || doEverything){
+	    player.burn -= effectsIncrement;
+	    if (player.burn > 0) System.out.println("Some of the flames on you body were quenched");
+	    else System.out.println("You have gained fire resistance.");
+	}
+	if (type.equals("regeneration") || doEverything){
+	    player.regeneration += effectsIncrement;
+	    System.out.println("You have gain some regeneration");
+        }
+        System.out.println();
+    }
 }
