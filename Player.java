@@ -12,6 +12,8 @@ public class Player extends Entity{
     // general data variables
     public int savePoint = 0;
     private int index = -1;
+    String name = "you";
+    int health = 500;
 
     // abilities variables
     Inventory inventory = new Inventory();
@@ -35,7 +37,7 @@ public class Player extends Entity{
 	System.out.println("\nPeashooter ammo: " + peashooterAmmo);
 	System.out.print("Enter the number in front of the attack you want to use: ");
 	
-	choice = General.getInt(console, 1, moveCounter);
+	choice = General.getInt(console, 1, moveCounter) - 1;
 
 	if (abilities[choice].startsWith("Peashooter")) peashooter(enemy, random);
 	else if (abilities[choice].startsWith("Wand")) wand(enemy, random);
@@ -43,16 +45,16 @@ public class Player extends Entity{
 	
 	// servant attack
 	if (servants.length > 0){
-	    int firstNumber = rand.nextInt(servants.length);
+	    int firstNumber = random.nextInt(servants.length);
 	    Enemy firstServant = servants[firstNumber];
-	    firstServant.attack(rand, player, console);
+	    firstServant.attack(random, enemy, console);
 	    if (servants.length > 1){
-		int secondNumber = rand.nextInt(servants.length);
-		while (secondNumber == firstNumber) secondNumber rand.nextInt(servants.length);
-		secondServant = servants[secondNumber];
-		secondServant.attack;
+		int secondNumber = random.nextInt(servants.length);
+		while (secondNumber == firstNumber) secondNumber = random.nextInt(servants.length);
+		Enemy secondServant = servants[secondNumber];
+		secondServant.attack(random, enemy, console);
 	    }
-	
+	}
     }
 
 

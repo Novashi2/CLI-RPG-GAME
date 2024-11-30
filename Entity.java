@@ -6,9 +6,9 @@ import java.util.Random;
 public class Entity{
     // common genreal variables
     public int health;
-    public String name;
+    public String name = "";
     public String element;
-    public Enemy[] servants;
+    public Enemy[] servants = new Enemy[0];
     
     // effects variables
     public int burn;

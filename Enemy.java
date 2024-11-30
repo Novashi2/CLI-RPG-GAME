@@ -1,7 +1,9 @@
 // This file stores information for enemy objects
 import java.util.Random;
 import java.util.Scanner;
-
+import java.io.FileNotFoundException;
+import java.io.File;
+import java.util.Arrays;
 
 public class Enemy extends Entity{
     
@@ -19,7 +21,7 @@ public class Enemy extends Entity{
 	buildName();
     } 
 
-    public Enemy(String type, String title, String element){
+    public Enemy(String type, String title, String element) throws FileNotFoundException{
 	this.type = type;
 	this.title = title;
 	this.element = element;
@@ -48,7 +50,7 @@ public class Enemy extends Entity{
     
 
     // This function determines which attack function will be used by
-    // comparing the type variable to different possinilitues
+    // comparing the type variable to different possibilitues
     public void attack(Random rand, Entity player, Scanner console){
 	if (type.equals("spider")) spiderAttack(rand, player);
 	else if (type.equals("skeleton")) skeletonAttack(player, rand);
@@ -66,10 +68,11 @@ public class Enemy extends Entity{
 	    firstServant.attack(rand, player, console);
 	    if (servants.length > 1){
 		int secondNumber = rand.nextInt(servants.length);
-		while (secondNumber == firstNumber) secondNumber rand.nextInt(servants.length);
-		secondServant = servants[secondNumber];
-		secondServant.attack;
+		while (secondNumber == firstNumber) secondNumber = rand.nextInt(servants.length);
+		Enemy secondServant = servants[secondNumber];
+		secondServant.attack(rand, player, console);
 	    }
+	}
     }
 
 
@@ -189,9 +192,19 @@ public class Enemy extends Entity{
 
 /*-----------------------------------This contains information for the dragon enemies----------------------------------------*/
 
-    public void setDragon(){
+    public void setDragon() throws FileNotFoundException{
 	health = 200;
-	if (type.equals("Elder Dragon")) health += 200;
+	if (type.equals("Elder Dragon")){
+	    health += 250;
+	    // The lines below read the dragon's servants into the servants array
+	    Scanner servantsReader = new Scanner(new File("DragonServants.txt"));
+	    while (servantsReader.hasNextLine()){
+		Scanner newServant = new Scanner(servantsReader.nextLine());
+		servants = Arrays.copyOf(servants, servants.length + 1);
+		servants[servants.length - 1] = new Enemy(newServant.next(), newServant.next(), newServant.next());
+	    }
+	}
+
     }
 
 
