@@ -78,4 +78,26 @@ public class General {
 	}
 	return choice;
     }
+
+    public static int getInt(Scanner console, int min, int max){
+	
+	while (!console.hasNextInt()){
+	    console.next();
+	    console.nextLine();
+	    System.out.print("Please enter the corresponding number for one of the items above: ");
+	}
+	
+	int playerInput = console.nextInt();
+
+	while (playerInput < min && playerInput > max){
+	    System.out.print("Please enter the corresponding number for one of the items above: ");
+	    if (console.hasNextInt()) playerInput = console.nextInt();
+	    else {
+		console.next();
+	        console.nextLine();
+	    }
+	}
+	
+	return playerInput;
+    }
 }

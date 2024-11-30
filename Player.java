@@ -19,7 +19,9 @@ public class Player{
     public int poison = 0;
 
     // abilities variables
+    Inventory inventory = new Inventory();
     public String[] abilities = {"Peashooter", "Wand", "Sword", null, null, null, null};// null slots added to expand skills
+    public Enemy[] servants = new Enemy[0]; // will be worked on later
     public int peashooterAmmo = 20;
     
     
@@ -159,11 +161,11 @@ public class Player{
 
 	// adds player data to DragonServants.txt
 	dragonServantLines[i] = name + " " + enemy.type;
-	System.out.println(Arrays.toString(dragonServantLines));	
 
 	PrintStream servantPrinter = new PrintStream(dragonServants);
+	
 	for (int j = 0; j <= i; j++){
-	    servantPrinter.println(dragonServantLines[i]);
+	    servantPrinter.println(dragonServantLines[j]);
 	}
 
 	System.exit(0);

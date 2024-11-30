@@ -34,6 +34,7 @@ public class Enemy{
 	if (type.equals("spider")) setSpider();
 	else if (type.equals("skeleton")) setSkeleton();
 	else if (type.equals("draconic hornets")) setHornets();
+	else if (type.equals("dragon") || type.equals("Elder Dragon")) setDragon();
     }
 
     public void buildName(){
@@ -178,11 +179,125 @@ public class Enemy{
 	System.out.println( name + " swarmed you and dealt " + damage + " damage to you. You are now burnt.");
     }
 
-/*-----------------------------------This contains information for the regular dragon enemy----------------------------------------*/
+/*-----------------------------------This contains information for the dragon enemies----------------------------------------*/
 
     public void setDragon(){
-	
+	health = 200;
+	if (type.equals("Elder Dragon")) health += 200;
     }
 
 
+    public void dragonAttack(Player player, Random random){
+	int decision = random.nextInt(100) + 1;
+	if (decision <= 50) elementalAttack(player, random, name, "you");
+	else if (decision <= 75) dragonBite(player);
+	else if (type.equals("dragon")) tailWhip(player);
+	else spikeShot(player);
+
+    }
+
+    public void elementalAttack(Player player, Random random, String name, String targetName){
+	String[] elements = {"fire", "lightning", "air", "poison", "earth"};
+	int i = 0; // used to determine attack
+	if (!type.equals("Elder Dragon")){
+	    i = random.nextInt(elements.length);
+	}else while(!elements[i].equals(element)) i++;
+
+	if (i == 0) fireAttack(player, name, targetName);
+	else if (i == 1) lightningAttack(player, random, name, targetName);
+	else if (i == 2) airAttack(player, random, name, targetName);
+	else if (i == 3) poisonAttack(player, name, targetName);
+	else if (i == 4) earthAttack(player, name, targetName);
+    }
+
+    public void fireAttack(Player player, String name, String targetName){
+	int damage = 50;
+	int burnAdder = 10;
+	player.burn += burnAdder;
+	player.health -= damage;
+	System.out.println(name + " unleashed a wave of fire, dealt " + damage + " damage to " + targetName + "and set " + targetName + " on fire." );
+	if (player.servants.length != 0){
+	    for (int i = 0; i < player.servants.length; i++){
+		player.servants[i].health -= damage;
+		player.servants[i].burn += burnAdder;
+		System.out.println(player.servants[i].name + "was also caught in the fire wave and took " + damage + " damage.");
+	    }
+	}
+    }
+
+    public void lightningAttack(Player player, Random random, String name, String targetName){
+	int damage = 50;
+	player.health -= damage;
+	System.out.println( name + " unleashed a torrent of lightning, dealt " + damage + " damage to " + targetName + ", and shocked " + targetName + ".");
+	if (player.servants.length != 0){
+	    for (int i = 0; i < player.servants.length; i++){
+		player.servants[i].health -= damage;
+		System.out.println(player.servants[i].name + "also got shocked and took " + damage + " damage.");
+	    }
+	}	
+
+	attack(random, player);
+    }
+
+    public void airAttack(Player player, Random random, String name, String targetName){
+	int damage = 50;
+	player.health -= damage;
+	System.out.println( name + " created a storm, dealt " + damage + " damage to " + "targetName");
+	if (player.servants.length != 0){
+	    for (int i = 0; i < player.servants.length; i++){
+		player.servants[i].health -= damage;
+		System.out.println(player.servants[i].name + "also got tossed around and took " + damage + " damage.");
+	    }
+	}
+
+	if (random.nextBoolean()) airAttack(player, random, name, targetName);
+    }
+
+    public void poisonAttack(Player player, String name, String targetName){
+	int damage = 50;
+	int poisonAdder = 10;
+	player.health -= damage;
+	player.poison += poisonAdder;
+	System.out.println(name + "unleashed a wave of poison, dealt " + damage + " damage to and poisoning " + targetName + ".");
+	if (player.servants.length != 0){
+	    for (int i = 0; i < player.servants.length; i++){
+		player.servants[i].health -= damage;
+		System.out.println(player.servants[i].name + "also got poisoned and took " + damage + " damage.");
+	    }
+	}
+    }
+
+    public void earthAttack(Player player, String name, String targetName){
+	int damage = 65;
+	int healMarker = 70;
+	player.health -= damage;
+	health += healMarker;
+	System.out.println(name + " created an earthquake dealing " + damage + " damage to " + targetName + ".");
+	System.out.println(name + " was healed for " + healMarker + " health.");
+	if (player.servants.length != 0){
+	    for (int i = 0; i < player.servants.length; i++){
+		player.servants[i].health -= damage;
+		System.out.println(player.servants[i].name + "was also affected by the earthquake and took " + damage + " damage.");
+	    }
+	}
+    }
+
+    public void dragonBite(Player player){
+	int damage = 50;
+	player.health -= damage;
+	System.out.println(name + " bit you and dealt " + damage + " damage.");
+    }
+
+    public void tailWhip(Player player){
+	int damage = 60;
+	player.health -= damage;
+	System.out.println(name + " threw you with its tail and dealt " + damage + " damage.");
+    }
+
+    public void spikeShot(Player player){
+	int damage = 60;
+	player.health -= damage;
+	System.out.println("The Elder Dragon threw a spike at you, dealing " + damage + " damage.");
+	// Possible add dragon curse function.
+    }
 }
