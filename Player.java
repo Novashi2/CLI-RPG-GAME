@@ -7,7 +7,7 @@ import java.io.PrintStream;
 
 public class Player extends Entity{
     
-    public static final int PLAYER_LINES = 2;
+    public static final int PLAYER_LINES = 4;
 
     // general data variables
     public int savePoint = 0;
@@ -194,7 +194,24 @@ public class Player extends Entity{
 	    atEndOfAbilities = abilitiesIndex == abilities.length || abilities[abilitiesIndex] == null;
 	}
 	
+	// stores the items in an array
+	playerData[2][index] = "";
+	for (int i = 0; i < inventory.size; i++){
+	    String item = inventory.items[i];
+	    if (item.indexOf(' ') != -1) item.replace(" ", "_");
+	    playerData[2][index] += item + " ";
+	}
 
+	playerData[3][index] = "";
+	for (int i = 0; i < servants.servants.length; i++){
+	    Enemy servant = servants.servants[i];
+	    String type = servant.type;
+	    int health = servant.health;
+	    int poison = servant.poison;
+	    int burn = servant.burn;
+	    int regeneration = servant.regeneration;
+	    playerData[3][index] += type + " " + health +  " " + poison + " " + burn + " " + regeneration + " ";
+	}
 
 	PrintStream playerWriter = new PrintStream(playerFile);
 	// Writes everything to the file
@@ -241,7 +258,7 @@ public class Player extends Entity{
     }
 
 
-    public Player(Scanner console) throws FileNotFoundException{
+    public Player(Scanner console, Random random) throws FileNotFoundException{
 	File playerFile = new File("Players.txt");
 	Scanner playerData = new Scanner(playerFile);
 	String[][] playerInfo = new String[PLAYER_LINES][10000]; // 10000 is present because it is an impossibly high number that 
@@ -277,25 +294,10 @@ public class Player extends Entity{
 		System.out.println();
 		System.out.print("Select the number for the character you want to play: ");
 		
-		while (!console.hasNextInt()){
-		    console.next();
-		    System.out.print("Please enter a number from the options above: ");
-		}
-
-		int selection = console.nextInt();
-		console.nextLine();
-
-		while (selection > playerCounter || selection < 1){
-		    System.out.print("Please enter a number from the options above: ");
-		    if (console.hasNextInt()) selection = console.nextInt();
-		    else{
-			console.next();
-			console.nextLine();
-		    }
-		}
+		int selection = General.getInt(console, 1, playerCounter) - 1;
 
 		// general information is assigned assigned to the object in the lines below
-		playerData = new Scanner(playerInfo[0][selection - 1]);
+		playerData = new Scanner(playerInfo[0][selection]);
 		name = playerData.next();
 		health = playerData.nextInt();
 		savePoint = playerData.nextInt();
@@ -306,12 +308,38 @@ public class Player extends Entity{
 
 		    
 		// assigns abilities based on what is in the file. assertion made that the abilities array has enough feilds.
-		Scanner abilitiesData = new Scanner(playerInfo[1][selection - 1]);
+		Scanner abilitiesData = new Scanner(playerInfo[1][selection]);
 		int abilitiesCounter = 0;
 		while (abilitiesData.hasNext()){
 		    abilities[abilitiesCounter] = abilitiesData.next();
 		    abilitiesCounter++;
 		}
+
+		Scanner items = new Scanner(playerInfo[2][selection]);
+		while (items.hasNext()){
+		    String newItem = items.next();
+		    if (newItem.indexOf('_') != -1){
+			newItem.replace("_", " ");
+		    }
+		    inventory.addItem(newItem, console, this, random);
+		}
+			
+		Scanner servants = new Scanner(playerInfo[3][selection]);
+		while (servants.hasNext()){
+		    String newType = servants.next();
+		    String newElement = null;
+		    if (newType.equals("dragon")) newElement = servants.next();
+		    int newHealth = servants.nextInt();
+		    int newPoison = servants.nextInt();
+		    int newBurn = servants.nextInt();
+		    this.servants.addServant(newType, null, newElement, true);
+		    Enemy newServant = this.servants.servants[this.servants.servants.length - 1];
+		    newServant.health = newHealth;
+		    newServant.poison = newPoison;
+		    newServant.burn = newBurn;
+		}     
+
+
 	    }else newPlayer(console);
 	}else newPlayer(console);
 

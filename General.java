@@ -11,7 +11,11 @@ public class General {
     public static void battle(Player player, Enemy enemy, Random random, Scanner console) throws FileNotFoundException{
 	
 	while (player.health > 0 && enemy.health > 0){
-	    player.inventory.useItem(console, player, random);
+	    if (player.inventory.size > 0){
+		System.out.println("Do you want to use an item? (y/n): ");
+		char choice = yOrN(console);
+		if (choice == 'y') player.inventory.useItem(console, player, random);
+	    }
 	    player.attack(enemy, random, console);
 	    enemy.dealEffects();
 	    enemy.attack(random, player, console);
@@ -99,5 +103,14 @@ public class General {
 	}
 	
 	return playerInput;
+    }
+
+    public static char yOrN(Scanner console){
+	char choice = console.nextLine().charAt(0);
+	while (choice != 'y' && choice != 'n'){
+	    System.out.println("Please enter either \"y\" or \"n\": ");
+	    choice = console.nextLine().charAt(0);
+	}
+	return choice;
     }
 }

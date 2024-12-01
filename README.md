@@ -9,7 +9,7 @@ Novashi - 4
 
 Format of variables and objects being printed to the players.txt file:
 name health savePoint poison burn peaShooterAmmo
-abilities(in the format: ability1 ability2 etc...) e
-items(similar format as above, only if programmed into the game)
-servants(in format: servant1 type servant1 health servant1 poison servant1 burn, only if we get to it)
+abilities(in the format: ability1 ability2 etc...)
+items(similar format as abovee)
+servants(in format: servant1 type  element(if dragon) health poison burn regeneration)
 
