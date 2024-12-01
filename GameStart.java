@@ -10,7 +10,7 @@ public class GameStart {
         //instantiates a new Random object
         Random r = new Random(); 
         
-	Player player = new Player(console);
+	Player player = new Player(console, r);
         // Health that has not been moved out yet.
         int dragonHealth = 100;
         int skeletonHealth = 30;

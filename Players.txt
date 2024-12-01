@@ -1,4 +1,4 @@
-James 100 4 0 0 20
+Steve 467 4 0 4 19
 Peashooter Wand Sword 
-Steve 12 4 0 4 19
-Peashooter Wand Sword 
+
+

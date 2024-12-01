@@ -1,6 +1,8 @@
 // This file contains the inventory, its items, and various functions
 import java.util.Scanner;
 import java.util.Arrays;
+import java.util.Random;
+import java.io.FileNotFoundException;
 
 
 
@@ -10,24 +12,11 @@ public class Inventory{
     int size = 0; // stores data of first null instance in the
     public final int MAX_UNIQUE_ITEMS = 20; // maximum number of item types identified by the game 
 
-/*    public static void main(String[] args){
-
-	Inventory inventory = new Inventory();
-	inventory.addItem("Alexander");
-	inventory.addItem("pizza");
-	inventory.addItem("apple");
-	inventory.addItem("Annika");
-	inventory.addItem("Irina");
-
-	inventory.print();
-    }
-*/
-
     // Adds an item given an item name. It is assumed that the correct item name is entered.
-    public void addItem(String itemName, Scanner console){
+    public void addItem(String itemName, Scanner console, Player player, Random random) throws FileNotFoundException{
 	if (size == items.length){
 	    System.out.println("You must use an item to add the " + itemName + "to your inventory.");
-	    useItem(console);
+	    useItem(console, player, random);
 	}
 	items[size] = itemName;
 	size ++; //fix to add inventory cap
@@ -43,12 +32,10 @@ public class Inventory{
 	    int j = -1;
 	   
 	    while (!itemFound && !atEndOfItemsFound){
-	
 		j++;
 		atEndOfItemsFound = itemsFound[j] == null || j == itemsFound.length; 
 		if (!atEndOfItemsFound) itemFound = itemsFound[j].equals(items[i]);
 	    }
-	  
 	    // the conditional below checks to see if the item was not found in the itemsFound array. If it was not found, then the
 	    // item is added to the next empty element in the array.
 	    if (!itemFound) itemsFound[j] = items[i];
@@ -78,7 +65,7 @@ public class Inventory{
     }
 
 
-    public void useItem(Scanner console){
+    public void useItem(Scanner console, Player player, Random random) throws FileNotFoundException{
 	String[] itemsFound = new String[MAX_UNIQUE_ITEMS];	
 	int[] lastItemIndexSeen = new int[MAX_UNIQUE_ITEMS];
 	int[] itemAmount = new int[MAX_UNIQUE_ITEMS];
@@ -102,11 +89,56 @@ public class Inventory{
 	}
 	items[items.length - 1] = null;
 
-	//uses item--will be added once items populate the section below
+	// figures out which item function to use
+	if (item.equals("health potion")) potion("health", player);
+	else if(item.equals("poison potion")) potion("health", player);
+	else if (item.equals("fire potion")) potion("fire", player);
+	else if (item.equals("regeneration potion")) potion("regeneration", player);
+	else if (item.equals("general potion")) potion("everything", player);
+	else if (item.equals("dragon egg")) servantToken("dragon", player, random);
+	else if (item.equals("skull")) servantToken("skeleton", player, random);
+	else if (item.equals("spider egg sack"))  for (int i = 0; i < random.nextInt(2, 10); i++) servantToken("spider", player, random);
+
 	size--;
     }
 	
 	
 /*-----------------------------------------Below this point are item functions-----------------------------------------------------*/
-
+    public void potion(String type, Player player){
+	int healthIncrement = 40;
+	int effectsIncrement = 20;
+	boolean doEverything = type.equals("everything");
+	if (type.equals("health") || doEverything){
+	    player.health += healthIncrement;
+	    System.out.println("You were healed for " + healthIncrement + " health");
+	}
+	if (type.equals("poison") || doEverything){
+	    player.poison -= effectsIncrement;
+	    if (player.poison > 0) System.out.println("You were cured fo some of your poison");
+	    else System.out.println("You gained poison resistance");
+	}
+	if (type.equals("burn") || doEverything){
+	    player.burn -= effectsIncrement;
+	    if (player.burn > 0) System.out.println("Some of the flames on you body were quenched");
+	    else System.out.println("You have gained fire resistance.");
+	}
+	if (type.equals("regeneration") || doEverything){
+	    player.regeneration += effectsIncrement;
+	    System.out.println("You have gain some regeneration");
+        }
+        System.out.println();
+    }
+    
+    // This function is ran for item that add items to the player's 
+    public void servantToken(String type, Player player, Random random) throws FileNotFoundException{
+	if (type.equals("dragon")){
+	    String[] elements = {"fire", "earth", "poison", "air", "lightning"};
+	    String element = elements[random.nextInt(elements.length)];
+	    player.servants.addServant(type, null, element, true);
+	    System.out.println("You have summoned a " + element + " dragon.");
+	}else {
+	    player.servants.addServant(type, null, null, true);
+	    System.out.println("You have summoned a " + type + ".");
+	}
+    }
 }
