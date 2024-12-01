@@ -64,10 +64,9 @@ public class Player extends Entity{
 		enemy.health -= damage;
 	    } else System.out.println("You missed.");
 
-	    peashooterAmmo = peashooterAmmo - 1;
+	    peashooterAmmo --;
 	} else System.out.println("You're out of ammunition");//possibly add this to the player attack function.
     }
-
 
 
     // The wand function adds a random negative effect to the enemy.
@@ -90,14 +89,11 @@ public class Player extends Entity{
 	}
     }
     
-    
     public void sword (Enemy enemy){ //possibly add something interesting to this part of the code?
 	int damage = 35;
 	System.out.println("You dealt " + damage + " damage to the " + enemy.name);
 	enemy.health -= damage;
     }
-
-
 
 
 /*-----------------------------------------Here are the effects functions for the player-------------------------------------------*/
@@ -135,7 +131,6 @@ public class Player extends Entity{
 	System.out.println("You were slain by " + enemy.name + ".");
 	System.out.println("As you die, you feel the Elder Dragon's power turning you into a part of the dungeon.");
 	// printDeathImage(enemy.type) will come later
-
 
 	String[] dragonServantLines = new String[100];
 	
@@ -242,9 +237,6 @@ public class Player extends Entity{
 	    Thread.sleep(5000);
 	}
     }
-	    
-
-
 
 
 /*----------------------------Constructor for player object and necessary functions--KEEP AT END-----------------------------------*/
@@ -259,14 +251,11 @@ public class Player extends Entity{
 	}
     }
 
-
     public Player(Scanner console, Random random) throws FileNotFoundException{
 	File playerFile = new File("Players.txt");
 	Scanner playerData = new Scanner(playerFile);
 	String[][] playerInfo = new String[PLAYER_LINES][10000]; // 10000 is present because it is an impossibly high number that 
 								 // nobody is likely to hit
-
-
 	// prints welcome ASCII art
 	General.printText("Printable_Text.txt", 0);
 	
@@ -307,7 +296,6 @@ public class Player extends Entity{
 		burn = playerData.nextInt();
 		peashooterAmmo = playerData.nextInt();
 		index = selection - 1;
-
 		    
 		// assigns abilities based on what is in the file. assertion made that the abilities array has enough feilds.
 		Scanner abilitiesData = new Scanner(playerInfo[1][selection]);
@@ -340,12 +328,9 @@ public class Player extends Entity{
 		    newServant.poison = newPoison;
 		    newServant.burn = newBurn;
 		}     
-
-
 	    }else newPlayer(console);
 	}else newPlayer(console);
 
 	System.out.println("\nWelcome, " + name + ".\n");
-
     }
 }

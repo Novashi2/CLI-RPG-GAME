@@ -41,7 +41,7 @@ public class GameStart {
                 DungeonFour.theFourthDungeon(console, r, player); //calls the fourth dungeon method with scanner and random objects
 		player.save(5, console);
 	    } else if (player.savePoint == 5) {
-		// call dragon fight
+		Dragon.run(player, r, console);
 	    }
 	    //break;
         }
@@ -58,5 +58,6 @@ public class GameStart {
         System.out.print("Do you want to go down the first path (1) or the second path (2)? ");
 
 	return General.pickPath(console);
+
     }
 }
