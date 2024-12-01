@@ -73,5 +73,10 @@ public class ServantLog{
 	target.drop(player, random, console, drops, true, 0);
 
     }
-    
+
+    public void dealEffects(){
+	for (int i = 0; i < servants.length; i++){
+	    servants[i].dealEffects();
+	}
+    }    
 }

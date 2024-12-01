@@ -95,6 +95,8 @@ public class Enemy extends Entity{
 	    health += bonusHealth;
 	    System.out.println(name + " regenerated " + bonusHealth + " health.");
 	}
+
+	servants.dealEffects();
     }
 
     // The function below makes the enemy drop an item.

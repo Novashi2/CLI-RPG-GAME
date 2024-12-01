@@ -122,6 +122,8 @@ public class Player extends Entity{
 	    health += bonusHealth;
 	    System.out.println(name + " regenerated " + bonusHealth + " health.");
 	}
+
+	servants.dealEffects();
 	    
     } 
 /*----------These functions are the ones that end the game once a player dies, wants to exit at a savepoint, or wins---------------*/
