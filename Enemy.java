@@ -18,15 +18,15 @@ public class Enemy extends Entity{
 	this.type = type;
     	this.health = health; 
 
-	buildName();
+	buildName(false);
     } 
 
-    public Enemy(String type, String title, String element) throws FileNotFoundException{
+    public Enemy(String type, String title, String element, boolean playerHas) throws FileNotFoundException{
 	this.type = type;
 	this.title = title;
 	this.element = element;
 	
-	buildName();
+	buildName(playerHas);
 
 	if (type.equals("spider")) setSpider();
 	else if (type.equals("skeleton")) setSkeleton();
@@ -34,9 +34,14 @@ public class Enemy extends Entity{
 	else if (type.equals("dragon") || type.equals("Elder Dragon")) setDragon();
     }
 
-    public void buildName(){
+    public void buildName(boolean playerHas){
+	if (playerHas){
+	    this.name = "your";
+	} else{
+	    this.name = "the";
+	}
 	if (title == null){
-	    this.name = "the " + type;
+	    this.name += " " + type;
 	}else if (element != null){ // dragons can only be fallen players, so there is no need to remove the title variable
 	    this.name = title + " the " + element + " " + type;
 	}else {
@@ -62,22 +67,13 @@ public class Enemy extends Entity{
 	} 
 	
 	// servant attack
-	if (servants.length > 0){
-	    int firstNumber = rand.nextInt(servants.length);
-	    Enemy firstServant = servants[firstNumber];
-	    firstServant.attack(rand, player, console);
-	    if (servants.length > 1){
-		int secondNumber = rand.nextInt(servants.length);
-		while (secondNumber == firstNumber) secondNumber = rand.nextInt(servants.length);
-		Enemy secondServant = servants[secondNumber];
-		secondServant.attack(rand, player, console);
-	    }
-	}
+	servants.attack(rand, player, console);
+	
     }
 
 
 
-    // Although there are still effects for the enemy, I don't believe that they will become large enough to give it its own section.
+    // Although there are still effects for the enemy, they likely won't be large enough to have and effects section.
     // Therefore, the dealEffects function is int the general section of this file.
     public void dealEffects(){
 	int damage;
@@ -101,10 +97,41 @@ public class Enemy extends Entity{
 	}
     }
 
-
-
-
-
+    // The function below makes the enemy drop an item.
+    public void drop(Player player, Random random, Scanner console, String[] drops, boolean makeRandom, int choices) throws FileNotFoundException{ 
+	if (makeRandom){
+	    player.inventory.addItem(drops[random.nextInt(drops.length)], console, player, random);
+	}else { 
+	    
+	    int choiceNumber = 0;
+	    while (choiceNumber < choices){
+		// Prints options and prompts you to choose.
+		System.out.println("Here is a list of " + name + "'s drops:");
+		System.out.println();
+		
+		int dropsIndex = 0;
+		while (dropsIndex < drops.length && drops[dropsIndex] != null){
+		    System.out.println(dropsIndex + 1 + ". " + drops[dropsIndex]);
+		}
+		System.out.println();
+		System.out.print("Select a number from the list above: ");
+		
+		int choice = General.getInt(console, 1, drops.length) - 1;
+		
+		// The lines below use and remove the item from the drops array.
+		player.inventory.addItem(drops[choice], console, player, random);
+		
+		for (int i = choice; i < drops.length - 1; i++){
+		    drops[i] = drops[i + 1];
+		}
+		drops[drops.length - 1] = null;
+		
+		choices --;
+		System.out.println("You can select " + choices + " more items from the drops.");
+	    }
+	}
+    }
+		
 /*---------------------------------------This section contains information for the spider type-------------------------------------*/
    
     //the spider can attack with leech, which can be found in the entity parent class
@@ -200,8 +227,11 @@ public class Enemy extends Entity{
 	    Scanner servantsReader = new Scanner(new File("DragonServants.txt"));
 	    while (servantsReader.hasNextLine()){
 		Scanner newServant = new Scanner(servantsReader.nextLine());
-		servants = Arrays.copyOf(servants, servants.length + 1);
-		servants[servants.length - 1] = new Enemy(newServant.next(), newServant.next(), newServant.next());
+		String newTitle = newServant.next();
+		String newType = newServant.next();
+		String newElement = null;
+		if (newType.equals("dragon")) newElement = newServant.next();
+		servants.addServant(newType, newTitle, newElement, false); 
 	    }
 	}
 

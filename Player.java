@@ -44,17 +44,7 @@ public class Player extends Entity{
 	else if (abilities[choice].startsWith("Sword")) sword(enemy);	
 	
 	// servant attack
-	if (servants.length > 0){
-	    int firstNumber = random.nextInt(servants.length);
-	    Enemy firstServant = servants[firstNumber];
-	    firstServant.attack(random, enemy, console);
-	    if (servants.length > 1){
-		int secondNumber = random.nextInt(servants.length);
-		while (secondNumber == firstNumber) secondNumber = random.nextInt(servants.length);
-		Enemy secondServant = servants[secondNumber];
-		secondServant.attack(random, enemy, console);
-	    }
-	}
+	servants.attack(random, enemy, console);
     }
 
 

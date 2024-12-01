@@ -8,7 +8,7 @@ public class Entity{
     public int health;
     public String name = "";
     public String element;
-    public Enemy[] servants = new Enemy[0];
+    public ServantLog servants = new ServantLog();
     
     // effects variables
     public int burn;
@@ -76,13 +76,7 @@ public class Entity{
 
 	System.out.println(targetNote);
 
-	for (int i = 0; i < target.servants.length; i++){
-	    target.health -= damage;
-	    target.burn += burnIncrement;
-	    target.poison += poisonIncrement;
-	    regeneration += regenerationIncrement;
-	    System.out.println(target.servants[i].name + servantNote);
-	}
+	target.servants.damage(servantNote, damage, burnIncrement, poisonIncrement);
 
 	if (isLightning){
 	    attack(random, target, console);

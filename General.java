@@ -11,7 +11,7 @@ public class General {
     public static void battle(Player player, Enemy enemy, Random random, Scanner console) throws FileNotFoundException{
 	
 	while (player.health > 0 && enemy.health > 0){
-	    //player.useItem(); -- function is not programmed yet, so it is commented out at the moment
+	    player.inventory.useItem(console, player, random);
 	    player.attack(enemy, random, console);
 	    enemy.dealEffects();
 	    enemy.attack(random, player, console);

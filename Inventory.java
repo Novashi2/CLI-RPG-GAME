@@ -1,6 +1,8 @@
 // This file contains the inventory, its items, and various functions
 import java.util.Scanner;
 import java.util.Arrays;
+import java.util.Random;
+import java.io.FileNotFoundException;
 
 
 
@@ -11,10 +13,10 @@ public class Inventory{
     public final int MAX_UNIQUE_ITEMS = 20; // maximum number of item types identified by the game 
 
     // Adds an item given an item name. It is assumed that the correct item name is entered.
-    public void addItem(String itemName, Scanner console){
+    public void addItem(String itemName, Scanner console, Player player, Random random) throws FileNotFoundException{
 	if (size == items.length){
 	    System.out.println("You must use an item to add the " + itemName + "to your inventory.");
-	    useItem(console);
+	    useItem(console, player, random);
 	}
 	items[size] = itemName;
 	size ++; //fix to add inventory cap
@@ -63,7 +65,7 @@ public class Inventory{
     }
 
 
-    public void useItem(Scanner console, Player player){
+    public void useItem(Scanner console, Player player, Random random) throws FileNotFoundException{
 	String[] itemsFound = new String[MAX_UNIQUE_ITEMS];	
 	int[] lastItemIndexSeen = new int[MAX_UNIQUE_ITEMS];
 	int[] itemAmount = new int[MAX_UNIQUE_ITEMS];
@@ -93,7 +95,9 @@ public class Inventory{
 	else if (item.equals("fire potion")) potion("fire", player);
 	else if (item.equals("regeneration potion")) potion("regeneration", player);
 	else if (item.equals("general potion")) potion("everything", player);
-
+	else if (item.equals("dragon egg")) servantToken("dragon", player, random);
+	else if (item.equals("skull")) servantToken("skeleton", player, random);
+	else if (item.equals("spider egg sack"))  for (int i = 0; i < random.nextInt(2, 10); i++) servantToken("spider", player, random);
 
 	size--;
     }
@@ -123,5 +127,18 @@ public class Inventory{
 	    System.out.println("You have gain some regeneration");
         }
         System.out.println();
+    }
+    
+    // This function is ran for item that add items to the player's 
+    public void servantToken(String type, Player player, Random random) throws FileNotFoundException{
+	if (type.equals("dragon")){
+	    String[] elements = {"fire", "earth", "poison", "air", "lightning"};
+	    String element = elements[random.nextInt(elements.length)];
+	    player.servants.addServant(type, null, element, true);
+	    System.out.println("You have summoned a " + element + " dragon.");
+	}else {
+	    player.servants.addServant(type, null, null, true);
+	    System.out.println("You have summoned a " + type + ".");
+	}
     }
 }

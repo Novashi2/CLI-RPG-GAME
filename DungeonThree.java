@@ -15,7 +15,7 @@ public class DungeonThree {
 
 	int choice = General.pickPath(console);
 	
-	Enemy spider = new Enemy("spider", null, null);
+	Enemy spider = new Enemy("spider", null, null, false);
 	if (choice == 2){ // kills you for going foward and ignoring the warning
 	    System.out.println("As you continue down the path, the ground falls out from underneath you, and you get stuck in a");
 	    System.out.println("web. Immediately, a spider starts to attack you out of nowhwere");
@@ -25,7 +25,8 @@ public class DungeonThree {
 	System.out.println("As you continue down the mineshaft, you start to see an increase of webs and eventualy enter a cavern.");
 	System.out.println("There is a vague path in the cavern, but most of it is covered in a thick layer of webs.");
 	System.out.println("You eventually get stuck in the webs and free yourself just in time to respond to a giant spider fast ");
-	System.out.println("approaching you.");
+	System.out.println("approaching you.\n");
+	Thread.sleep(3000);
 
 	General.battle(player, spider, random, console);
 
@@ -34,9 +35,11 @@ public class DungeonThree {
 	System.out.println("you enter a wide and spacious cavern. Inside, you see a hollow cavern made out of bones.");
 	Thread.sleep(3000);
 	System.out.println("You hear a rattle and a moments later a \"woosh\" as an arrow flies past your head. You see what seems");
-	System.out.println("to be a moving set of bones in the back of the cavern.");
+	System.out.println("to be a moving set of bones in the back of the cavern.\n");
+	Thread.sleep(3000);
 
-	Enemy skeleton = new Enemy("skeleton", null, null);
+
+	Enemy skeleton = new Enemy("skeleton", null, null, false);
 	General.battle(player, skeleton, random, console);
 
 	System.out.println("After wandering around the cavern, you see a bright light and decide to follow it. The light brings");
@@ -44,7 +47,7 @@ public class DungeonThree {
 	System.out.println("to notice an enterance for a giant hornet's nest until you accidentally kick it. Immediately, a swarm");
 	System.out.println("of giant, scaly hornets erupt form the ground.");
 
-	Enemy hornetSwarm = new Enemy("draconic hornets", null, null);
+	Enemy hornetSwarm = new Enemy("draconic hornets", null, null, false);
 	General.battle(player, skeleton, random, console);
 	
 	// possibly add small dragon--not the elder dragon
