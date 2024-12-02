@@ -1,10 +1,10 @@
-// This file contains the inforamtoin for the basic dungeon entity which player and enemy will inherit
+// This file contains the informatoin for the basic dungeon entity which player and enemy will inherit
 import java.util.Scanner;
 import java.util.Random;
 
 
 public class Entity{
-    // common genreal variables
+    // common general variables
     public int health;
     public String name = "";
     public String element;
@@ -26,7 +26,7 @@ public class Entity{
 	int damage = 15;
 	target.health -= damage;
 	this.health += damage;
-	System.out.println("The spider leeched " + damage + " health from you");
+	System.out.println(name + " leeched " + damage + " health from you");
     }
 
 
@@ -84,5 +84,21 @@ public class Entity{
 	    attack(random, target, console);
 	    attack(random, target, console);
 	}
+    }
+
+    public void dragonBite(Entity target){
+	int damage = 50;
+	target.health -= damage;
+	System.out.println(name + " bit " + target.name + " and dealt " + damage + " damage.");
+    }
+
+    public void tailWhip(Entity target){
+	int damage = 60;
+	target.health -= damage;
+
+	String posessive = null;
+	if (name == "you") posessive = "your";
+	else posessive = "its";
+	System.out.println(name + " threw " + target.name + " with " + posessive + " tail and dealt " + damage + " damage.");
     }
 }
