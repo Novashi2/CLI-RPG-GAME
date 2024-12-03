@@ -116,4 +116,9 @@ public class General {
 	System.out.println();
 	return choice;
     }
+
+	public static void Continue(Scanner Console) {
+		System.out.print("Enter anything then press enter to continue: ");
+		Console.next();
+	}
 }

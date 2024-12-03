@@ -66,8 +66,16 @@ public class Enemy extends Entity{
 	}
 	else if (type.equals("shadow")) {
 		player.health -= 25;
-		System.out.println(name + "dealth 50 damage to you.");
+		System.out.println(name + "dealt 25 damage to you.");
 	} 
+	else if (type.equals("Amalgam")) {
+		player.health -= 15;
+		System.out.println(name + " dealt 15 damage to you.");
+	}
+	else if (type.equals("Golem")) {
+		player.health -= 20;
+		System.out.println(name + " dealt 20 damage to you.");
+	}
 
 	System.out.println();
 	// servant attack

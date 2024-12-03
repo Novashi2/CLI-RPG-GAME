@@ -33,6 +33,7 @@ public class GameStart {
 		player.save(2, console);
 	    } else if(player.savePoint == 2){
                 //call dungeon 2
+				DungeonTwo.SecondDungeon(console, r, player);
 		player.save(5, console);
 	    }else if (player.savePoint == 3){
 		DungeonThree.run(player, r, console);
