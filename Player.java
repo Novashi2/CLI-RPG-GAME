@@ -18,6 +18,9 @@ public class Player extends Entity{
     // player-only effects variables
     int scales = 0;
     private int newScales = 0; // this is private because it ensures that the player is notified that he or she has recieved scales
+    boolean stageOne = false;
+    boolean stageTwo = false;
+    boolean stageThree = false;
     
     // abilities variables
     Inventory inventory = new Inventory();
@@ -26,7 +29,6 @@ public class Player extends Entity{
 
     // gameplay variables that aren't stored
     boolean slayedDragon = false;
-    String name = "you";
     
     // This function prompts the user to enter a number that corresponds to an attack printed in the terminal and then uses that
     // input to determine an attack.
@@ -50,11 +52,10 @@ public class Player extends Entity{
 	else if (abilities[choice].startsWith("Wand")) wand(enemy, random);
 	else if (abilities[choice].startsWith("Sword")) sword(enemy);	
 	else if (abilities[choice].startsWith("Leech")) leech(enemy);
-	else if (abilities[choice].startsWith("Draconic")) elementalAttack(enemy, random, console);
+	else if (abilities[choice].startsWith("Draconic")) elementalAttack(enemy, random, console, element);
 	else if (abilities[choice].startsWith("Bite")) dragonBite(enemy);
 	else if (abilities[choice].startsWith("Tail")) tailWhip(enemy);
-
-	
+	System.out.println();
 	// servant attack
 	servants.attack(random, enemy, console);
     }
@@ -110,7 +111,7 @@ public class Player extends Entity{
 
 /*-----------------------------------------Here are the effects functions for the player-------------------------------------------*/
     // This function processes the effects variables.
-    public void dealEffects(){
+    public void dealEffects(Random random) throws FileNotFoundException{
 	int damage;
 	if (burn > 0){
 	    damage = 3;
@@ -130,6 +131,7 @@ public class Player extends Entity{
 	    health += bonusHealth;
 	    System.out.println(name + " regenerated " + bonusHealth + " health.");
 	}
+	dragonCurse(random);
 	servants.dealEffects();
     } 
 
@@ -154,29 +156,35 @@ public class Player extends Entity{
 	newScales = 0;
 
 	if (scales >= 1000){ // kills player
-	    File dragonServants = new File("DragonServants.txt");
-	    Scanner servantReader = new Scanner(dragonServants);
+	    if (!slayedDragon){
+		File dragonServants = new File("DragonServants.txt");
+		Scanner servantReader = new Scanner(dragonServants);
 	    
-	    String[] currentServants = new String[0];
-	    
+		String[] currentServants = new String[0];
 
-	    while (servantReader.hasNextLine()){
+		while (servantReader.hasNextLine()){
+		    currentServants = Arrays.copyOf(currentServants, currentServants.length + 1);
+		    currentServants[currentServants.length - 1] = servantReader.nextLine();
+		}
+	    
+		// adds player as a dragon
 		currentServants = Arrays.copyOf(currentServants, currentServants.length + 1);
-		currentServants[currentServants.length - 1] = servantReader.nextLine();
-	    }
+		currentServants[currentServants.length] = ID + " " + "dragon " + element;
 	    
-	    // adds player as a dragon
-	    currentServants = Arrays.copyOf(currentServants, currentServants.length + 1);
-	    currentServants[currentServants.length] = ID + " " + "dragon " + element;
-	    
-	    PrintStream servantWriter = new PrintStream(dragonServants);
-	    for (int i = 0; i < currentServants.length; i++){
-		servantWriter.println(currentServants[i]);
+		PrintStream servantWriter = new PrintStream(dragonServants);
+		for (int i = 0; i < currentServants.length; i++){
+		    servantWriter.println(currentServants[i]);
+		}
+		System.out.println("You became a dragon and are cursed to serve the elder dragon until the mountain's core is found.\n");
+	    } else {
+		System.out.println("The dragon's curse has been completed. You are now the Elder Dragon");
 	    }
-	    System.out.println("You became a dragon and are cursed to serve the elder dragon until the mountain's core is found.\n");
 	    // print end image
 	    System.exit(0);  
-	} else if (scales >= 750){
+	} else if (scales >= 750 && !stageThree){
+	    stageThree = true;
+	    stageTwo = true;
+	    stageOne = true;
 	    System.out.println("You have trouble walking on two and have grown wings. Your hands have become talons, and you");
 	    System.out.println("have lost all humanity. The only thing keeping you from succumbing to the curse is the urge to get");
 	    System.out.println("to the mountain's core.");
@@ -195,18 +203,21 @@ public class Player extends Entity{
 	    }
 
 	    System.out.println("\nYou have lost some of your abilities.\n");
-	} else if (scales >= 500){
+	} else if (scales >= 500 && !stageTwo){
+	    stageTwo = true;
+	    stageOne = true;
 	    System.out.println("You feel a sudden burst of power as any sense of humanity continues to wane.");
 	    String[] elements = {"fire", "earth", "air", "poison", "lightning"};
-	    this.element = elements[random.nextInt(elements.length)];
+	    element = elements[random.nextInt(elements.length)];
 	    
 	    // adds ability
 	    int abilitiesCounter = 0;
 	    while (abilities[abilitiesCounter] != null) abilitiesCounter++;
-	    abilities[abilitiesCounter] = "draconic " + element;
+	    abilities[abilitiesCounter] = "Draconic " + element;
 	    System.out.println("You have recieved the " + abilities[abilitiesCounter] + " ability.");
 	    System.out.println();
-	} else if (scales > 250){
+	} else if (scales > 250 && !stageOne){
+	    stageOne = true;
 	    System.out.println("You notice that everything seems to be smaller. When you look down, you realize the opposite is");
 	    System.out.println("A large amount of your body is covered in scales, and your hands look less human and are harder");
 	    System.out.println("to move than before...");
@@ -217,13 +228,16 @@ public class Player extends Entity{
 
 /*----------These functions are the ones that end the game once a player dies, wants to exit at a savepoint, or wins---------------*/
 
-    public void kill(Enemy enemy) throws FileNotFoundException{
+    public void kill(Enemy enemy) throws FileNotFoundException, InterruptedException{
 	File dragonServants = new File("DragonServants.txt");
 	Scanner servantReader = new Scanner(dragonServants);
 
 	System.out.println("You were slain by " + enemy.name + ".");
 	System.out.println("As you die, you feel the Elder Dragon's power turning you into a part of the dungeon.");
-	// printDeathImage(enemy.type) will come later
+	Thread.sleep(3000);
+
+	// prints death images
+	if (enemy.type.equals("spider")) General.printText("Printable_Text.txt", 2);
 
 	String[] dragonServantLines = new String[100];
 	
@@ -271,7 +285,7 @@ public class Player extends Entity{
 
 	if (index == -1) index = playerIndex; // prevents the player from being written twice in the same file or overwriting data
 	// stores general data line in the array
-	playerData[0][index] = ID + " " + health + " " + savePoint + " " + poison + " " + burn + " " + peashooterAmmo;
+	playerData[0][index] = ID + " " + health + " " + savePoint + " " + poison + " " + burn + " " + peashooterAmmo + " " + scales;
 	
 	// stores the abilities line in the array
 	playerData[1][index] = abilities[0] + " ";

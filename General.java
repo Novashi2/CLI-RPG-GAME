@@ -8,8 +8,8 @@ public class General {
     }
     
     // This is the battle function for the program.
-    public static void battle(Player player, Enemy enemy, Random random, Scanner console) throws FileNotFoundException{
-	
+    public static void battle(Player player, Enemy enemy, Random random, Scanner console) throws FileNotFoundException, InterruptedException{
+
 	while (player.health > 0 && enemy.health > 0){
 	    if (player.inventory.size > 0){
 		System.out.println("Do you want to use an item? (y/n): ");
@@ -19,12 +19,14 @@ public class General {
 	    player.attack(enemy, random, console);
 	    enemy.dealEffects();
 	    enemy.attack(random, player, console);
-	    player.dealEffects();
+
+	    // adds scales to the player
+	    if (random.nextInt(100) < 30) player.addScales(random.nextInt(1,50));
+	    player.dealEffects(random);
 	}
 
 	if (enemy.health <= 0) {
 	    System.out.println("You have slain the " + enemy.name + ".");
-	    // Possible drop
 	}
 
 	if (player.health <= 0){

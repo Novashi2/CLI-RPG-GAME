@@ -15,9 +15,11 @@ public class Dragon {
 	System.out.println();
 	Thread.sleep(3000);
 
-	Enemy elderDragon = new Enemy("elder dragon", null, null, false);
+	Enemy elderDragon = new Enemy("Elder Dragon", null, null, false);
 
 	General.battle(player, elderDragon, random, console);
+
+	player.slayedDragon = true;
 
 	// add drop;
 	
@@ -31,7 +33,7 @@ public class Dragon {
 
 	while (positionNumber % 17 != 0){
 	   // drop something at random
-	   player.dealEffects();
+	   player.dealEffects(random);
 	   // dragon scales
 
 	   System.out.println("You see three paths in front of you again");

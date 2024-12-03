@@ -31,6 +31,7 @@ public class ServantLog{
     }
 
     public void damage(String message,int damage, int burnIncrement, int poisonIncrement){
+
 	for (int i = 0; i < servants.length; i++){
 	    Enemy target = servants[i];
 	    target.health -= damage;

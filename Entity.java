@@ -5,15 +5,15 @@ import java.util.Random;
 
 public class Entity{
     // common general variables
-    public int health;
-    public String name = "";
+    public int health = 0;
+    public String name = "you";
     public String element;
     public ServantLog servants = new ServantLog();
     
     // effects variables
-    public int burn;
-    public int poison;
-    public int regeneration;
+    public int burn = 0;
+    public int poison = 0;
+    public int regeneration = 0;
 
 
 
@@ -30,8 +30,8 @@ public class Entity{
     }
 
 
-    public void elementalAttack(Entity target, Random random, Scanner console){
-	String[] elements = {null, "fire", "lightning", "air", "poison", "earth"};
+    public void elementalAttack(Entity target, Random random, Scanner console, String element){
+	String[] elements = {"", "fire", "lightning", "air", "poison", "earth"};
 	int elementNumber = 0; // used to determine attack
 	if (element.equals("elder")){
 	    elementNumber = random.nextInt(1, elements.length);
@@ -49,7 +49,7 @@ public class Entity{
 
 
 	if (element.equals("fire") || elements[elementNumber].equals("fire")){
-	    targetNote = name + "unleashed a wave of fire, dealing " + damage + " damage and setting " + target.name + " on fire";
+	    targetNote = name + " unleashed a wave of fire, dealing " + damage + " damage and setting " + target.name + " on fire";
 	    servantNote = " was also caught in the fire and took " + damage + " damage.";
 	    burnIncrement = 15;
 	} else if (isLightning){
@@ -77,7 +77,6 @@ public class Entity{
 	System.out.println(targetNote);
 
 	target.servants.damage(servantNote, damage, burnIncrement, poisonIncrement);
-
 	if (isLightning){
 	    attack(random, target, console);
 	} else if(isAir){
