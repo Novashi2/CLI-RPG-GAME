@@ -23,24 +23,29 @@ public class Dragon {
 
 	// add drop;
 	
-	System.out.println("As the dragon fades from existence, three pathway appear. You still need to find the core of");
+	System.out.println("\tAs the dragon fades from existence, three pathway appear. You still need to find the core of");
 	System.out.println("the mountain. Since you haven't found it yet, you must to explore the tunnels...\n");
-	
 
 	int positionNumber = 0;
-
 	positionNumber += choosePath(console, random);
 
+	Enemy chest = new Enemy("chest", 1);
+	
+	String[] chestDrops = {"dragon crystal", "general potion", "dragon crystal"};
 	while (positionNumber % 17 != 0){
-	   // drop something at random
-	   player.dealEffects(random);
-	   // dragon scales
+	    if (random.nextInt(100) < 40){
+		System.out.println("You have found a chest and decided to take an item.\n");
+		chest.drop(player, random, console, chestDrops, true, 0);
+	    }
+	    player.addScales(random.nextInt(30) + 1);
+	    player.dealEffects(random);
+	   
 
 	   System.out.println("You see three paths in front of you again");
 	   positionNumber += choosePath(console, random);
 	}
 
-	// win the game
+	player.win();
     }
 
     public static int choosePath(Scanner console, Random random){

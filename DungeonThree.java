@@ -11,7 +11,7 @@ public class DungeonThree {
 	System.out.println("As you continue down the cave, the pathway becomes cleaner and narrower. Eventually, you see a mine");
 	System.out.println("shaft to the side of the path. There is a sign on the shaft that says \"Only danger lies below.\"");
 	System.out.println("Another sign hanging from the path's ceiling says \"Turn back before it is too late - The guardian\"");
-	System.out.print("Do you want to go down the mine shaft (1) or continue walking foward (2)? ");
+	System.out.print("\nDo you want to go down the mine shaft (1) or continue walking foward (2)? ");
 
 	int choice = General.pickPath(console);
 	

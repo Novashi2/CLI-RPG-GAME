@@ -26,7 +26,7 @@ public class General {
 	}
 
 	if (enemy.health <= 0) {
-	    System.out.println("You have slain the " + enemy.name + ".");
+	    System.out.println("You have slain " + enemy.name + ".");
 	}
 
 	if (player.health <= 0){
@@ -103,7 +103,7 @@ public class General {
 	        console.nextLine();
 	    }
 	}
-	
+	System.out.println();
 	return playerInput;
     }
 
@@ -113,6 +113,7 @@ public class General {
 	    System.out.println("Please enter either \"y\" or \"n\": ");
 	    choice = console.nextLine().charAt(0);
 	}
+	System.out.println();
 	return choice;
     }
 }

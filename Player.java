@@ -120,13 +120,13 @@ public class Player extends Entity{
 	    System.out.println("You have been burnt for " + damage + " damage.");
 	}
 	if (poison > 0){
-	    damage = poison * 5;
+	    damage = poison * 2;
 	    poison --;
 	    health -= damage;
 	    System.out.println("The poison in your body dealt " + damage + " damage to you.");
 	}
 	if (regeneration > 0){
-	    int bonusHealth = 5 * regeneration;
+	    int bonusHealth = 2 * regeneration;
 	    regeneration --;
 	    health += bonusHealth;
 	    System.out.println(name + " regenerated " + bonusHealth + " health.");
@@ -138,8 +138,7 @@ public class Player extends Entity{
     // Dragon curse -- scales
     public void addScales(int newScales){
 	this.newScales += newScales;
-	health += newScales * 2;
-	regeneration += 10 * newScales;
+	regeneration += 5 * newScales;
 	poison -= 5 * newScales;
 	burn -= 5 * newScales;
 	System.out.println("You have recieved " + newScales + " scales. The scales immediately merge with your skin and you feel a");
@@ -387,9 +386,9 @@ public class Player extends Entity{
 	// checks to see if data is in file. If so, then the program prompts the user on whether he or she wants to pull up a profile
 	if (playerData.hasNext()){
 	    System.out.print("Do you have a profile on this computer? (y/n): ");
-	    char choice = (console.next()).charAt(0);
-	    console.nextLine();
+	    char choice = General.yOrN(console);
 	    
+
 	    // what happens if a player wants to pull a character out of the player file.
 	    if (choice == 'y'){
 		System.out.println("Here are the stored characters:\n");

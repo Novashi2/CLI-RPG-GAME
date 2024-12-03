@@ -88,13 +88,13 @@ public class Enemy extends Entity{
 	    System.out.println(name + " was burnt for " + damage + " damage.");
 	}
 	if (poison > 0){
-	    damage = poison * 5;
+	    damage = poison * 2;
 	    poison --;
 	    health -= damage;
 	    System.out.println("The poison in " + name + "'s body dealt " + name + " " + damage + " damage.");
 	}
 	if (regeneration > 0){
-	    int bonusHealth = 5 * regeneration;
+	    int bonusHealth = 2 * regeneration;
 	    regeneration --;
 	    health += bonusHealth;
 	    System.out.println(name + " regenerated " + bonusHealth + " health.");
@@ -155,14 +155,14 @@ public class Enemy extends Entity{
     public void spiderBite(Entity player){
 	int damage = 15;
 	player.health -= damage;
-	System.out.println("The spider bit you and dealt " + damage + " damage. \nYou are now poisoned.");
+	System.out.println(name + " bit you and dealt " + damage + " damage. \nYou are now poisoned.");
 	player.poison += 3;
     }
     
     public void spiderCacoon(Entity player, Random rand){
 	String message = "You are still trapped in the cocoon";
 
-	System.out.println("The spider wrapped you in a silk cocoon. You struggle to break free as the spider keeps attacking you.");
+	System.out.println(name + " wrapped you in a silk cocoon. You struggle to break free as the spider keeps attacking you.");
 
 
 	spiderBite(player);
@@ -258,6 +258,6 @@ public class Enemy extends Entity{
 	int damage = 60;
 	player.health -= damage;
 	System.out.println("The Elder Dragon threw a spike at you, dealing " + damage + " damage.");
-	// Possible add dragon curse function.
+	player.addScales(20);
     }
 }

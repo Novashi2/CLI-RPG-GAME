@@ -43,7 +43,6 @@ public class GameStart {
 	    } else if (player.savePoint == 5) {
 		Dragon.run(player, r, console);
 	    }
-	    //break;
         }
     }
 
