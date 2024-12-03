@@ -95,7 +95,7 @@ public class General {
 	
 	int playerInput = console.nextInt();
 
-	while (playerInput < min && playerInput > max){
+	while (playerInput < min || playerInput > max){
 	    System.out.print("Please enter the corresponding number for one of the items above: ");
 	    if (console.hasNextInt()) playerInput = console.nextInt();
 	    else {
