@@ -97,7 +97,7 @@ public class Inventory{
 	else if (item.equals("general potion")) potion("everything", player);
 	else if (item.equals("dragon egg")) servantToken("dragon", player, random);
 	else if (item.equals("skull")) servantToken("skeleton", player, random);
-	else if (item.equals("spider egg sack"))  for (int i = 0; i < random.nextInt(2, 10); i++) servantToken("spider", player, random);
+	else if (item.equals("spider egg sack")) for (int i = 0; i < random.nextInt(2, 10); i++) servantToken("spider", player, random);
 
 	size--;
     }

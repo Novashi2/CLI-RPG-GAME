@@ -11,7 +11,7 @@ public class Enemy extends Entity{
     //enemy fields
     public String title; // name enemy may hav ehad before if it was a player
     public String type; // what the enemy is
-
+    int health;
 
     //Enemy constructor 
     public Enemy(String type, int health) {
@@ -60,12 +60,12 @@ public class Enemy extends Entity{
 	if (type.equals("spider")) spiderAttack(rand, player);
 	else if (type.equals("skeleton")) skeletonAttack(player, rand);
 	else if (type.equals("dragonic hornets")) hornetAttack(player);
-	else if (type.equals("dragon") || type.equals("elder dragon")) dragonAttack(player, rand, console);
+	else if (type.equals("dragon") || type.equals("Elder Dragon")) dragonAttack(player, rand, console);
 	else if (type.equals("mimic")) {
-	    player.health -= 5;
-	    System.out.println(name + "dealt 5 damage to you.");
+	    player.health -= 50;
+	    System.out.println(name + "dealt 50 damage to you.");
 	} 
-	
+	System.out.println();
 	// servant attack
 	servants.attack(rand, player, console);
 	
@@ -95,6 +95,8 @@ public class Enemy extends Entity{
 	    health += bonusHealth;
 	    System.out.println(name + " regenerated " + bonusHealth + " health.");
 	}
+
+	servants.dealEffects();
     }
 
     // The function below makes the enemy drop an item.
@@ -207,7 +209,7 @@ public class Enemy extends Entity{
 
 /*----------------------------------This contains the information for a hornet hive enemy------------------------------------------*/
     public void setHornets(){
-	health = 40;
+	health = 100;
     }
 
     public void hornetAttack(Entity player){
@@ -220,9 +222,10 @@ public class Enemy extends Entity{
 /*-----------------------------------This contains information for the dragon enemies----------------------------------------*/
 
     public void setDragon() throws FileNotFoundException{
-	health = 200;
+	this.health = 200;
 	if (type.equals("Elder Dragon")){
-	    health += 250;
+	    this.health = 700;
+	    element = "elder";
 	    // The lines below read the dragon's servants into the servants array
 	    Scanner servantsReader = new Scanner(new File("DragonServants.txt"));
 	    while (servantsReader.hasNextLine()){
@@ -240,23 +243,11 @@ public class Enemy extends Entity{
 
     public void dragonAttack(Entity player, Random random, Scanner console){
 	int decision = random.nextInt(100) + 1;
-	if (decision <= 50) elementalAttack(player, random, console);
+	if (decision <= 50) elementalAttack(player, random, console, element);
 	else if (decision <= 75) dragonBite(player);
 	else if (type.equals("dragon")) tailWhip(player);
 	else spikeShot(player);
 
-    }
-
-    public void dragonBite(Entity player){
-	int damage = 50;
-	player.health -= damage;
-	System.out.println(name + " bit you and dealt " + damage + " damage.");
-    }
-
-    public void tailWhip(Entity player){
-	int damage = 60;
-	player.health -= damage;
-	System.out.println(name + " threw you with its tail and dealt " + damage + " damage.");
     }
 
     public void spikeShot(Entity player){

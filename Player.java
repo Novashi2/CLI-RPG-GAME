@@ -12,14 +12,23 @@ public class Player extends Entity{
     // general data variables
     public int savePoint = 0;
     private int index = -1;
-    String name = "you";
     int health = 500;
+    String ID = null;
 
+    // player-only effects variables
+    int scales = 0;
+    private int newScales = 0; // this is private because it ensures that the player is notified that he or she has recieved scales
+    boolean stageOne = false;
+    boolean stageTwo = false;
+    boolean stageThree = false;
+    
     // abilities variables
     Inventory inventory = new Inventory();
     public String[] abilities = {"Peashooter", "Wand", "Sword", null, null, null, null};// null slots added to expand skills
     public int peashooterAmmo = 20;
-    
+
+    // gameplay variables that aren't stored
+    boolean slayedDragon = false;
     
     // This function prompts the user to enter a number that corresponds to an attack printed in the terminal and then uses that
     // input to determine an attack.
@@ -42,7 +51,11 @@ public class Player extends Entity{
 	if (abilities[choice].startsWith("Peashooter")) peashooter(enemy, random);
 	else if (abilities[choice].startsWith("Wand")) wand(enemy, random);
 	else if (abilities[choice].startsWith("Sword")) sword(enemy);	
-	
+	else if (abilities[choice].startsWith("Leech")) leech(enemy);
+	else if (abilities[choice].startsWith("Draconic")) elementalAttack(enemy, random, console, element);
+	else if (abilities[choice].startsWith("Bite")) dragonBite(enemy);
+	else if (abilities[choice].startsWith("Tail")) tailWhip(enemy);
+	System.out.println();
 	// servant attack
 	servants.attack(random, enemy, console);
     }
@@ -64,10 +77,9 @@ public class Player extends Entity{
 		enemy.health -= damage;
 	    } else System.out.println("You missed.");
 
-	    peashooterAmmo = peashooterAmmo - 1;
+	    peashooterAmmo --;
 	} else System.out.println("You're out of ammunition");//possibly add this to the player attack function.
     }
-
 
 
     // The wand function adds a random negative effect to the enemy.
@@ -90,7 +102,6 @@ public class Player extends Entity{
 	}
     }
     
-    
     public void sword (Enemy enemy){ //possibly add something interesting to this part of the code?
 	int damage = 35;
 	System.out.println("You dealt " + damage + " damage to the " + enemy.name);
@@ -98,11 +109,9 @@ public class Player extends Entity{
     }
 
 
-
-
 /*-----------------------------------------Here are the effects functions for the player-------------------------------------------*/
     // This function processes the effects variables.
-    public void dealEffects(){
+    public void dealEffects(Random random) throws FileNotFoundException{
 	int damage;
 	if (burn > 0){
 	    damage = 3;
@@ -122,18 +131,113 @@ public class Player extends Entity{
 	    health += bonusHealth;
 	    System.out.println(name + " regenerated " + bonusHealth + " health.");
 	}
-	    
+	dragonCurse(random);
+	servants.dealEffects();
     } 
+
+    // Dragon curse -- scales
+    public void addScales(int newScales){
+	this.newScales += newScales;
+	health += newScales * 2;
+	regeneration += 10 * newScales;
+	poison -= 5 * newScales;
+	burn -= 5 * newScales;
+	System.out.println("You have recieved " + newScales + " scales. The scales immediately merge with your skin and you feel a");
+	System.out.println("surge in power. Yet, you also sense a bit of your humanity slip away...\n");
+    }
+
+    public void dragonCurse(Random random) throws FileNotFoundException{
+	if (scales == 0 && newScales > 0){
+	    System.out.println("You have recieved the Elder's Dragon's curse. As you get more scales, you will start to become a");
+	    System.out.println("dragon.");
+	}
+
+	scales += newScales;
+	newScales = 0;
+
+	if (scales >= 1000){ // kills player
+	    if (!slayedDragon){
+		File dragonServants = new File("DragonServants.txt");
+		Scanner servantReader = new Scanner(dragonServants);
+	    
+		String[] currentServants = new String[0];
+
+		while (servantReader.hasNextLine()){
+		    currentServants = Arrays.copyOf(currentServants, currentServants.length + 1);
+		    currentServants[currentServants.length - 1] = servantReader.nextLine();
+		}
+	    
+		// adds player as a dragon
+		currentServants = Arrays.copyOf(currentServants, currentServants.length + 1);
+		currentServants[currentServants.length] = ID + " " + "dragon " + element;
+	    
+		PrintStream servantWriter = new PrintStream(dragonServants);
+		for (int i = 0; i < currentServants.length; i++){
+		    servantWriter.println(currentServants[i]);
+		}
+		System.out.println("You became a dragon and are cursed to serve the elder dragon until the mountain's core is found.\n");
+	    } else {
+		System.out.println("The dragon's curse has been completed. You are now the Elder Dragon");
+	    }
+	    // print end image
+	    System.exit(0);  
+	} else if (scales >= 750 && !stageThree){
+	    stageThree = true;
+	    stageTwo = true;
+	    stageOne = true;
+	    System.out.println("You have trouble walking on two and have grown wings. Your hands have become talons, and you");
+	    System.out.println("have lost all humanity. The only thing keeping you from succumbing to the curse is the urge to get");
+	    System.out.println("to the mountain's core.");
+
+	    for (int i = 0; i < abilities.length; i++){
+		if (abilities[i] != null && abilities[i].equals("Sword")){
+		    abilities[i] = "Bite";
+		}else if (abilities[i] != null && abilities.equals("Peashooter")){
+		    abilities[i] = "Tail whip";
+		}else if (abilities[i] != null && abilities.equals("Wand")){
+		    for (int j = i; j < abilities.length - 1; j++){
+			abilities[j] = abilities[j + 1];
+		    }
+		    abilities[abilities.length - 1] = null;
+		}
+	    }
+
+	    System.out.println("\nYou have lost some of your abilities.\n");
+	} else if (scales >= 500 && !stageTwo){
+	    stageTwo = true;
+	    stageOne = true;
+	    System.out.println("You feel a sudden burst of power as any sense of humanity continues to wane.");
+	    String[] elements = {"fire", "earth", "air", "poison", "lightning"};
+	    element = elements[random.nextInt(elements.length)];
+	    
+	    // adds ability
+	    int abilitiesCounter = 0;
+	    while (abilities[abilitiesCounter] != null) abilitiesCounter++;
+	    abilities[abilitiesCounter] = "Draconic " + element;
+	    System.out.println("You have recieved the " + abilities[abilitiesCounter] + " ability.");
+	    System.out.println();
+	} else if (scales > 250 && !stageOne){
+	    stageOne = true;
+	    System.out.println("You notice that everything seems to be smaller. When you look down, you realize the opposite is");
+	    System.out.println("A large amount of your body is covered in scales, and your hands look less human and are harder");
+	    System.out.println("to move than before...");
+	    System.out.println();
+	}
+    }
+	
+
 /*----------These functions are the ones that end the game once a player dies, wants to exit at a savepoint, or wins---------------*/
 
-    public void kill(Enemy enemy) throws FileNotFoundException{
+    public void kill(Enemy enemy) throws FileNotFoundException, InterruptedException{
 	File dragonServants = new File("DragonServants.txt");
 	Scanner servantReader = new Scanner(dragonServants);
 
 	System.out.println("You were slain by " + enemy.name + ".");
 	System.out.println("As you die, you feel the Elder Dragon's power turning you into a part of the dungeon.");
-	// printDeathImage(enemy.type) will come later
+	Thread.sleep(3000);
 
+	// prints death images
+	if (enemy.type.equals("spider")) General.printText("Printable_Text.txt", 2);
 
 	String[] dragonServantLines = new String[100];
 	
@@ -148,7 +252,7 @@ public class Player extends Entity{
 	}
 
 	// adds player data to DragonServants.txt
-	dragonServantLines[i] = name + " " + enemy.type;
+	dragonServantLines[i] = ID + " " + enemy.type;
 
 	PrintStream servantPrinter = new PrintStream(dragonServants);
 	
@@ -181,7 +285,7 @@ public class Player extends Entity{
 
 	if (index == -1) index = playerIndex; // prevents the player from being written twice in the same file or overwriting data
 	// stores general data line in the array
-	playerData[0][index] = name + " " + health + " " + savePoint + " " + poison + " " + burn + " " + peashooterAmmo;
+	playerData[0][index] = ID + " " + health + " " + savePoint + " " + poison + " " + burn + " " + peashooterAmmo + " " + scales;
 	
 	// stores the abilities line in the array
 	playerData[1][index] = abilities[0] + " ";
@@ -198,7 +302,7 @@ public class Player extends Entity{
 	playerData[2][index] = "";
 	for (int i = 0; i < inventory.size; i++){
 	    String item = inventory.items[i];
-	    if (item.indexOf(' ') != -1) item.replace(" ", "_");
+	    if (item.indexOf(' ') != -1) item = item.replace(" ", "_");
 	    playerData[2][index] += item + " ";
 	}
 
@@ -240,31 +344,25 @@ public class Player extends Entity{
 	    Thread.sleep(5000);
 	}
     }
-	    
-
-
 
 
 /*----------------------------Constructor for player object and necessary functions--KEEP AT END-----------------------------------*/
     private void newPlayer(Scanner console){
 	System.out.print("Enter the name you want your character to have: ");
-	name = console.nextLine();
+	ID = console.nextLine();
 	
 	// input verification
-	while (name.indexOf(" ") != -1){
+	while (ID.indexOf(" ") != -1){
 	    System.out.print("Your name must have no spaces. Please try again: ");
-	    name = console.nextLine();
+	    ID = console.nextLine();
 	}
     }
-
 
     public Player(Scanner console, Random random) throws FileNotFoundException{
 	File playerFile = new File("Players.txt");
 	Scanner playerData = new Scanner(playerFile);
 	String[][] playerInfo = new String[PLAYER_LINES][10000]; // 10000 is present because it is an impossibly high number that 
 								 // nobody is likely to hit
-
-
 	// prints welcome ASCII art
 	General.printText("Printable_Text.txt", 0);
 	
@@ -279,16 +377,16 @@ public class Player extends Entity{
 		System.out.println("Here are the stored characters:\n");
 		int playerCounter = 0; // counts how many players are stored in the file
 
-		// lists the names of all players in the file
+		// lists the IDs of all players in the file
 		while (playerData.hasNextLine()){
 
 		    for (int i = 0; i < PLAYER_LINES; i++){
 			playerInfo[i][playerCounter] = playerData.nextLine();
 		    }
 
-		    String name = playerInfo[0][playerCounter].substring(0, playerInfo[0][playerCounter].indexOf(' '));
+		    String ID = playerInfo[0][playerCounter].substring(0, playerInfo[0][playerCounter].indexOf(' '));
 		    playerCounter++;
-		    System.out.println(playerCounter + ". " + name);
+		    System.out.println(playerCounter + ". " + ID);
 		}
 		
 		System.out.println();
@@ -298,14 +396,14 @@ public class Player extends Entity{
 
 		// general information is assigned assigned to the object in the lines below
 		playerData = new Scanner(playerInfo[0][selection]);
-		name = playerData.next();
+		ID = playerData.next();
 		health = playerData.nextInt();
 		savePoint = playerData.nextInt();
 		poison = playerData.nextInt();
 		burn = playerData.nextInt();
 		peashooterAmmo = playerData.nextInt();
-		index = selection - 1;
-
+		scales = playerData.nextInt();
+		index = selection;
 		    
 		// assigns abilities based on what is in the file. assertion made that the abilities array has enough feilds.
 		Scanner abilitiesData = new Scanner(playerInfo[1][selection]);
@@ -314,16 +412,17 @@ public class Player extends Entity{
 		    abilities[abilitiesCounter] = abilitiesData.next();
 		    abilitiesCounter++;
 		}
-
+		// gets items
 		Scanner items = new Scanner(playerInfo[2][selection]);
 		while (items.hasNext()){
 		    String newItem = items.next();
 		    if (newItem.indexOf('_') != -1){
-			newItem.replace("_", " ");
+			System.out.println("INVALID");
+			newItem = newItem.replace("_", " ");
 		    }
 		    inventory.addItem(newItem, console, this, random);
 		}
-			
+		// gets servants	
 		Scanner servants = new Scanner(playerInfo[3][selection]);
 		while (servants.hasNext()){
 		    String newType = servants.next();
@@ -338,12 +437,9 @@ public class Player extends Entity{
 		    newServant.poison = newPoison;
 		    newServant.burn = newBurn;
 		}     
-
-
 	    }else newPlayer(console);
 	}else newPlayer(console);
 
-	System.out.println("\nWelcome, " + name + ".\n");
-
+	System.out.println("\nWelcome, " + ID + ".\n");
     }
 }

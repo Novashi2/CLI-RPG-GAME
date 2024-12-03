@@ -31,6 +31,7 @@ public class ServantLog{
     }
 
     public void damage(String message,int damage, int burnIncrement, int poisonIncrement){
+
 	for (int i = 0; i < servants.length; i++){
 	    Enemy target = servants[i];
 	    target.health -= damage;
@@ -73,5 +74,10 @@ public class ServantLog{
 	target.drop(player, random, console, drops, true, 0);
 
     }
-    
+
+    public void dealEffects(){
+	for (int i = 0; i < servants.length; i++){
+	    servants[i].dealEffects();
+	}
+    }    
 }

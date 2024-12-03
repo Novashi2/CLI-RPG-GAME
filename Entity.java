@@ -1,19 +1,19 @@
-// This file contains the inforamtoin for the basic dungeon entity which player and enemy will inherit
+// This file contains the informatoin for the basic dungeon entity which player and enemy will inherit
 import java.util.Scanner;
 import java.util.Random;
 
 
 public class Entity{
-    // common genreal variables
-    public int health;
-    public String name = "";
+    // common general variables
+    public int health = 0;
+    public String name = "you";
     public String element;
     public ServantLog servants = new ServantLog();
     
     // effects variables
-    public int burn;
-    public int poison;
-    public int regeneration;
+    public int burn = 0;
+    public int poison = 0;
+    public int regeneration = 0;
 
 
 
@@ -26,12 +26,12 @@ public class Entity{
 	int damage = 15;
 	target.health -= damage;
 	this.health += damage;
-	System.out.println("The spider leeched " + damage + " health from you");
+	System.out.println(name + " leeched " + damage + " health from you");
     }
 
 
-    public void elementalAttack(Entity target, Random random, Scanner console){
-	String[] elements = {null, "fire", "lightning", "air", "poison", "earth"};
+    public void elementalAttack(Entity target, Random random, Scanner console, String element){
+	String[] elements = {"", "fire", "lightning", "air", "poison", "earth"};
 	int elementNumber = 0; // used to determine attack
 	if (element.equals("elder")){
 	    elementNumber = random.nextInt(1, elements.length);
@@ -49,7 +49,7 @@ public class Entity{
 
 
 	if (element.equals("fire") || elements[elementNumber].equals("fire")){
-	    targetNote = name + "unleashed a wave of fire, dealing " + damage + " damage and setting " + target.name + " on fire";
+	    targetNote = name + " unleashed a wave of fire, dealing " + damage + " damage and setting " + target.name + " on fire";
 	    servantNote = " was also caught in the fire and took " + damage + " damage.";
 	    burnIncrement = 15;
 	} else if (isLightning){
@@ -77,12 +77,27 @@ public class Entity{
 	System.out.println(targetNote);
 
 	target.servants.damage(servantNote, damage, burnIncrement, poisonIncrement);
-
 	if (isLightning){
 	    attack(random, target, console);
 	} else if(isAir){
 	    attack(random, target, console);
 	    attack(random, target, console);
 	}
+    }
+
+    public void dragonBite(Entity target){
+	int damage = 50;
+	target.health -= damage;
+	System.out.println(name + " bit " + target.name + " and dealt " + damage + " damage.");
+    }
+
+    public void tailWhip(Entity target){
+	int damage = 60;
+	target.health -= damage;
+
+	String posessive = null;
+	if (name == "you") posessive = "your";
+	else posessive = "its";
+	System.out.println(name + " threw " + target.name + " with " + posessive + " tail and dealt " + damage + " damage.");
     }
 }

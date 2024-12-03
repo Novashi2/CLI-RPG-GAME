@@ -1,4 +1,16 @@
-Steve 467 4 0 4 19
+Steve 797 5 -20 -16 19 500
+Peashooter Wand Sword 
+
+
+john 475 5 0 0 20 725 550
+Peashooter Wand Sword 
+
+
+dumdum 245 4 8 0 18 749
+Peashooter Wand Sword 
+
+
+Natalia 2917 4 -77 -80 20 249
 Peashooter Wand Sword 
 
 
