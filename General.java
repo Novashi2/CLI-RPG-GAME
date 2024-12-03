@@ -1,35 +1,116 @@
 import java.util.Scanner;
 import java.util.Random;
+import java.io.FileNotFoundException;
+import java.io.File;
 
 public class General {
     public static void main(String[] args) {
-	Player player = new Player();
-	Random random = new Random();
-	Scanner console = new Scanner(System.in);
-	Enemy spider = new Enemy();
-	spider.setSpider();
-	battle(player, spider, random, console);
     }
-
-    public static void battle(Player player, Enemy enemy, Random random, Scanner console){
+    
+    // This is the battle function for the program.
+    public static void battle(Player player, Enemy enemy, Random random, Scanner console) throws FileNotFoundException{
 	
 	while (player.health > 0 && enemy.health > 0){
-	    //player.useItem(); -- function is not programmed yet, so it is commented out at the moment
+	    if (player.inventory.size > 0){
+		System.out.println("Do you want to use an item? (y/n): ");
+		char choice = yOrN(console);
+		if (choice == 'y') player.inventory.useItem(console, player, random);
+	    }
 	    player.attack(enemy, random, console);
 	    enemy.dealEffects();
-	    enemy.attack(random, player);
+	    enemy.attack(random, player, console);
 	    player.dealEffects();
 	}
 
-	if (player.health <= 0){
-	    System.out.println("You have been killed by the " + enemy.name + ".");
-	    System.exit(0); // This will likely be put in a player.death() method
-	}else{
+	if (enemy.health <= 0) {
 	    System.out.println("You have slain the " + enemy.name + ".");
-	    // possible add of drops here or in the funciton where the battle occurrs in?
+	    // Possible drop
 	}
+
+	if (player.health <= 0){
+	    player.kill(enemy);
+	}
+	
     }
 
-	
+    // This method takes a file name and integer. Afterwards, it uses the file name to print the entire file if the textNumber
+    // parameter is -1. If textNumber >= 0, sections of the code will be printed. Sections are determined by putting the word "break"
+    // on a line at the end of a section of text. 
+    public static void printText(String fileName, int textNumber) throws FileNotFoundException{
+	Scanner inputFile = new Scanner(new File(fileName));
+	if (textNumber == -1){
+	    while (inputFile.hasNextLine()) System.out.println(inputFile.nextLine());
+	} else {
+	    int i = 0;
+	    String text = "";
+	    System.out.print(text);
+	    // gets to text section to print
+	    while (i != textNumber && inputFile.hasNextLine()){
+		text = inputFile.nextLine();
+		if (text.startsWith("break")) i++;
+	    }
+	    //prints section--fencpost issue occurrs, so the nextLine is called before the while loop starts
+	    if (inputFile.hasNextLine()){
+		text = inputFile.nextLine();
+	    }
+	    while (!text.startsWith("break") && inputFile.hasNextLine()){
+		System.out.println(text);
+		text = inputFile.nextLine();
+	    }
+	}
+    }
     
+    // This function 
+    public static int pickPath(Scanner console){
+	String error = "Please answer with \"1\" or \"2\": ";
+
+	// checks for integer as next input
+	while (!console.hasNextInt()){
+	    console.nextLine();
+	    System.out.print(error);
+	}
+
+	int choice = console.nextInt();
+
+	//verifies input after verifying that value is an integer
+	while(choice != 1 && choice != 2) {
+	    System.out.print(error);
+	    //ensure that user enters integer first time
+	    if (!console.hasNextInt()){
+		console.nextLine();
+	    } else choice = console.nextInt();
+	}
+	return choice;
+    }
+
+    public static int getInt(Scanner console, int min, int max){
+	
+	while (!console.hasNextInt()){
+	    console.next();
+	    console.nextLine();
+	    System.out.print("Please enter the corresponding number for one of the items above: ");
+	}
+	
+	int playerInput = console.nextInt();
+
+	while (playerInput < min && playerInput > max){
+	    System.out.print("Please enter the corresponding number for one of the items above: ");
+	    if (console.hasNextInt()) playerInput = console.nextInt();
+	    else {
+		console.next();
+	        console.nextLine();
+	    }
+	}
+	
+	return playerInput;
+    }
+
+    public static char yOrN(Scanner console){
+	char choice = console.nextLine().charAt(0);
+	while (choice != 'y' && choice != 'n'){
+	    System.out.println("Please enter either \"y\" or \"n\": ");
+	    choice = console.nextLine().charAt(0);
+	}
+	return choice;
+    }
 }

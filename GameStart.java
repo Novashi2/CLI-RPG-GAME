@@ -1,78 +1,62 @@
 import java.util.Scanner;
-import java.util.HashMap;
 import java.util.Random;
+import java.io.FileNotFoundException;
 
 public class GameStart {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException, InterruptedException{
 
         //instantiates a new Scanner object
         Scanner console = new Scanner(System.in);
         //instantiates a new Random object
         Random r = new Random(); 
         
-        //placeholder ints
-        // Health
-        int playerHealth = 150;
-        int spiderHealth = 30;
+	Player player = new Player(console, r);
+        // Health that has not been moved out yet.
         int dragonHealth = 100;
         int skeletonHealth = 30;
 	
-	//String[] playerWeapons = []; //initiates weapons array. Not sure if we want to add the weapons or have the player choose.
-        // Damage  //the sword and peashooter damage has been moved into the weapons file. 
-        int wandDamage = 25; //add effects?
+        // Damage   
         int dragonDamage = 15;
         int skeletonDamage = 15;
 
 
-
-        System.out.println("First message");
-
-	// gathers information on which path the player will take	
-        int dungeonChoice = getDungeonChoice(console);
-
-        //we can check health at the end of every turn
-        while(playerHealth>0) { 
-            if  (dungeonChoice == 1) {
-                //call dungeon 1
-                //call dungeon 2
-            } else if(dungeonChoice == 2) {
-                //call dungeon 3
-                DungeonFour.theFourthDungeon(console, r); //calls the fourth dungeon method and passes through scanner and random objects
-	    }
-	    break;
-        }
-
-        if (playerHealth>0) {
-            System.out.println("You win!");
-        } 
-        else {
-            System.out.println("You died!");
-        }
 	
+
+
+        // This function is an infinite loop because the battle function and dragon fight will end the game.
+        while (true) { 
+            if  (player.savePoint == 0) {
+		General.printText("Printable_text.txt", 1);
+		player.savePoint = -1 + 2 * getDungeonChoice(console); // Determines the next path that the player will go down.
+	    }else if (player.savePoint == 1){
+		// dungeon 1
+		player.save(2, console);
+	    } else if(player.savePoint == 2){
+                //call dungeon 2
+		player.save(5, console);
+	    }else if (player.savePoint == 3){
+		DungeonThree.run(player, r, console);
+		player.save(4, console);
+	    } else if (player.savePoint == 4) {
+                DungeonFour.theFourthDungeon(console, r, player); //calls the fourth dungeon method with scanner and random objects
+		player.save(5, console);
+	    } else if (player.savePoint == 5) {
+		// call dragon fight
+	    }
+	    //break;
+        }
     }
 
     public static int getDungeonChoice(Scanner console){
-	int dungeonChoice = 0;
-	String prompt = "Do you want to go down path 1 or 2? ";
-	String error = "Please answer with \"1\" or \"2\": ";
+	System.out.println("\tYou follow the map that was given to you to the lair's enterance. When you look up from the map,");
+	System.out.println("you see the cliff face of a mountain with a cave entrance. You enter into the cave. Inside, there are ");
+	System.out.println("signs of the remains of the battles that were fought before. In front of you, there are two tunnels.");
+	System.out.println("You hear a roar come from the first tunnel, while the second as a sign that reads \"Only darkness lies");
+	System.out.println("past this point\"...");
+	System.out.println();
 
+        System.out.print("Do you want to go down the first path (1) or the second path (2)? ");
 
-        System.out.print(prompt);
-	//ensure that user enters integer first time
-	while (!console.hasNextInt()){
-	    console.nextLine();
-	    System.out.print(error);
-	}
-	dungeonChoice = console.nextInt();
-	//verifies input after verifying that value is an integer
-	while(dungeonChoice != 1 && dungeonChoice != 2) {
-	    System.out.print(error);
-	    //ensure that user enters integer first time
-	    if (!console.hasNextInt()){
-		console.nextLine();
-	    } else dungeonChoice = console.nextInt();
-	    
-	}
-	return dungeonChoice;
+	return General.pickPath(console);
     }
 }

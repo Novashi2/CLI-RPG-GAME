@@ -1,0 +1,17 @@
+              __        __   _                            _                     
+              \ \      / /__| | ___ ___  _ __ ___   ___  | |_ ___               
+               \ \ /\ / / _ \ |/ __/ _ \| '_ ` _ \ / _ \ | __/ _ \              
+                \ V  V /  __/ | (_| (_) | | | | | |  __/ | || (_) |             
+ _____ _         \_/\_/_\___|_|\___\___/|_| |_| |_|\___|  \__\___/       _      
+|_   _| |__   ___  |  _ \ _ __ __ _  __ _  ___  _ __ ( )___  | |    __ _(_)_ __ 
+  | | | '_ \ / _ \ | | | | '__/ _` |/ _` |/ _ \| '_ \|// __| | |   / _` | | '__|
+  | | | | | |  __/ | |_| | | | (_| | (_| | (_) | | | | \__ \ | |__| (_| | | |   
+  |_| |_| |_|\___| |____/|_|  \__,_|\__, |\___/|_| |_| |___/ |_____\__,_|_|_|   
+                                    |___/                                       
+
+break(0 in printText function and introduction to program on top)
+	The Elder Dragon has awoken and plagued the land of Oslikh. The world's best heros
+went to slay the dragon, but none have returned. It has become your responsibility to slay
+the Elder Dragon and repair the land with the mountain's core, which is part of the Dragon's hoard.
+
+break(1 in printText, gives lore for the story)
