@@ -442,4 +442,11 @@ public class Player extends Entity{
 
 	System.out.println("\nWelcome, " + ID + ".\n");
     }
+
+	/*a call of this like player.toString() will return the string version aka the stats of the player*/
+	@Override
+	public String toString() {
+		return("Health: " +this.health +"\nName: " +ID+"\nPoison: "+this.poison+"\nBurn: "+this.burn+"\nRegeneration: "+this.regeneration);
+	}
+
 }
