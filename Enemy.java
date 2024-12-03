@@ -3,7 +3,6 @@ import java.util.Random;
 import java.util.Scanner;
 import java.io.FileNotFoundException;
 import java.io.File;
-import java.util.Arrays;
 
 public class Enemy extends Entity{
     
@@ -64,7 +63,12 @@ public class Enemy extends Entity{
 	else if (type.equals("mimic")) {
 	    player.health -= 50;
 	    System.out.println(name + "dealt 50 damage to you.");
+	}
+	else if (type.equals("shadow")) {
+		player.health -= 25;
+		System.out.println(name + "dealth 50 damage to you.");
 	} 
+
 	System.out.println();
 	// servant attack
 	servants.attack(rand, player, console);

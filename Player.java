@@ -227,7 +227,11 @@ public class Player extends Entity{
 	
 
 /*----------These functions are the ones that end the game once a player dies, wants to exit at a savepoint, or wins---------------*/
-
+    public void win() throws FileNotFoundException{
+	System.out.println("You have found the mountain's core. You feel its power rushing through you, bringing back you humanity");
+	System.out.println("and returning you to normal. ");
+    }
+    
     public void kill(Enemy enemy) throws FileNotFoundException, InterruptedException{
 	File dragonServants = new File("DragonServants.txt");
 	Scanner servantReader = new Scanner(dragonServants);
@@ -237,7 +241,7 @@ public class Player extends Entity{
 	Thread.sleep(3000);
 
 	// prints death images
-	if (enemy.type.equals("spider")) General.printText("Printable_Text.txt", 2);
+	if (enemy.type.equals("spider")) General.printText("Printable_text.txt", 2);
 
 	String[] dragonServantLines = new String[100];
 	
@@ -442,4 +446,11 @@ public class Player extends Entity{
 
 	System.out.println("\nWelcome, " + ID + ".\n");
     }
+
+	/*a call of this like player.toString() will return the string version aka the stats of the player*/
+	@Override
+	public String toString() {
+		return("Health: " +this.health +"\nName: " +ID+"\nPoison: "+this.poison+"\nBurn: "+this.burn+"\nRegeneration: "+this.regeneration);
+	}
+
 }
