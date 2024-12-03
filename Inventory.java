@@ -141,4 +141,13 @@ public class Inventory{
 	    System.out.println("You have summoned a " + type + ".");
 	}
     }
+
+    public void leech(Player player){
+	int i = 0;
+	while (player.abilities[i] != null){
+	    i++;
+	}
+	player.abilities[i] = "Leech";
+    }
+
 }

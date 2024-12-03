@@ -30,7 +30,7 @@ public class Entity{
     }
 
 
-    public void elementalAttack(Entity target, Random random, Scanner console, String element){
+    public void elementalAttack(Entity target, Random random, Scanner console, Entity attacker){
 	String[] elements = {"", "fire", "lightning", "air", "poison", "earth"};
 	int elementNumber = 0; // used to determine attack
 	if (element.equals("elder")){
@@ -78,10 +78,10 @@ public class Entity{
 
 	target.servants.damage(servantNote, damage, burnIncrement, poisonIncrement);
 	if (isLightning){
-	    attack(random, target, console);
+	    attacker.attack(random, target, console);
 	} else if(isAir){
-	    attack(random, target, console);
-	    attack(random, target, console);
+	    attacker.attack(random, target, console);
+	    attacker.attack(random, target, console);
 	}
     }
 

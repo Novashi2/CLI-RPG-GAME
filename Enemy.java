@@ -247,7 +247,7 @@ public class Enemy extends Entity{
 
     public void dragonAttack(Entity player, Random random, Scanner console){
 	int decision = random.nextInt(100) + 1;
-	if (decision <= 50) elementalAttack(player, random, console, element);
+	if (decision <= 50) elementalAttack(player, random, console, this);
 	else if (decision <= 75) dragonBite(player);
 	else if (type.equals("dragon")) tailWhip(player);
 	else spikeShot(player);

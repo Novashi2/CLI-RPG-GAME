@@ -52,7 +52,7 @@ public class Player extends Entity{
 	else if (abilities[choice].startsWith("Wand")) wand(enemy, random);
 	else if (abilities[choice].startsWith("Sword")) sword(enemy);	
 	else if (abilities[choice].startsWith("Leech")) leech(enemy);
-	else if (abilities[choice].startsWith("Draconic")) elementalAttack(enemy, random, console, element);
+	else if (abilities[choice].startsWith("Draconic")) elementalAttack(enemy, random, console, this);
 	else if (abilities[choice].startsWith("Bite")) dragonBite(enemy);
 	else if (abilities[choice].startsWith("Tail")) tailWhip(enemy);
 	System.out.println();
@@ -227,9 +227,23 @@ public class Player extends Entity{
 	
 
 /*----------These functions are the ones that end the game once a player dies, wants to exit at a savepoint, or wins---------------*/
-    public void win() throws FileNotFoundException{
+    public void win() throws FileNotFoundException, InterruptedException{
 	System.out.println("You have found the mountain's core. You feel its power rushing through you, bringing back you humanity");
-	System.out.println("and returning you to normal. ");
+	System.out.println("and returning you to normal. As you exit the dungeon, you see many of the people who went into");
+	System.out.println("the dungeon in a daze.");
+	System.out.println();
+	Thread.sleep(2000);
+	System.out.println("You are celebrated as a hero when you return to your village and live in peace for the next few years");
+	System.out.println("\nStill, the lair still calls...\n");
+
+	// print the victory image
+	
+	// clears the players.txt and dragonServants.txt file
+	// Once one account wins, all progress is lost on purpose.
+	PrintStream player = new PrintStream("players.txt");
+	PrintStream dragonServants = new PrintStream("dragonServants.txt");
+
+	System.exit(0);
     }
     
     public void kill(Enemy enemy) throws FileNotFoundException, InterruptedException{
