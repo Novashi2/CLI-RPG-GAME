@@ -13,8 +13,7 @@ public class DungeonTwo {
         "\nTowards the backend of the cavern you spot a large stone statue with an unidentifiable liquid gushing from its mouth into a basin just below it. " +
         "\nAs you approch the the basin, you have the urge to make a wish. You ready a coin and think of a wish.");
         System.out.println("You flip the coin into the basin...");
-        Thread.sleep(4000); // Pause for effect
-
+       General.Continue(s);
         // Random object chooses the monster the player will fight
         int coinToss = coin.nextInt(2);
         
@@ -23,8 +22,8 @@ public class DungeonTwo {
             System.out.println("After a few moments you notice that the liqud has ceased its flow " +
             "\nand the liquid has been draining from the basin to first reveal the coin you had just tossed, but began to reveal an amalgam of flesh and bones. " +
             "\nYou take a step back in disgust and as you do the flesh and bones start to meld into one hideous amalgamation.");
-            Thread.sleep(2000);
             System.out.println("I don't think this is what you wished for.");
+           General.Continue(s);
             Enemy amalgam = new Enemy("Amalgam", 55);
             General.battle(player, amalgam, r, s);
         }else { // Battle 2
@@ -35,12 +34,10 @@ public class DungeonTwo {
         }
         System.out.println("Huzzah! you have vanquished the enemy! Though you feel a bit roughed up and in need of healing, your gaze takes you to the basin and the flowing liquid." +
         "\nYou are urged to drink the liquid against your better judgment.");
-        Thread.sleep(2000);
         System.out.println("You take a sip...");
-        Thread.sleep(4000);
-        System.out.println("You feel reinvigorated! You heal back to max health!");
-        player.health = 100; //sets hp back to what I assume is max
-        System.out.println(player.health);
+        System.out.println("You feel reinvigorated! You heal 25HP!");
+        player.health += 25; //sets hp back to what I assume is max
+        System.out.println("Your current HP is " + player.health + ".");
 
 
         // Progress to Dragon fight
