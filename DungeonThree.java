@@ -11,7 +11,7 @@ public class DungeonThree {
 	System.out.println("As you continue down the cave, the pathway becomes cleaner and narrower. Eventually, you see a mine");
 	System.out.println("shaft to the side of the path. There is a sign on the shaft that says \"Only danger lies below.\"");
 	System.out.println("Another sign hanging from the path's ceiling says \"Turn back before it is too late - The guardian\"");
-	System.out.print("Do you want to go down the mine shaft (1) or continue walking foward (2)? ");
+	System.out.print("\nDo you want to go down the mine shaft (1) or continue walking foward (2)? ");
 
 	int choice = General.pickPath(console);
 	
@@ -26,9 +26,11 @@ public class DungeonThree {
 	System.out.println("There is a vague path in the cavern, but most of it is covered in a thick layer of webs.");
 	System.out.println("You eventually get stuck in the webs and free yourself just in time to respond to a giant spider fast ");
 	System.out.println("approaching you.\n");
-	Thread.sleep(3000);
+	General.Continue(console);
 
 	General.battle(player, spider, random, console);
+	String[] spiderDrops = {"spider token", "spider egg sack", "poison potion", "health potion"};
+	spider.drop(player, random, console, spiderDrops, false, 2);
 
 	System.out.println("After cutting through the remaining webs, you enter through a hole you find that leads into a tunnel.");
 	System.out.println("You walk through the tunnel until you the surrounding walls start to be made of bones. Shortly after,");
@@ -36,24 +38,30 @@ public class DungeonThree {
 	Thread.sleep(3000);
 	System.out.println("You hear a rattle and a moments later a \"woosh\" as an arrow flies past your head. You see what seems");
 	System.out.println("to be a moving set of bones in the back of the cavern.\n");
-	Thread.sleep(3000);
+	General.Continue(console);
 
 
 	Enemy skeleton = new Enemy("skeleton", null, null, false);
 	General.battle(player, skeleton, random, console);
+	String[] skeletonDrops = {"dragon egg", "skull", "general potion", "poison potion", "fire potion"};
+	skeleton.drop(player, random, console, skeletonDrops, false, 3);
 
 	System.out.println("After wandering around the cavern, you see a bright light and decide to follow it. The light brings");
 	System.out.println("you down a spacious stony passageway. Unfortunately, you were so focused on the light that you failed");
 	System.out.println("to notice an enterance for a giant hornet's nest until you accidentally kick it. Immediately, a swarm");
 	System.out.println("of giant, scaly hornets erupt form the ground.");
+	General.Continue(console);
 
 	Enemy hornetSwarm = new Enemy("draconic hornets", null, null, false);
-	General.battle(player, skeleton, random, console);
+	General.battle(player, hornetSwarm, random, console);
+	String[] swarmDrops = {"fire potion", "regeneration potion", "general potion", "dragon crystal", "dragon crystal"};
+	hornetSwarm.drop(player, random, console, skeletonDrops, false, 3);
 	
 	// possibly add small dragon--not the elder dragon
 	System.out.println("You continue to follow the light down the hallway until you see a hollow doorway made of steel. It the");
 	System.out.println("doorway is an inscription saying \"To the underneath.\" The light illuminates the portal and you walk");
 	System.out.println("it.");
+	General.Continue(console);
 
 
     }
