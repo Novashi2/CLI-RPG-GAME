@@ -55,7 +55,7 @@ public class Enemy extends Entity{
 
     // This function determines which attack function will be used by
     // comparing the type variable to different possibilitues
-    public void attack(Random rand, Entity player, Scanner console){
+    public void attack(Random rand, Player player, Scanner console){
 	if (type.equals("spider")) spiderAttack(rand, player);
 	else if (type.equals("skeleton")) skeletonAttack(player, rand);
 	else if (type.equals("dragonic hornets")) hornetAttack(player);
@@ -66,7 +66,7 @@ public class Enemy extends Entity{
 	}
 	else if (type.equals("shadow")) {
 		player.health -= 25;
-		System.out.println(name + "dealt 25 damage to you.");
+		System.out.println(name + " dealt 25 damage to you.");
 	} 
 	else if (type.equals("Amalgam")) {
 		player.health -= 15;
@@ -126,6 +126,7 @@ public class Enemy extends Entity{
 		int dropsIndex = 0;
 		while (dropsIndex < drops.length && drops[dropsIndex] != null){
 		    System.out.println(dropsIndex + 1 + ". " + drops[dropsIndex]);
+		    dropsIndex ++;
 		}
 		System.out.println();
 		System.out.print("Select a number from the list above: ");
@@ -140,8 +141,8 @@ public class Enemy extends Entity{
 		}
 		drops[drops.length - 1] = null;
 		
-		choices --;
-		System.out.println("You can select " + choices + " more items from the drops.");
+		choiceNumber++;
+		if (choices > 1) System.out.println("You can select " + (choices - choiceNumber) + " more items from the drops.\n");
 	    }
 	}
     }
@@ -253,16 +254,16 @@ public class Enemy extends Entity{
     }
 
 
-    public void dragonAttack(Entity player, Random random, Scanner console){
+    public void dragonAttack(Player player, Random random, Scanner console){
 	int decision = random.nextInt(100) + 1;
-	if (decision <= 50) elementalAttack(player, random, console, this);
+	if (decision <= 50) elementalAttack(player, random, console, this, null);
 	else if (decision <= 75) dragonBite(player);
 	else if (type.equals("dragon")) tailWhip(player);
 	else spikeShot(player);
 
     }
 
-    public void spikeShot(Entity player){
+    public void spikeShot(Player player){
 	int damage = 60;
 	player.health -= damage;
 	System.out.println("The Elder Dragon threw a spike at you, dealing " + damage + " damage.");

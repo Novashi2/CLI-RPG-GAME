@@ -52,7 +52,7 @@ public class Player extends Entity{
 	else if (abilities[choice].startsWith("Wand")) wand(enemy, random);
 	else if (abilities[choice].startsWith("Sword")) sword(enemy);	
 	else if (abilities[choice].startsWith("Leech")) leech(enemy);
-	else if (abilities[choice].startsWith("Draconic")) elementalAttack(enemy, random, console, this);
+	else if (abilities[choice].startsWith("Draconic")) elementalAttack(enemy, random, console, null, this);
 	else if (abilities[choice].startsWith("Bite")) dragonBite(enemy);
 	else if (abilities[choice].startsWith("Tail")) tailWhip(enemy);
 	System.out.println();
@@ -68,12 +68,12 @@ public class Player extends Entity{
 
     // The peashooter function uses a random object to decude whether the player will or won't hit the enemy. 
     public void peashooter(Enemy enemy, Random random){
-    	int damage = 45;
+    	int damage = 90;
 	int hitNumber = random.nextInt(100);
 	
 	if (peashooterAmmo > 0){
 	    if (hitNumber < 50){
-		System.out.println("You dealt " + damage + " damage to" + enemy.name);
+		System.out.println("You dealt " + damage + " damage to " + enemy.name);
 		enemy.health -= damage;
 	    } else System.out.println("You missed.");
 
@@ -87,8 +87,8 @@ public class Player extends Entity{
 	int decider = random.nextInt(1,101);
 	int baseDamage = 25;
 	if (decider <= 30){ // bonus damage
-	    System.out.println("You dealt 90 damage to the " + enemy.name);
-	    enemy.health -= 90;
+	    System.out.println("You dealt 50 damage to the " + enemy.name);
+	    enemy.health -= 50;
 	} else if (decider <= 66){// burn attack
 	    int burnCounter = decider - 10;
 	    System.out.println("You dealt " + baseDamage + " damage and burnt the " + enemy.name + ".");
@@ -127,10 +127,11 @@ public class Player extends Entity{
 	}
 	if (regeneration > 0){
 	    int bonusHealth = 2 * regeneration;
-	    regeneration --;
+	    regeneration /= 2;
 	    health += bonusHealth;
 	    System.out.println(name + " regenerated " + bonusHealth + " health.");
 	}
+	System.out.println();
 	dragonCurse(random);
 	servants.dealEffects();
     } 
@@ -138,9 +139,9 @@ public class Player extends Entity{
     // Dragon curse -- scales
     public void addScales(int newScales){
 	this.newScales += newScales;
-	regeneration += 5 * newScales;
-	poison -= 5 * newScales;
-	burn -= 5 * newScales;
+	regeneration += 2 * newScales;
+	poison -= 2 * newScales;
+	burn -= 2 * newScales;
 	System.out.println("You have recieved " + newScales + " scales. The scales immediately merge with your skin and you feel a");
 	System.out.println("surge in power. Yet, you also sense a bit of your humanity slip away...\n");
     }
@@ -154,7 +155,7 @@ public class Player extends Entity{
 	scales += newScales;
 	newScales = 0;
 
-	if (scales >= 1000){ // kills player
+	if (scales >= 400){ // kills player
 	    if (!slayedDragon){
 		File dragonServants = new File("DragonServants.txt");
 		Scanner servantReader = new Scanner(dragonServants);
@@ -180,7 +181,7 @@ public class Player extends Entity{
 	    }
 	    // print end image
 	    System.exit(0);  
-	} else if (scales >= 750 && !stageThree){
+	} else if (scales >= 300 && !stageThree){
 	    stageThree = true;
 	    stageTwo = true;
 	    stageOne = true;
@@ -202,7 +203,7 @@ public class Player extends Entity{
 	    }
 
 	    System.out.println("\nYou have lost some of your abilities.\n");
-	} else if (scales >= 500 && !stageTwo){
+	} else if (scales >= 200 && !stageTwo){
 	    stageTwo = true;
 	    stageOne = true;
 	    System.out.println("You feel a sudden burst of power as any sense of humanity continues to wane.");
@@ -215,23 +216,23 @@ public class Player extends Entity{
 	    abilities[abilitiesCounter] = "Draconic " + element;
 	    System.out.println("You have recieved the " + abilities[abilitiesCounter] + " ability.");
 	    System.out.println();
-	} else if (scales > 250 && !stageOne){
+	} else if (scales > 100 && !stageOne){
 	    stageOne = true;
 	    System.out.println("You notice that everything seems to be smaller. When you look down, you realize the opposite is");
-	    System.out.println("A large amount of your body is covered in scales, and your hands look less human and are harder");
-	    System.out.println("to move than before...");
+	    System.out.println("true. A large amount of your body is covered in scales, and you appear less human and are harder");
+	    System.out.println(" than before...");
 	    System.out.println();
 	}
     }
 	
 
 /*----------These functions are the ones that end the game once a player dies, wants to exit at a savepoint, or wins---------------*/
-    public void win() throws FileNotFoundException, InterruptedException{
+    public void win(Scanner console) throws FileNotFoundException, InterruptedException{
 	System.out.println("You have found the mountain's core. You feel its power rushing through you, bringing back you humanity");
 	System.out.println("and returning you to normal. As you exit the dungeon, you see many of the people who went into");
 	System.out.println("the dungeon in a daze.");
 	System.out.println();
-	Thread.sleep(2000);
+	General.Continue(console);
 	System.out.println("You are celebrated as a hero when you return to your village and live in peace for the next few years");
 	System.out.println("\nStill, the lair still calls...\n");
 
@@ -460,10 +461,19 @@ public class Player extends Entity{
 	System.out.println("\nWelcome, " + ID + ".\n");
     }
 
-	/*a call of this like player.toString() will return the string version aka the stats of the player*/
-	@Override
-	public String toString() {
-		return("Health: " +this.health +"\nName: " +ID+"\nPoison: "+this.poison+"\nBurn: "+this.burn+"\nRegeneration: "+this.regeneration);
-	}
+    /*a call of this like player.toString() will return the string version aka the stats of the player*/
+    @Override
+    public String toString() {
+	int poisonCounter;
+	int burnCounter;
+
+	if (this.poison < 0) poisonCounter = 0;
+	else poisonCounter = poison;
+
+	if (this.burn < 0) burnCounter = 0;
+	else burnCounter = burn; 
+
+	return("Health: " +this.health +"\nName: " +ID+"\nPoison: "+poisonCounter+"\nBurn: "+burnCounter+"\nRegeneration: "+this.regeneration);
+    }
 
 }

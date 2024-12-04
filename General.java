@@ -11,6 +11,10 @@ public class General {
     public static void battle(Player player, Enemy enemy, Random random, Scanner console) throws FileNotFoundException, InterruptedException{
 
 	while (player.health > 0 && enemy.health > 0){
+	    System.out.println("Here are your stats: \n"); 
+	    System.out.println(player);
+	    System.out.println();
+
 	    if (player.inventory.size > 0){
 		System.out.println("Do you want to use an item? (y/n): ");
 		char choice = yOrN(console);
@@ -82,6 +86,7 @@ public class General {
 		console.nextLine();
 	    } else choice = console.nextInt();
 	}
+	System.out.println();
 	return choice;
     }
 
@@ -110,7 +115,7 @@ public class General {
     public static char yOrN(Scanner console){
 	char choice = console.nextLine().charAt(0);
 	while (choice != 'y' && choice != 'n'){
-	    System.out.println("Please enter either \"y\" or \"n\": ");
+	    System.out.print("Please enter either \"y\" or \"n\": ");
 	    choice = console.nextLine().charAt(0);
 	}
 	System.out.println();
@@ -118,7 +123,8 @@ public class General {
     }
 
 	public static void Continue(Scanner Console) {
-		System.out.print("Enter anything then press enter to continue: ");
-		Console.next();
+	    System.out.print("Type in anything; then press ENTER to continue: ");
+	    Console.next();
+	    System.out.println();
 	}
 }
