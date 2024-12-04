@@ -98,6 +98,9 @@ public class Inventory{
 	else if (item.equals("dragon egg")) servantToken("dragon", player, random);
 	else if (item.equals("skull")) servantToken("skeleton", player, random);
 	else if (item.equals("spider egg sack")) for (int i = 0; i < random.nextInt(2, 10); i++) servantToken("spider", player, random);
+	else if (item.equals("spider token")) leech(player);
+	else if (item.equals("dragon crystal")) player.addScales(100);
+	else if (item.equals("temporary curse cure")) curseCure(player);
 
 	size--;
     }
@@ -140,5 +143,18 @@ public class Inventory{
 	    player.servants.addServant(type, null, null, true);
 	    System.out.println("You have summoned a " + type + ".");
 	}
+    }
+
+    public void leech(Player player){
+	int i = 0;
+	while (player.abilities[i] != null){
+	    i++;
+	}
+	player.abilities[i] = "Leech";
+    }
+    
+    public void curseCure(Player player){
+	System.out.println("You have lost 50 dragon scales.");
+	player.scales -= 50;
     }
 }

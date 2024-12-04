@@ -1,4 +1,4 @@
-n 500 2 0 0 20 0
+Steve 2056 5 -500 -490 20 100
 Peashooter Wand Sword 
 
 
