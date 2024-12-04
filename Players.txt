@@ -2,3 +2,7 @@ Steve 2056 5 -500 -490 20 100
 Peashooter Wand Sword 
 
 
+Jack 570 5 -20 -20 18 10
+Peashooter Wand Sword 
+
+
