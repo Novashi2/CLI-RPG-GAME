@@ -10,7 +10,7 @@ public class Inventory{
     
     String[] items = new String[100];
     int size = 0; // stores data of first null instance in the
-    public final int MAX_UNIQUE_ITEMS = 20; // maximum number of item types identified by the game 
+    public final int MAX_UNIQUE_ITEMS = 11; // maximum number of item types identified by the game 
 
     // Adds an item given an item name. It is assumed that the correct item name is entered.
     public void addItem(String itemName, Scanner console, Player player, Random random) throws FileNotFoundException{
@@ -103,6 +103,7 @@ public class Inventory{
 	else if (item.equals("temporary curse cure")) curseCure(player);
 
 	size--;
+	System.out.println();
     }
 	
 	
@@ -151,6 +152,7 @@ public class Inventory{
 	    i++;
 	}
 	player.abilities[i] = "Leech";
+	System.out.println("You have gained the leech ability");
     }
     
     public void curseCure(Player player){

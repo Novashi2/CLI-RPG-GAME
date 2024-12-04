@@ -34,8 +34,8 @@ public class DungeonThree {
 
 	System.out.println("After cutting through the remaining webs, you enter through a hole you find that leads into a tunnel.");
 	System.out.println("You walk through the tunnel until you the surrounding walls start to be made of bones. Shortly after,");
-	System.out.println("you enter a wide and spacious cavern. Inside, you see a hollow cavern made out of bones.");
-	Thread.sleep(3000);
+	System.out.println("you enter a wide and spacious cavern. Inside, you see a hollow cavern made out of bones.\n");
+	General.Continue(console);
 	System.out.println("You hear a rattle and a moments later a \"woosh\" as an arrow flies past your head. You see what seems");
 	System.out.println("to be a moving set of bones in the back of the cavern.\n");
 	General.Continue(console);
@@ -49,7 +49,7 @@ public class DungeonThree {
 	System.out.println("After wandering around the cavern, you see a bright light and decide to follow it. The light brings");
 	System.out.println("you down a spacious stony passageway. Unfortunately, you were so focused on the light that you failed");
 	System.out.println("to notice an enterance for a giant hornet's nest until you accidentally kick it. Immediately, a swarm");
-	System.out.println("of giant, scaly hornets erupt form the ground.");
+	System.out.println("of giant, scaly hornets erupt form the ground.\n");
 	General.Continue(console);
 
 	Enemy hornetSwarm = new Enemy("draconic hornets", null, null, false);
@@ -60,7 +60,7 @@ public class DungeonThree {
 	// possibly add small dragon--not the elder dragon
 	System.out.println("You continue to follow the light down the hallway until you see a hollow doorway made of steel. It the");
 	System.out.println("doorway is an inscription saying \"To the underneath.\" The light illuminates the portal and you walk");
-	System.out.println("it.");
+	System.out.println("it.\n");
 	General.Continue(console);
 
 
