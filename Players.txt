@@ -1,9 +1,0 @@
-j 500 2 0 0 20 0
-Peashooter Wand Sword 
-
-j\ 500 5 0 0 20 0
-Peashooter Wand Sword 
-
-jack 500 2 0 0 20 0
-Peashooter Wand Sword 
-
