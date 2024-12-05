@@ -1,4 +1,7 @@
 // This file stores information for enemy objects
+import org.w3c.dom.ls.LSOutput;
+
+import java.sql.SQLOutput;
 import java.util.Random;
 import java.util.Scanner;
 import java.io.FileNotFoundException;
@@ -231,6 +234,62 @@ public class Enemy extends Entity{
 	player.burn += 1;
 	System.out.println( name + " swarmed you and dealt " + damage + " damage to you. You are now burnt.");
     }
+
+
+/*-------------------------------------This contains the information for the slime enemy----------------------------------------------------------------------*/
+
+
+	public void setSlime() {health = 100;}
+
+
+	public void jellySlam(Entity player){
+		int damage = 30;
+		player.health -= damage;
+		player.poison += 6;
+		System.out.println( "The "+name + " knocks you back and dealt" + damage+" damage. You become poisoned.");
+	}
+
+	public void slimeShot(Entity player) {
+		int damage = 20;
+		player.health -= damage;
+		player.poison += 8;
+		System.out.println("The "+name+" Shoots goop at you and dealt "+damage+"damage. You have been poisoned.");
+	}
+
+	public void slimeAttack(Entity player, Random random) {
+		int decider = random.nextInt(100) + 1;
+		if (decider < 40) slimeShot(player);
+		else jellySlam(player);
+	}
+
+	/*--------------------------------This contains information for the Werewolf enemy--------------------------------------------------------------*/
+
+
+
+	public void setWerewolf(){health = 100;}
+
+	public void savageBite(Entity player){
+		int damage = 30;
+		player.health -= damage;
+		health += 15;
+		System.out.println("The werewolf lunges and bites you and dealt "+damage+", it looks envigorated.");
+	}
+
+	public void wolfClaw(Entity player){
+		int damage = 25;
+		player.health -= damage;
+		player.poison += 8;
+		System.out.println("It runs forward slashing and dealt "+damage+", you feel poisoned");
+
+	}
+	public void werewolfAttack(Entity player, Random random){
+		int decider = random.nextInt(100) + 1;
+		if (decider < 40) wolfClaw(player);
+		else savageBite(player);
+	}
+
+
+
 
 /*-----------------------------------This contains information for the dragon enemies----------------------------------------*/
 
