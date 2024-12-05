@@ -1,4 +1,7 @@
 // This file stores information for enemy objects
+import org.w3c.dom.ls.LSOutput;
+
+import java.sql.SQLOutput;
 import java.util.Random;
 import java.util.Scanner;
 import java.io.FileNotFoundException;
@@ -31,6 +34,10 @@ public class Enemy extends Entity{
 	else if (type.equals("skeleton")) setSkeleton();
 	else if (type.equals("draconic hornets")) setHornets();
 	else if (type.equals("dragon") || type.equals("Elder Dragon")) setDragon();
+	else if (type.equals("Amalgam")) setAmalgam();
+	else if (type.equals("Golem")) setGolem();
+	else if (type.equals("Slime")) setSlime();
+	else if (type.equals("Werewolf")) setWerewolf();
     }
 
     public void buildName(boolean playerHas){
@@ -55,11 +62,15 @@ public class Enemy extends Entity{
 
     // This function determines which attack function will be used by
     // comparing the type variable to different possibilitues
-    public void attack(Random rand, Player player, Scanner console){
+    public void attack(Random rand, Entity player, Scanner console){
 	if (type.equals("spider")) spiderAttack(rand, player);
 	else if (type.equals("skeleton")) skeletonAttack(player, rand);
 	else if (type.equals("dragonic hornets")) hornetAttack(player);
 	else if (type.equals("dragon") || type.equals("Elder Dragon")) dragonAttack(player, rand, console);
+	else if (type.equals("Amalgam")) amalgamAttack(rand, player);
+	else if (type.equals("Golem")) golemAttack(rand, player);
+	else if (type.equals("Slime")) slimeAttack(player, rand);
+	else if (type.equals("Werewolf")) werewolfAttack(player, rand);
 	else if (type.equals("mimic")) {
 	    player.health -= 50;
 	    System.out.println(name + "dealt 50 damage to you.");
@@ -68,19 +79,9 @@ public class Enemy extends Entity{
 		player.health -= 25;
 		System.out.println(name + " dealt 25 damage to you.");
 	} 
-	else if (type.equals("Amalgam")) {
-		player.health -= 60;
-		System.out.println(name + " dealt 60 damage to you.");
-	}
-	else if (type.equals("Golem")) {
-		player.health -= 45;
-		System.out.println(name + " dealt 45 damage to you.");
-	}
+
 
 	System.out.println();
-	// servant attack
-	servants.attack(rand, player, console);
-	
     }
 
 
@@ -96,19 +97,18 @@ public class Enemy extends Entity{
 	    System.out.println(name + " was burnt for " + damage + " damage.");
 	}
 	if (poison > 0){
-	    damage = poison * 2;
-	    poison --;
+	    damage = poison;
+	    poison /= 2;
 	    health -= damage;
 	    System.out.println("The poison in " + name + "'s body dealt " + name + " " + damage + " damage.");
 	}
 	if (regeneration > 0){
-	    int bonusHealth = 2 * regeneration;
-	    regeneration --;
+	    int bonusHealth = regeneration * 2;
+	    regeneration /= 2;
 	    health += bonusHealth;
 	    System.out.println(name + " regenerated " + bonusHealth + " health.");
 	}
 
-	servants.dealEffects();
     }
 
     // The function below makes the enemy drop an item.
@@ -131,7 +131,7 @@ public class Enemy extends Entity{
 		System.out.println();
 		System.out.print("Select a number from the list above: ");
 		
-		int choice = General.getInt(console, 1, drops.length) - 1;
+		int choice = General.getInt(console, 1, drops.length - choiceNumber) - 1;
 		
 		// The lines below use and remove the item from the drops array.
 		player.inventory.addItem(drops[choice], console, player, random);
@@ -164,12 +164,12 @@ public class Enemy extends Entity{
     public void spiderBite(Entity player){
 	int damage = 15;
 	player.health -= damage;
-	System.out.println(name + " bit you and dealt " + damage + " damage. \nYou are now poisoned.");
+	System.out.println(name + " bit " + player.name + " and dealt " + damage + " damage, poisoning " + player.name + ".");
 	player.poison += 3;
     }
     
     public void spiderCacoon(Entity player, Random rand){
-	String message = "You are still trapped in the cocoon";
+	String message = "You are still trapped in the cocoon.";
 
 	System.out.println(name + " wrapped you in a silk cocoon. You struggle to break free as the spider keeps attacking you.");
 
@@ -177,7 +177,7 @@ public class Enemy extends Entity{
 	spiderBite(player);
 
 	for (int i = 0; i < rand.nextInt(5); i++){	    
-	    System.out.print(message);
+	    System.out.println(message);
 	    spiderBite(player);
 	    //possibly add a sleep command here
 	}
@@ -199,24 +199,23 @@ public class Enemy extends Entity{
     }
     
     public void soulArrow(Entity player){
-	int damage = this.health * 5;
+	int damage = health;
 	player.health -= damage;
-	health *= 2;
-	System.out.println(name + " shot a soul arrow and dealt " + damage + " health.");
+	System.out.println(name + " shot a soul arrow and dealt " + damage + " damage.");
     }
 
     public void fireArrow(Entity player){
 	int damage = 25;
 	player.health -= damage;
 	player.burn += 5;
-	System.out.println(name + " shot a fire arrow and dealt " + damage + " damage. You are now burnt.");
+	System.out.println(name + " shot a fire arrow and dealing " + damage + " damage and burning " + player.name.toLowerCase() + ".");
     }
 
     public void poisonArrow(Entity player){
 	int damage = 25;
 	player.health -= damage;
-	player.poison += 8;
-	System.out.println(name + " shot a poisoned arrow and dealt " + " damage. You are now poisoned.");
+	player.poison += 20;
+	System.out.println(name + " shot a poisoned arrow and dealing " + damage + " damage and poisoning " + player.name.toLowerCase()  + ".");
     }
 
 
@@ -229,32 +228,77 @@ public class Enemy extends Entity{
 	int damage = 15;
 	player.health -= damage;
 	player.burn += 1;
-	System.out.println( name + " swarmed you and dealt " + damage + " damage to you. You are now burnt.");
+	System.out.println( name + " swarmed " + player.name + " and dealt " + damage + " damage to you. You are now burnt.");
     }
+
+
+/*-------------------------------------This contains the information for the slime enemy----------------------------------------------------------------------*/
+
+
+	public void setSlime() {health = 100;}
+
+
+	public void jellySlam(Entity player){
+		int damage = 30;
+		player.health -= damage;
+		player.poison += 6;
+		System.out.println( "The " + name + " knocks you back and dealt " + damage + " damage. You become poisoned.");
+	}
+
+	public void slimeShot(Entity player) {
+		int damage = 20;
+		player.health -= damage;
+		player.poison += 8;
+		System.out.println("The " + name + " Shoots goop at you and dealt " + damage + " damage. You have been poisoned.");
+	}
+
+	public void slimeAttack(Entity player, Random random) {
+		int decider = random.nextInt(100) + 1;
+		if (decider < 40) slimeShot(player);
+		else jellySlam(player);
+	}
+
+	/*--------------------------------This contains information for the Werewolf enemy--------------------------------------------------------------*/
+
+
+
+	public void setWerewolf(){health = 100;}
+
+	public void savageBite(Entity player){
+		int damage = 30;
+		player.health -= damage;
+		health += 15;
+		System.out.println("The werewolf lunges and bites you and dealt "+damage+", it looks envigorated.");
+	}
+
+	public void wolfClaw(Entity player){
+		int damage = 25;
+		player.health -= damage;
+		player.poison += 8;
+		System.out.println("It runs forward slashing and dealt "+damage+", you feel poisoned");
+
+	}
+	public void werewolfAttack(Entity player, Random random){
+		int decider = random.nextInt(100) + 1;
+		if (decider < 40) wolfClaw(player);
+		else savageBite(player);
+	}
+
+
+
 
 /*-----------------------------------This contains information for the dragon enemies----------------------------------------*/
 
     public void setDragon() throws FileNotFoundException{
 	this.health = 200;
 	if (type.equals("Elder Dragon")){
-	    this.health = 700;
+	    this.health = 250;
 	    element = "elder";
-	    // The lines below read the dragon's servants into the servants array
-	    Scanner servantsReader = new Scanner(new File("DragonServants.txt"));
-	    while (servantsReader.hasNextLine()){
-		Scanner newServant = new Scanner(servantsReader.nextLine());
-		String newTitle = newServant.next();
-		String newType = newServant.next();
-		String newElement = null;
-		if (newType.equals("dragon")) newElement = newServant.next();
-		servants.addServant(newType, newTitle, newElement, false); 
-	    }
 	}
 
     }
 
-
-    public void dragonAttack(Player player, Random random, Scanner console){
+    public void dragonAttack(Entity player, Random random, Scanner console){
 	int decision = random.nextInt(100) + 1;
 	if (decision <= 50) elementalAttack(player, random, console, this, null);
 	else if (decision <= 75) dragonBite(player);
@@ -263,10 +307,68 @@ public class Enemy extends Entity{
 
     }
 
-    public void spikeShot(Player player){
-	int damage = 60;
+    public void spikeShot(Entity player){
+	int damage = 45;
 	player.health -= damage;
 	System.out.println("The Elder Dragon threw a spike at you, dealing " + damage + " damage.");
 	player.addScales(20);
     }
+
+
+	public void setAmalgam() {
+		health = 120;
+	}
+
+	public void amalgamAttack(Random rand, Entity player){
+		int decider = rand.nextInt(100) + 1;
+		if (decider <=10) Grapple(player, rand);
+		else if (decider <= 70) Fleshball(player);
+		else leech(player);
+		}
+	
+		public void Fleshball(Entity player){
+		int damage = 20;
+		player.health -= damage;
+		System.out.println(name + " Threw a ball of flesh at " + player.name + " and dealt " + damage + " damage. ");
+		}
+		
+		public void Grapple(Entity player, Random rand){
+		String message = "You are still trapped in the Amalgam's embrace.";
+	
+		System.out.println(name + " enveloped you in itself. You struggle to break free from its embrace.");
+	
+	
+		Fleshball(player);
+	
+		for (int i = 0; i < rand.nextInt(3); i++){	    
+			System.out.println(message);
+			Fleshball(player);
+		}
+		}
+
+
+		public void setGolem() {
+			health = 150;
+		}
+	
+		public void golemAttack(Random rand, Entity player){
+			int hitChance = rand.nextInt(101);
+			int decider = rand.nextInt(100) + 1;
+			if (decider <=30) {
+				if (hitChance <= 60) Boulder(player, rand);
+				else System.out.println("The Golem threw a boulder and missed!");
+			}else Punch(player);
+			}
+			public void Punch(Entity player){
+			int damage = 20;
+			player.health -= damage;
+			System.out.println(name + " Threw a punch at " + player.name + " and dealt " + damage + " damage. ");
+			}
+			
+			public void Boulder(Entity player, Random rand){
+			int damage = 35;
+			player.health -= damage;
+			System.out.println(name + " launched a boulder at " + player.name + " and dealt " + damage + " damage. ");
+			}
+		
 }
