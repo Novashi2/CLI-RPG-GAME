@@ -212,10 +212,10 @@ public class Player extends Entity{
 	System.out.println();
 	General.Continue(console);
 	System.out.println("You are celebrated as a hero when you return to your village and live in peace for the next few years");
-	System.out.println("\nStill, the lair still calls...\n");
+	System.out.println("\nStill, the lair calls...\n");
 
-	// print the victory image
-	
+	General.printText("Printable_text.txt", 3);
+
 	// clears the players.txt and dragonServants.txt file
 	// Once one account wins, all progress is lost on purpose.
 	PrintStream player = new PrintStream("players.txt");
@@ -232,6 +232,10 @@ public class Player extends Entity{
 
 	// prints death images
 	if (enemy.type.equals("spider")) General.printText("Printable_text.txt", 2);
+	else if (enemy.type.equals("skeleton")) General.printText("Printable_text.txt", 4);
+	else if (enemy.type.equals("golem")) General.printText("Printable_text.txt", 5);
+	else if (enemy.type.equals("draconic hornets")) General.printText("Printable_text.txt", 6);
+	else if (enemy.type.equals("Elder Dragon") || enemy.type.equals("dragon")) General.printText("Printable_text.txt", 7);
 
 
 	System.exit(0);
@@ -381,7 +385,6 @@ public class Player extends Entity{
 		while (items.hasNext()){
 		    String newItem = items.next();
 		    if (newItem.indexOf('_') != -1){
-			System.out.println("INVALID");
 			newItem = newItem.replace("_", " ");
 		    }
 		    inventory.addItem(newItem, console, this, random);

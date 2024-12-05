@@ -21,9 +21,6 @@ public class Dragon {
 
 	player.slayedDragon = true;
 
-	String[] drops = {"temporary curse cure", "general potion", "dragon crystal"};
-	elderDragon.drop(player, random, console, drops, false, 1);
-	
 	System.out.println("\tAs the dragon fades from existence, a small glowing stone appears from where it once stood.");
 
 	player.win(console);

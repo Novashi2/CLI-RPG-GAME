@@ -99,8 +99,8 @@ public class Enemy extends Entity{
 	    System.out.println("The poison in " + name + "'s body dealt " + name + " " + damage + " damage.");
 	}
 	if (regeneration > 0){
-	    int bonusHealth = regeneration;
-	    regeneration --;
+	    int bonusHealth = regeneration * 2;
+	    regeneration /= 2;
 	    health += bonusHealth;
 	    System.out.println(name + " regenerated " + bonusHealth + " health.");
 	}
