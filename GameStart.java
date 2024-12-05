@@ -17,7 +17,8 @@ public class GameStart {
 		General.printText("Printable_text.txt", 1);
 		player.savePoint = -1 + 2 * getDungeonChoice(console); // Determines the next path that the player will go down.
 	    }else if (player.savePoint == 1){
-		// dungeon 1
+		// call dungeon 1
+				DungeonOne.firstDungeon(player, r,console);
 		player.save(2, console);
 	    } else if(player.savePoint == 2){
                 //call dungeon 2
