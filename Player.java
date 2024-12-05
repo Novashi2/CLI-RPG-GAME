@@ -7,12 +7,11 @@ import java.io.PrintStream;
 
 public class Player extends Entity{
     
-    public static final int PLAYER_LINES = 4;
+    public static final int PLAYER_LINES = 3;
 
     // general data variables
     public int savePoint = 0;
     private int index = -1;
-    int health = 500;
     String ID = null;
 
     // player-only effects variables
@@ -56,8 +55,6 @@ public class Player extends Entity{
 	else if (abilities[choice].startsWith("Bite")) dragonBite(enemy);
 	else if (abilities[choice].startsWith("Tail")) tailWhip(enemy);
 	System.out.println();
-	// servant attack
-	servants.attack(random, enemy, console);
     }
 
 
@@ -68,7 +65,7 @@ public class Player extends Entity{
 
     // The peashooter function uses a random object to decude whether the player will or won't hit the enemy. 
     public void peashooter(Enemy enemy, Random random){
-    	int damage = 90;
+    	int damage = 50;
 	int hitNumber = random.nextInt(100);
 	
 	if (peashooterAmmo > 0){
@@ -95,7 +92,7 @@ public class Player extends Entity{
 	    enemy.burn += burnCounter;
 	    enemy.health -= baseDamage;
 	} else { // poison attack
-	    int poisonCounter = decider - 66;
+	    int poisonCounter = 12;
 	    System.out.println("You dealt " + baseDamage + " damage and poisoned the " + enemy.name + ".");
 	    enemy.poison += poisonCounter;
 	    enemy.health -= baseDamage;
@@ -120,8 +117,8 @@ public class Player extends Entity{
 	    System.out.println("You have been burnt for " + damage + " damage.");
 	}
 	if (poison > 0){
-	    damage = poison * 2;
-	    poison --;
+	    damage = poison;
+	    poison /= 2;
 	    health -= damage;
 	    System.out.println("The poison in your body dealt " + damage + " damage to you.");
 	}
@@ -133,15 +130,12 @@ public class Player extends Entity{
 	}
 	System.out.println();
 	dragonCurse(random);
-	servants.dealEffects();
     } 
 
     // Dragon curse -- scales
     public void addScales(int newScales){
 	this.newScales += newScales;
-	regeneration += 2 * newScales;
-	poison -= 2 * newScales;
-	burn -= 2 * newScales;
+	regeneration += newScales/2;
 	System.out.println("You have recieved " + newScales + " scales. The scales immediately merge with your skin and you feel a");
 	System.out.println("surge in power. Yet, you also sense a bit of your humanity slip away...\n");
     }
@@ -157,24 +151,6 @@ public class Player extends Entity{
 
 	if (scales >= 400){ // kills player
 	    if (!slayedDragon){
-		File dragonServants = new File("DragonServants.txt");
-		Scanner servantReader = new Scanner(dragonServants);
-	    
-		String[] currentServants = new String[0];
-
-		while (servantReader.hasNextLine()){
-		    currentServants = Arrays.copyOf(currentServants, currentServants.length + 1);
-		    currentServants[currentServants.length - 1] = servantReader.nextLine();
-		}
-	    
-		// adds player as a dragon
-		currentServants = Arrays.copyOf(currentServants, currentServants.length + 1);
-		currentServants[currentServants.length - 1] = ID + " " + "dragon " + element;
-	    
-		PrintStream servantWriter = new PrintStream(dragonServants);
-		for (int i = 0; i < currentServants.length; i++){
-		    servantWriter.println(currentServants[i]);
-		}
 		System.out.println("You became a dragon and are cursed to serve the elder dragon until the mountain's core is found.\n");
 	    } else {
 		System.out.println("The dragon's curse has been completed. You are now the Elder Dragon");
@@ -241,14 +217,12 @@ public class Player extends Entity{
 	// clears the players.txt and dragonServants.txt file
 	// Once one account wins, all progress is lost on purpose.
 	PrintStream player = new PrintStream("players.txt");
-	PrintStream dragonServants = new PrintStream("dragonServants.txt");
 
 	System.exit(0);
     }
     
     public void kill(Enemy enemy) throws FileNotFoundException, InterruptedException{
-	File dragonServants = new File("DragonServants.txt");
-	Scanner servantReader = new Scanner(dragonServants);
+
 
 	System.out.println("You were slain by " + enemy.name + ".");
 	System.out.println("As you die, you feel the Elder Dragon's power turning you into a part of the dungeon.");
@@ -257,29 +231,9 @@ public class Player extends Entity{
 	// prints death images
 	if (enemy.type.equals("spider")) General.printText("Printable_text.txt", 2);
 
-	String[] dragonServantLines = new String[100];
-	
-	// puts current information in the file in the array
-	int i = 0;
-	while (servantReader.hasNextLine()){
-	    if (i == dragonServantLines.length){
-		dragonServantLines = Arrays.copyOf(dragonServantLines, dragonServantLines.length + 100);
-	    }
-	    dragonServantLines[i] = servantReader.nextLine();
-	    i++;
-	}
-
-	// adds player data to DragonServants.txt
-	dragonServantLines[i] = ID + " " + enemy.type;
-
-	PrintStream servantPrinter = new PrintStream(dragonServants);
-	
-	for (int j = 0; j <= i; j++){
-	    servantPrinter.println(dragonServantLines[j]);
-	}
 
 	System.exit(0);
-    }
+	}
     
     // This method updates the savePoint variable, saves the player information to the Players.txt file, and prompts the player on 
     // whether he or she wants to exit the game. 
@@ -322,17 +276,6 @@ public class Player extends Entity{
 	    String item = inventory.items[i];
 	    if (item.indexOf(' ') != -1) item = item.replace(" ", "_");
 	    playerData[2][index] += item + " ";
-	}
-
-	playerData[3][index] = "";
-	for (int i = 0; i < servants.servants.length; i++){
-	    Enemy servant = servants.servants[i];
-	    String type = servant.type;
-	    int health = servant.health;
-	    int poison = servant.poison;
-	    int burn = servant.burn;
-	    int regeneration = servant.regeneration;
-	    playerData[3][index] += type + " " + health +  " " + poison + " " + burn + " " + regeneration + " ";
 	}
 
 	PrintStream playerWriter = new PrintStream(playerFile);
@@ -439,22 +382,7 @@ public class Player extends Entity{
 			newItem = newItem.replace("_", " ");
 		    }
 		    inventory.addItem(newItem, console, this, random);
-		}
-		// gets servants	
-		Scanner servants = new Scanner(playerInfo[3][selection]);
-		while (servants.hasNext()){
-		    String newType = servants.next();
-		    String newElement = null;
-		    if (newType.equals("dragon")) newElement = servants.next();
-		    int newHealth = servants.nextInt();
-		    int newPoison = servants.nextInt();
-		    int newBurn = servants.nextInt();
-		    this.servants.addServant(newType, null, newElement, true);
-		    Enemy newServant = this.servants.servants[this.servants.servants.length - 1];
-		    newServant.health = newHealth;
-		    newServant.poison = newPoison;
-		    newServant.burn = newBurn;
-		}     
+		}  
 	    }else newPlayer(console);
 	}else newPlayer(console);
 

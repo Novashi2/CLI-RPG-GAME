@@ -29,7 +29,7 @@ public class DungeonThree {
 	General.Continue(console);
 
 	General.battle(player, spider, random, console);
-	String[] spiderDrops = {"spider token", "spider egg sack", "poison potion", "health potion"};
+	String[] spiderDrops = {"spider token", "poison potion", "health potion"};
 	spider.drop(player, random, console, spiderDrops, false, 2);
 
 	System.out.println("After cutting through the remaining webs, you enter through a hole you find that leads into a tunnel.");
@@ -43,7 +43,7 @@ public class DungeonThree {
 
 	Enemy skeleton = new Enemy("skeleton", null, null, false);
 	General.battle(player, skeleton, random, console);
-	String[] skeletonDrops = {"dragon egg", "skull", "general potion", "poison potion", "fire potion"};
+	String[] skeletonDrops = {"general potion", "poison potion", "fire potion"};
 	skeleton.drop(player, random, console, skeletonDrops, false, 3);
 
 	System.out.println("After wandering around the cavern, you see a bright light and decide to follow it. The light brings");
