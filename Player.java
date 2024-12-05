@@ -12,7 +12,6 @@ public class Player extends Entity{
     // general data variables
     public int savePoint = 0;
     private int index = -1;
-    int health = 500;
     String ID = null;
 
     // player-only effects variables
@@ -68,7 +67,7 @@ public class Player extends Entity{
 
     // The peashooter function uses a random object to decude whether the player will or won't hit the enemy. 
     public void peashooter(Enemy enemy, Random random){
-    	int damage = 90;
+    	int damage = 50;
 	int hitNumber = random.nextInt(100);
 	
 	if (peashooterAmmo > 0){

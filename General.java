@@ -36,7 +36,9 @@ public class General {
 	if (player.health <= 0){
 	    player.kill(enemy);
 	}
-	
+	System.out.println("Here are your stats: \n"); 
+	System.out.println(player);
+	System.out.println();
     }
 
     // This method takes a file name and integer. Afterwards, it uses the file name to print the entire file if the textNumber

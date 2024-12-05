@@ -5,7 +5,7 @@ import java.util.Random;
 
 public class Entity{
     // common general variables
-    public int health = 0;
+    public int health = 500;
     public String name = "You";
     public String element;
     public ServantLog servants = new ServantLog();
@@ -39,7 +39,7 @@ public class Entity{
 	
 	String targetNote = "";
 	String servantNote = ""; // this will be added to the servant note in the for loop
-	int damage = 100; // default damage
+	int damage = 50; // default damage
 	int burnIncrement = 0;
 	int poisonIncrement = 0;
 	int regenerationIncrement = 0;
@@ -53,11 +53,11 @@ public class Entity{
 	    servantNote = " was also caught in the fire and took " + damage + " damage.";
 	    burnIncrement = 15;
 	} else if (isLightning){
-	    damage = 125;
+	    damage = 80;
 	    targetNote = name + " unleashed a torrent of lightning, dealing " + damage + " damage and shocking " + target.name.toLowerCase();
 	    servantNote = " also got shocked and took " + damage + " damage.";
 	} else if (isAir){
-	    damage = 150;
+	    damage = 80;
 	    targetNote = name + " created a storm, dealing " + damage + " damage.";
 	    servantNote = " also got caught in the storm and was dealt " + damage + " damage.";
 	} else if (element.equals("poison") || elements[elementNumber].equals("poison")){
