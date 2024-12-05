@@ -69,12 +69,12 @@ public class Enemy extends Entity{
 		System.out.println(name + " dealt 25 damage to you.");
 	} 
 	else if (type.equals("Amalgam")) {
-		player.health -= 15;
-		System.out.println(name + " dealt 15 damage to you.");
+		player.health -= 60;
+		System.out.println(name + " dealt 60 damage to you.");
 	}
 	else if (type.equals("Golem")) {
-		player.health -= 20;
-		System.out.println(name + " dealt 20 damage to you.");
+		player.health -= 45;
+		System.out.println(name + " dealt 45 damage to you.");
 	}
 
 	System.out.println();

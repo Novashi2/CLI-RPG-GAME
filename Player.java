@@ -87,8 +87,8 @@ public class Player extends Entity{
 	int decider = random.nextInt(1,101);
 	int baseDamage = 25;
 	if (decider <= 30){ // bonus damage
-	    System.out.println("You dealt 50 damage to the " + enemy.name);
-	    enemy.health -= 50;
+	    System.out.println("You dealt " + baseDamage + " damage to the " + enemy.name);
+	    enemy.health -= baseDamage;
 	} else if (decider <= 66){// burn attack
 	    int burnCounter = decider - 10;
 	    System.out.println("You dealt " + baseDamage + " damage and burnt the " + enemy.name + ".");
