@@ -340,7 +340,7 @@ public class Enemy extends Entity{
 	
 		Fleshball(player);
 	
-		for (int i = 0; i < rand.nextInt(3); i++){	    
+		for (int i = 0; i < rand.nextInt(2); i++){	    
 			System.out.println(message);
 			Fleshball(player);
 		}

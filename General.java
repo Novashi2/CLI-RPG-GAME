@@ -11,6 +11,7 @@ public class General {
     public static void battle(Player player, Enemy enemy, Random random, Scanner console) throws FileNotFoundException, InterruptedException{
 
 	while (player.health > 0 && enemy.health > 0){
+		System.out.println("----------------------------------------------------------------------------------");
 	    System.out.println("Here are your stats: \n"); 
 	    System.out.println(player);
 	    System.out.println();
@@ -36,6 +37,7 @@ public class General {
 	if (player.health <= 0){
 	    player.kill(enemy);
 	}
+	System.out.println("------------------------------------------------------------------------------------");
 	System.out.println("Here are your stats: \n"); 
 	System.out.println(player);
 	System.out.println();
