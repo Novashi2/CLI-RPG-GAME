@@ -12,14 +12,9 @@ public class DungeonFour {
     //method to force the player to say yes or no
     public static boolean yesno(Scanner s) {
         //scanner var for the user input
-        String tempScan = s.nextLine();
-        tempScan = s.nextLine();
-        while(!(tempScan.equalsIgnoreCase("y")) &&! (tempScan.equalsIgnoreCase("n"))) {
-            tempScan = s.nextLine(); 
-            System.out.println("Please respond with \"y\" or \"n\"");
-        }
+        char tempScan = General.yOrN(s);
         //just returns a boolean to be used in if/else statements rather than compare later
-        return(tempScan.equalsIgnoreCase("y"));
+        return(tempScan == 'y');
     }
     
     public static void theFourthDungeon(Scanner s, Random r, Player player) throws FileNotFoundException, InterruptedException{
@@ -36,7 +31,7 @@ public class DungeonFour {
 
         //hand gamble - 4.2  
         System.out.println("A hand reaches out, you hear a voice, \"Want to gamble?\"");
-        System.out.print("y/n");
+        System.out.print("y/n ");
         //the call of yesno evaluates true if the player enters "y"
         if(yesno(s)) {
             if(posNeg ==0){
@@ -55,6 +50,7 @@ public class DungeonFour {
 
         //shadow fight 4.3
         //fight encounter with a mirror of themselves 
+        System.out.println("The shadow crawls out from underneath your feet to attack.\n");
         Enemy hand = new Enemy ("shadow", 50);
         General.battle(player, hand, r, s);
         System.out.println();
