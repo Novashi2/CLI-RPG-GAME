@@ -16,7 +16,7 @@ public class General {
 	    System.out.println();
 
 	    if (player.inventory.size > 0){
-		System.out.println("Do you want to use an item? (y/n): ");
+		System.out.print("Do you want to use an item? (y/n): ");
 		char choice = yOrN(console);
 		if (choice == 'y') player.inventory.useItem(console, player, random);
 	    }
@@ -113,18 +113,20 @@ public class General {
     }
 
     public static char yOrN(Scanner console){
-	char choice = console.nextLine().charAt(0);
+	char choice = console.next().toLowerCase().charAt(0);
 	while (choice != 'y' && choice != 'n'){
 	    System.out.print("Please enter either \"y\" or \"n\": ");
-	    choice = console.nextLine().charAt(0);
+	    choice = console.next().toLowerCase().charAt(0);
 	}
 	System.out.println();
+	console.nextLine();
 	return choice;
     }
 
-	public static void Continue(Scanner Console) {
-	    System.out.print("Type in anything; then press ENTER to continue: ");
-	    Console.next();
-	    System.out.println();
-	}
+    public static void Continue(Scanner Console) {
+	System.out.print("Type in anything; then press ENTER to continue: ");
+	Console.next();
+	Console.nextLine();
+	System.out.println();
+    }
 }

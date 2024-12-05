@@ -11,18 +11,6 @@ public class GameStart {
         Random r = new Random(); 
         
 	Player player = new Player(console, r);
-        // Health that has not been moved out yet.
-        int dragonHealth = 100;
-        int skeletonHealth = 30;
-	
-        // Damage   
-        int dragonDamage = 15;
-        int skeletonDamage = 15;
-
-
-	
-
-
         // This function is an infinite loop because the battle function and dragon fight will end the game.
         while (true) { 
             if  (player.savePoint == 0) {

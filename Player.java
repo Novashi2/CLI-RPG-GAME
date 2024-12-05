@@ -83,7 +83,7 @@ public class Player extends Entity{
 
 
     // The wand function adds a random negative effect to the enemy.
-    public void wand (Enemy enemy, Random random){ // if we have time, it may be intersting to add more effects, like mind control
+    public void wand(Enemy enemy, Random random){ // if we have time, it may be intersting to add more effects, like mind control
 	int decider = random.nextInt(1,101);
 	int baseDamage = 25;
 	if (decider <= 30){ // bonus damage
@@ -96,7 +96,7 @@ public class Player extends Entity{
 	    enemy.health -= baseDamage;
 	} else { // poison attack
 	    int poisonCounter = decider - 66;
-	    System.out.println("You dealt " + baseDamage + "damage and poisoned the " + enemy.name + ".");
+	    System.out.println("You dealt " + baseDamage + " damage and poisoned the " + enemy.name + ".");
 	    enemy.poison += poisonCounter;
 	    enemy.health -= baseDamage;
 	}
@@ -148,7 +148,7 @@ public class Player extends Entity{
 
     public void dragonCurse(Random random) throws FileNotFoundException{
 	if (scales == 0 && newScales > 0){
-	    System.out.println("You have recieved the Elder's Dragon's curse. As you get more scales, you will start to become a");
+	    System.out.println("You have recieved the Elder's Dragon's curse. As you get more scales, you will become more like a");
 	    System.out.println("dragon.");
 	}
 
@@ -169,7 +169,7 @@ public class Player extends Entity{
 	    
 		// adds player as a dragon
 		currentServants = Arrays.copyOf(currentServants, currentServants.length + 1);
-		currentServants[currentServants.length] = ID + " " + "dragon " + element;
+		currentServants[currentServants.length - 1] = ID + " " + "dragon " + element;
 	    
 		PrintStream servantWriter = new PrintStream(dragonServants);
 		for (int i = 0; i < currentServants.length; i++){
@@ -382,7 +382,7 @@ public class Player extends Entity{
 	String[][] playerInfo = new String[PLAYER_LINES][10000]; // 10000 is present because it is an impossibly high number that 
 								 // nobody is likely to hit
 	// prints welcome ASCII art
-	General.printText("Printable_Text.txt", 0);
+	General.printText("Printable_text.txt", 0);
 	
 	// checks to see if data is in file. If so, then the program prompts the user on whether he or she wants to pull up a profile
 	if (playerData.hasNext()){
