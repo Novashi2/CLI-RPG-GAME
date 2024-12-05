@@ -139,9 +139,6 @@ public class Player extends Entity{
     // Dragon curse -- scales
     public void addScales(int newScales){
 	this.newScales += newScales;
-	regeneration += 2 * newScales;
-	poison -= 2 * newScales;
-	burn -= 2 * newScales;
 	System.out.println("You have recieved " + newScales + " scales. The scales immediately merge with your skin and you feel a");
 	System.out.println("surge in power. Yet, you also sense a bit of your humanity slip away...\n");
     }
@@ -154,8 +151,9 @@ public class Player extends Entity{
 
 	scales += newScales;
 	newScales = 0;
+	maxScales = 800;
 
-	if (scales >= 400){ // kills player
+	if (scales >= maxScales){ // kills player
 	    if (!slayedDragon){
 		File dragonServants = new File("DragonServants.txt");
 		Scanner servantReader = new Scanner(dragonServants);
@@ -181,7 +179,7 @@ public class Player extends Entity{
 	    }
 	    // print end image
 	    System.exit(0);  
-	} else if (scales >= 300 && !stageThree){
+	} else if (scales >= 3 * maxScales / 4 && !stageThree){
 	    stageThree = true;
 	    stageTwo = true;
 	    stageOne = true;
@@ -203,7 +201,7 @@ public class Player extends Entity{
 	    }
 
 	    System.out.println("\nYou have lost some of your abilities.\n");
-	} else if (scales >= 200 && !stageTwo){
+	} else if (scales >= 2 * maxScales / 4 && !stageTwo){
 	    stageTwo = true;
 	    stageOne = true;
 	    System.out.println("You feel a sudden burst of power as any sense of humanity continues to wane.");
@@ -216,7 +214,7 @@ public class Player extends Entity{
 	    abilities[abilitiesCounter] = "Draconic " + element;
 	    System.out.println("You have recieved the " + abilities[abilitiesCounter] + " ability.");
 	    System.out.println();
-	} else if (scales > 100 && !stageOne){
+	} else if (scales > maxScales / 4 && !stageOne){
 	    stageOne = true;
 	    System.out.println("You notice that everything seems to be smaller. When you look down, you realize the opposite is");
 	    System.out.println("true. A large amount of your body is covered in scales, and you appear less human and are harder");
