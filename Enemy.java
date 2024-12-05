@@ -164,7 +164,7 @@ public class Enemy extends Entity{
     public void spiderBite(Entity player){
 	int damage = 15;
 	player.health -= damage;
-	System.out.println(name + " bit " + player.name + " and dealt " + damage + " damage, poisoning " + target.name + ".");
+	System.out.println(name + " bit " + player.name + " and dealt " + damage + " damage, poisoning " + player.name + ".");
 	player.poison += 3;
     }
     
