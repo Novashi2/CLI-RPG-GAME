@@ -17,7 +17,7 @@ public class Entity{
 
 
 
-    public void attack(Random random, Entity target, Scanner console){
+    public void attack(Random random, Entity target){
 	System.out.println("This should not be used. Please use inheritance and overwrite this function.");
     }
     
@@ -96,5 +96,10 @@ public class Entity{
 	if (name == "You") posessive = "your";
 	else posessive = "its";
 	System.out.println(name + " threw " + target.name + " with " + posessive + " tail and dealt " + damage + " damage.");
+    }
+
+    public void addScales(int scales){
+	System.out.println("FAILED TO ADD SCALES");
+	System.out.println(scales);
     }
 }

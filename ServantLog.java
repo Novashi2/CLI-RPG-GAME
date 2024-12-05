@@ -19,7 +19,9 @@ public class ServantLog{
 	if (servants.length > 0){
 	    // first attack
 	    int firstServant = random.nextInt(servants.length);
-	    servants[firstServant].attack(random, player, console);
+	    Enemy firstAttacker = servants[firstServant];
+	    firstAttacker.attack(random, player, console);
+	    System.out.println("1");
 	    if (servants.length > 1) {
 		int secondServant = random.nextInt(servants.length);
 		while (secondServant == firstServant){
