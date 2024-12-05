@@ -1,8 +1,9 @@
-Steve 2056 5 -500 -490 20 100
+j 500 2 0 0 20 0
 Peashooter Wand Sword 
 
-
-Jack 570 5 -20 -20 18 10
+j\ 500 5 0 0 20 0
 Peashooter Wand Sword 
 
+jack 500 2 0 0 20 0
+Peashooter Wand Sword 
 

@@ -78,9 +78,6 @@ public class Enemy extends Entity{
 	}
 
 	System.out.println();
-	// servant attack
-	servants.attack(rand, player, console);
-	
     }
 
 
@@ -102,13 +99,12 @@ public class Enemy extends Entity{
 	    System.out.println("The poison in " + name + "'s body dealt " + name + " " + damage + " damage.");
 	}
 	if (regeneration > 0){
-	    int bonusHealth = 2 * regeneration;
+	    int bonusHealth = regeneration;
 	    regeneration --;
 	    health += bonusHealth;
 	    System.out.println(name + " regenerated " + bonusHealth + " health.");
 	}
 
-	servants.dealEffects();
     }
 
     // The function below makes the enemy drop an item.
@@ -201,7 +197,6 @@ public class Enemy extends Entity{
     public void soulArrow(Entity player){
 	int damage = health;
 	player.health -= damage;
-	health *= 2;
 	System.out.println(name + " shot a soul arrow and dealt " + damage + " damage.");
     }
 
@@ -237,18 +232,8 @@ public class Enemy extends Entity{
     public void setDragon() throws FileNotFoundException{
 	this.health = 200;
 	if (type.equals("Elder Dragon")){
-	    this.health = 700;
+	    this.health = 250;
 	    element = "elder";
-	    // The lines below read the dragon's servants into the servants array
-	    Scanner servantsReader = new Scanner(new File("DragonServants.txt"));
-	    while (servantsReader.hasNextLine()){
-		Scanner newServant = new Scanner(servantsReader.nextLine());
-		String newTitle = newServant.next();
-		String newType = newServant.next();
-		String newElement = null;
-		if (newType.equals("dragon")) newElement = newServant.next();
-		servants.addServant(newType, newTitle, newElement, false); 
-	    }
 	}
 
     }
@@ -263,7 +248,7 @@ public class Enemy extends Entity{
     }
 
     public void spikeShot(Entity player){
-	int damage = 60;
+	int damage = 45;
 	player.health -= damage;
 	System.out.println("The Elder Dragon threw a spike at you, dealing " + damage + " damage.");
 	player.addScales(20);
