@@ -95,9 +95,6 @@ public class Inventory{
 	else if (item.equals("fire potion")) potion("fire", player);
 	else if (item.equals("regeneration potion")) potion("regeneration", player);
 	else if (item.equals("general potion")) potion("everything", player);
-	else if (item.equals("dragon egg")) servantToken("dragon", player, random);
-	else if (item.equals("skull")) servantToken("skeleton", player, random);
-	else if (item.equals("spider egg sack")) for (int i = 0; i < random.nextInt(2, 10); i++) servantToken("spider", player, random);
 	else if (item.equals("spider token")) leech(player);
 	else if (item.equals("dragon crystal")) player.addScales(100);
 	else if (item.equals("temporary curse cure")) curseCure(player);
@@ -135,19 +132,6 @@ public class Inventory{
 	    System.out.println("You have gain some regeneration");
         }
         System.out.println();
-    }
-    
-    // This function is ran for item that add items to the player's 
-    public void servantToken(String type, Player player, Random random) throws FileNotFoundException{
-	if (type.equals("dragon")){
-	    String[] elements = {"fire", "earth", "poison", "air", "lightning"};
-	    String element = elements[random.nextInt(elements.length)];
-	    player.servants.addServant(type, null, element, true);
-	    System.out.println("You have summoned a " + element + " dragon.");
-	}else {
-	    player.servants.addServant(type, null, null, true);
-	    System.out.println("You have summoned a " + type + ".");
-	}
     }
 
     public void leech(Player player){

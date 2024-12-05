@@ -34,8 +34,6 @@ public class Enemy extends Entity{
 	else if (type.equals("skeleton")) setSkeleton();
 	else if (type.equals("draconic hornets")) setHornets();
 	else if (type.equals("dragon") || type.equals("Elder Dragon")) setDragon();
-	else if (type.equals("Werewolf")) setWerewolf();
-	else if (type.equals("Slime"))setSlime();
     }
 
     public void buildName(boolean playerHas){
@@ -274,14 +272,14 @@ public class Enemy extends Entity{
 		int damage = 30;
 		player.health -= damage;
 		health += 15;
-		System.out.println("The werewolf lunges! Biting into you and dealt "+damage+", it looks envigorated.");
+		System.out.println("The werewolf lunges and bites you and dealt "+damage+", it looks envigorated.");
 	}
 
 	public void wolfClaw(Entity player){
 		int damage = 25;
 		player.health -= damage;
 		player.poison += 8;
-		System.out.println("He runs forward slashing and dealt "+damage+", you feel poisoned");
+		System.out.println("It runs forward slashing and dealt "+damage+", you feel poisoned");
 
 	}
 	public void werewolfAttack(Entity player, Random random){
