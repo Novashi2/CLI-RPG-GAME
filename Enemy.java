@@ -99,8 +99,8 @@ public class Enemy extends Entity{
 	    System.out.println("The poison in " + name + "'s body dealt " + name + " " + damage + " damage.");
 	}
 	if (regeneration > 0){
-	    int bonusHealth = regeneration;
-	    regeneration --;
+	    int bonusHealth = regeneration * 2;
+	    regeneration /= 2;
 	    health += bonusHealth;
 	    System.out.println(name + " regenerated " + bonusHealth + " health.");
 	}
@@ -127,7 +127,7 @@ public class Enemy extends Entity{
 		System.out.println();
 		System.out.print("Select a number from the list above: ");
 		
-		int choice = General.getInt(console, 1, drops.length) - 1;
+		int choice = General.getInt(console, 1, drops.length - choiceNumber) - 1;
 		
 		// The lines below use and remove the item from the drops array.
 		player.inventory.addItem(drops[choice], console, player, random);
@@ -204,14 +204,14 @@ public class Enemy extends Entity{
 	int damage = 25;
 	player.health -= damage;
 	player.burn += 5;
-	System.out.println(name + " shot a fire arrow and dealing " + damage + " damage and burning " + player.name + ".");
+	System.out.println(name + " shot a fire arrow and dealing " + damage + " damage and burning " + player.name.toLowerCase() + ".");
     }
 
     public void poisonArrow(Entity player){
 	int damage = 25;
 	player.health -= damage;
 	player.poison += 20;
-	System.out.println(name + " shot a poisoned arrow and dealing " + damage + " damage and poisoning " + player.name  + ".");
+	System.out.println(name + " shot a poisoned arrow and dealing " + damage + " damage and poisoning " + player.name.toLowerCase()  + ".");
     }
 
 

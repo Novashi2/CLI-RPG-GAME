@@ -55,7 +55,7 @@ public class DungeonThree {
 	Enemy hornetSwarm = new Enemy("draconic hornets", null, null, false);
 	General.battle(player, hornetSwarm, random, console);
 	String[] swarmDrops = {"fire potion", "regeneration potion", "general potion", "dragon crystal", "dragon crystal"};
-	hornetSwarm.drop(player, random, console, skeletonDrops, false, 3);
+	hornetSwarm.drop(player, random, console, swarmDrops, false, 3);
 	
 	// possibly add small dragon--not the elder dragon
 	System.out.println("You continue to follow the light down the hallway until you see a hollow doorway made of steel. It the");

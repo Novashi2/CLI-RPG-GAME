@@ -23,7 +23,7 @@ public class Player extends Entity{
     
     // abilities variables
     Inventory inventory = new Inventory();
-    public String[] abilities = {"Peashooter", "Wand", "Sword", null, null, null, null};// null slots added to expand skills
+    public String[] abilities = {"Peashooter", "Wand", "Sword", null , null, null, null};// null slots added to expand skills
     public int peashooterAmmo = 20;
 
     // gameplay variables that aren't stored
@@ -135,7 +135,7 @@ public class Player extends Entity{
     // Dragon curse -- scales
     public void addScales(int newScales){
 	this.newScales += newScales;
-	regeneration += newScales/2;
+	regeneration += newScales / 2;
 	System.out.println("You have recieved " + newScales + " scales. The scales immediately merge with your skin and you feel a");
 	System.out.println("surge in power. Yet, you also sense a bit of your humanity slip away...\n");
     }
@@ -148,8 +148,9 @@ public class Player extends Entity{
 
 	scales += newScales;
 	newScales = 0;
+	int maxScales = 800;
 
-	if (scales >= 400){ // kills player
+	if (scales >= maxScales){ // kills player
 	    if (!slayedDragon){
 		System.out.println("You became a dragon and are cursed to serve the elder dragon until the mountain's core is found.\n");
 	    } else {
@@ -157,7 +158,7 @@ public class Player extends Entity{
 	    }
 	    // print end image
 	    System.exit(0);  
-	} else if (scales >= 300 && !stageThree){
+	} else if (scales >= 3 * maxScales / 4 && !stageThree){
 	    stageThree = true;
 	    stageTwo = true;
 	    stageOne = true;
@@ -179,7 +180,7 @@ public class Player extends Entity{
 	    }
 
 	    System.out.println("\nYou have lost some of your abilities.\n");
-	} else if (scales >= 200 && !stageTwo){
+	} else if (scales >= 2 * maxScales / 4 && !stageTwo){
 	    stageTwo = true;
 	    stageOne = true;
 	    System.out.println("You feel a sudden burst of power as any sense of humanity continues to wane.");
@@ -192,7 +193,7 @@ public class Player extends Entity{
 	    abilities[abilitiesCounter] = "Draconic " + element;
 	    System.out.println("You have recieved the " + abilities[abilitiesCounter] + " ability.");
 	    System.out.println();
-	} else if (scales > 100 && !stageOne){
+	} else if (scales > maxScales / 4 && !stageOne){
 	    stageOne = true;
 	    System.out.println("You notice that everything seems to be smaller. When you look down, you realize the opposite is");
 	    System.out.println("true. A large amount of your body is covered in scales, and you appear less human and are harder");
@@ -210,10 +211,10 @@ public class Player extends Entity{
 	System.out.println();
 	General.Continue(console);
 	System.out.println("You are celebrated as a hero when you return to your village and live in peace for the next few years");
-	System.out.println("\nStill, the lair still calls...\n");
+	System.out.println("\nStill, the lair calls...\n");
 
-	// print the victory image
-	
+	General.printText("Printable_text.txt", 3);
+
 	// clears the players.txt and dragonServants.txt file
 	// Once one account wins, all progress is lost on purpose.
 	PrintStream player = new PrintStream("players.txt");
@@ -230,6 +231,10 @@ public class Player extends Entity{
 
 	// prints death images
 	if (enemy.type.equals("spider")) General.printText("Printable_text.txt", 2);
+	else if (enemy.type.equals("skeleton")) General.printText("Printable_text.txt", 4);
+	else if (enemy.type.equals("golem")) General.printText("Printable_text.txt", 5);
+	else if (enemy.type.equals("draconic hornets")) General.printText("Printable_text.txt", 6);
+	else if (enemy.type.equals("Elder Dragon") || enemy.type.equals("dragon")) General.printText("Printable_text.txt", 7);
 
 
 	System.exit(0);
@@ -272,6 +277,7 @@ public class Player extends Entity{
 	
 	// stores the items in an array
 	playerData[2][index] = "";
+	System.out.println("SIZE: " + inventory.size);
 	for (int i = 0; i < inventory.size; i++){
 	    String item = inventory.items[i];
 	    if (item.indexOf(' ') != -1) item = item.replace(" ", "_");
@@ -378,7 +384,6 @@ public class Player extends Entity{
 		while (items.hasNext()){
 		    String newItem = items.next();
 		    if (newItem.indexOf('_') != -1){
-			System.out.println("INVALID");
 			newItem = newItem.replace("_", " ");
 		    }
 		    inventory.addItem(newItem, console, this, random);

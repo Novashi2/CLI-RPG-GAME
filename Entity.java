@@ -59,7 +59,7 @@ public class Entity{
 	    poisonIncrement = 10;
 	    targetNote = name + " unleashed a wave of poison, dealing " + damage + " damage and poisoned " + target.name.toLowerCase() + ".";
 	} else if (element.equals("earth") || elements[elementNumber].equals("earth")){
-	    regenerationIncrement = 13;
+	    regenerationIncrement = 8;
 	    targetNote = name + " created an earthquake dealing " + damage + " damage to " + target.name.toLowerCase();
 	}
 
