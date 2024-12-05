@@ -96,8 +96,8 @@ public class Enemy extends Entity{
 	    System.out.println(name + " was burnt for " + damage + " damage.");
 	}
 	if (poison > 0){
-	    damage = poison * 2;
-	    poison --;
+	    damage = poison;
+	    poison /= 2;
 	    health -= damage;
 	    System.out.println("The poison in " + name + "'s body dealt " + name + " " + damage + " damage.");
 	}

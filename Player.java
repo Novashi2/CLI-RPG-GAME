@@ -95,7 +95,7 @@ public class Player extends Entity{
 	    enemy.burn += burnCounter;
 	    enemy.health -= baseDamage;
 	} else { // poison attack
-	    int poisonCounter = decider - 66;
+	    int poisonCounter = 12;
 	    System.out.println("You dealt " + baseDamage + " damage and poisoned the " + enemy.name + ".");
 	    enemy.poison += poisonCounter;
 	    enemy.health -= baseDamage;
@@ -120,8 +120,8 @@ public class Player extends Entity{
 	    System.out.println("You have been burnt for " + damage + " damage.");
 	}
 	if (poison > 0){
-	    damage = poison * 2;
-	    poison --;
+	    damage = poison;
+	    poison /= 2;
 	    health -= damage;
 	    System.out.println("The poison in your body dealt " + damage + " damage to you.");
 	}
