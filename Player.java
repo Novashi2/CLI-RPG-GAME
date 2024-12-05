@@ -23,7 +23,7 @@ public class Player extends Entity{
     
     // abilities variables
     Inventory inventory = new Inventory();
-    public String[] abilities = {"Peashooter", "Wand", "Sword", null, null, null, null};// null slots added to expand skills
+    public String[] abilities = {"Peashooter", "Wand", "Sword", "god", null, null, null};// null slots added to expand skills
     public int peashooterAmmo = 20;
 
     // gameplay variables that aren't stored
@@ -54,6 +54,7 @@ public class Player extends Entity{
 	else if (abilities[choice].startsWith("Draconic")) elementalAttack(enemy, random, console, null, this);
 	else if (abilities[choice].startsWith("Bite")) dragonBite(enemy);
 	else if (abilities[choice].startsWith("Tail")) tailWhip(enemy);
+	else if (abilities[choice].startsWith("god")) enemy.health -= 1000;
 	System.out.println();
     }
 
@@ -135,10 +136,7 @@ public class Player extends Entity{
     // Dragon curse -- scales
     public void addScales(int newScales){
 	this.newScales += newScales;
-<<<<<<< HEAD
-=======
-	regeneration += newScales/2;
->>>>>>> aabdc11eac25952520722b2acaab1da3b04f3966
+	regeneration += newScales / 2;
 	System.out.println("You have recieved " + newScales + " scales. The scales immediately merge with your skin and you feel a");
 	System.out.println("surge in power. Yet, you also sense a bit of your humanity slip away...\n");
     }
@@ -151,7 +149,7 @@ public class Player extends Entity{
 
 	scales += newScales;
 	newScales = 0;
-	maxScales = 800;
+	int maxScales = 800;
 
 	if (scales >= maxScales){ // kills player
 	    if (!slayedDragon){
@@ -276,6 +274,7 @@ public class Player extends Entity{
 	
 	// stores the items in an array
 	playerData[2][index] = "";
+	System.out.println("SIZE: " + inventory.size);
 	for (int i = 0; i < inventory.size; i++){
 	    String item = inventory.items[i];
 	    if (item.indexOf(' ') != -1) item = item.replace(" ", "_");

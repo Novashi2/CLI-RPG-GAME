@@ -1,0 +1,6 @@
+Steve 430 4 5 0 20 0
+Peashooter Wand Sword god 
+spider_token health_potion general_potion fire_potion null dragon_crystal dragon_crystal general_potion 
+John 450 4 0 3 20 0
+Peashooter Wand Sword god 
+spider_token health_potion fire_potion poison_potion general_potion dragon_crystal dragon_crystal general_potion 

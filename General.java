@@ -30,7 +30,7 @@ public class General {
 	}
 
 	if (enemy.health <= 0) {
-	    System.out.println("You have slain " + enemy.name + ".");
+	    System.out.println("You have slain " + enemy.name + ".\n");
 	}
 
 	if (player.health <= 0){
