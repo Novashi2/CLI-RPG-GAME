@@ -382,7 +382,7 @@ public class Player extends Entity{
 	String[][] playerInfo = new String[PLAYER_LINES][10000]; // 10000 is present because it is an impossibly high number that 
 								 // nobody is likely to hit
 	// prints welcome ASCII art
-	General.printText("Printable_Text.txt", 0);
+	General.printText("Printable_text.txt", 0);
 	
 	// checks to see if data is in file. If so, then the program prompts the user on whether he or she wants to pull up a profile
 	if (playerData.hasNext()){
