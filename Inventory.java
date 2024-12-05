@@ -101,6 +101,10 @@ public class Inventory{
 	else if (item.equals("spider token")) leech(player);
 	else if (item.equals("dragon crystal")) player.addScales(100);
 	else if (item.equals("temporary curse cure")) curseCure(player);
+	else if (item.equals("dragon tooth")) player.addScales(100);
+	else if (item.equals("draconic wolf claw")) player.addScales(100);
+	else if (item.equals("wolf blood")) potion("everything",player);
+
 
 	size--;
 	System.out.println();
