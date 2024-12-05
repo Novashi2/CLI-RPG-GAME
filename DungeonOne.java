@@ -29,10 +29,6 @@ public class DungeonOne {
 
             System.out.println("You step past the puddle the slime has become as you continue forward.");
             System.out.println("The dungeon is lit by moss mimicking moonlight as you advance.");
-            System.out.println("A ragged man staring at the glowing moss stands hunched over in the middle of the room.");
-            System.out.println("He notices you quickly, his eyes flash red for a moment, his hands clenched and shaking.");
-            System.out.print("\n Do you... talk to him about gas prices?(1) Or... Give him a high five?(2) ");
-
-
+            System.out.println("A portal appears and you decide to enter it ");
         }
 }
