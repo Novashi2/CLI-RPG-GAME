@@ -23,7 +23,7 @@ public class Player extends Entity{
     
     // abilities variables
     Inventory inventory = new Inventory();
-    public String[] abilities = {"Peashooter", "Wand", "Sword", "god", null, null, null};// null slots added to expand skills
+    public String[] abilities = {"Peashooter", "Wand", "Sword", null , null, null, null};// null slots added to expand skills
     public int peashooterAmmo = 20;
 
     // gameplay variables that aren't stored
@@ -54,7 +54,6 @@ public class Player extends Entity{
 	else if (abilities[choice].startsWith("Draconic")) elementalAttack(enemy, random, console, null, this);
 	else if (abilities[choice].startsWith("Bite")) dragonBite(enemy);
 	else if (abilities[choice].startsWith("Tail")) tailWhip(enemy);
-	else if (abilities[choice].startsWith("god")) enemy.health -= 1000;
 	System.out.println();
     }
 
