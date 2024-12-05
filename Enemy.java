@@ -31,6 +31,8 @@ public class Enemy extends Entity{
 	else if (type.equals("skeleton")) setSkeleton();
 	else if (type.equals("draconic hornets")) setHornets();
 	else if (type.equals("dragon") || type.equals("Elder Dragon")) setDragon();
+	else if (type.equals("Amalgam")) setAmalgam();
+	else if (type.equals("Golem")) setGolem();
     }
 
     public void buildName(boolean playerHas){
@@ -60,6 +62,8 @@ public class Enemy extends Entity{
 	else if (type.equals("skeleton")) skeletonAttack(player, rand);
 	else if (type.equals("dragonic hornets")) hornetAttack(player);
 	else if (type.equals("dragon") || type.equals("Elder Dragon")) dragonAttack(player, rand, console);
+	else if (type.equals("Amalgam")) amalgamAttack(rand, player);
+	else if (type.equals("Golem")) golemAttack(rand, player);
 	else if (type.equals("mimic")) {
 	    player.health -= 50;
 	    System.out.println(name + "dealt 50 damage to you.");
@@ -68,14 +72,7 @@ public class Enemy extends Entity{
 		player.health -= 25;
 		System.out.println(name + " dealt 25 damage to you.");
 	} 
-	else if (type.equals("Amalgam")) {
-		player.health -= 60;
-		System.out.println(name + " dealt 60 damage to you.");
-	}
-	else if (type.equals("Golem")) {
-		player.health -= 45;
-		System.out.println(name + " dealt 45 damage to you.");
-	}
+
 
 	System.out.println();
     }
@@ -253,4 +250,62 @@ public class Enemy extends Entity{
 	System.out.println("The Elder Dragon threw a spike at you, dealing " + damage + " damage.");
 	player.addScales(20);
     }
+
+
+	public void setAmalgam() {
+		health = 120;
+	}
+
+	public void amalgamAttack(Random rand, Entity player){
+		int decider = rand.nextInt(100) + 1;
+		if (decider <=10) Grapple(player, rand);
+		else if (decider <= 70) Fleshball(player);
+		else leech(player);
+		}
+	
+		public void Fleshball(Entity player){
+		int damage = 20;
+		player.health -= damage;
+		System.out.println(name + " Threw a ball of flesh at " + player.name + " and dealt " + damage + " damage. ");
+		}
+		
+		public void Grapple(Entity player, Random rand){
+		String message = "You are still trapped in the Amalgam's embrace.";
+	
+		System.out.println(name + " enveloped you in itself. You struggle to break free from its embrace.");
+	
+	
+		Fleshball(player);
+	
+		for (int i = 0; i < rand.nextInt(3); i++){	    
+			System.out.println(message);
+			Fleshball(player);
+		}
+		}
+
+
+		public void setGolem() {
+			health = 150;
+		}
+	
+		public void golemAttack(Random rand, Entity player){
+			int hitChance = rand.nextInt(101);
+			int decider = rand.nextInt(100) + 1;
+			if (decider <=30) {
+				if (hitChance <= 60) Boulder(player, rand);
+				else System.out.println("The Golem threw a boulder and missed!");
+			}else Punch(player);
+			}
+			public void Punch(Entity player){
+			int damage = 20;
+			player.health -= damage;
+			System.out.println(name + " Threw a punch at " + player.name + " and dealt " + damage + " damage. ");
+			}
+			
+			public void Boulder(Entity player, Random rand){
+			int damage = 35;
+			player.health -= damage;
+			System.out.println(name + " launched a boulder at " + player.name + " and dealt " + damage + " damage. ");
+			}
+		
 }
