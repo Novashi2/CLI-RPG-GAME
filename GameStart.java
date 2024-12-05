@@ -17,12 +17,10 @@ public class GameStart {
 		General.printText("Printable_text.txt", 1);
 		player.savePoint = -1 + 2 * getDungeonChoice(console); // Determines the next path that the player will go down.
 	    }else if (player.savePoint == 1){
-		// call dungeon 1
-				DungeonOne.firstDungeon(player, r,console);
+		DungeonOne.firstDungeon(player, r,console);
 		player.save(2, console);
 	    } else if(player.savePoint == 2){
-                //call dungeon 2
-				DungeonTwo.SecondDungeon(console, r, player);
+		DungeonTwo.SecondDungeon(console, r, player);
 		player.save(5, console);
 	    }else if (player.savePoint == 3){
 		DungeonThree.run(player, r, console);

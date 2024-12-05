@@ -1,9 +1,0 @@
-<<<<<<< HEAD
-John 500 2 0 0 20 0
-Peashooter Wand Sword 
-
-=======
-Jack 587 5 0 0 20 36
-Peashooter Wand Sword 
-health_potion 
->>>>>>> e2ba50582799c196c3382c6abe0590226dc87d43
