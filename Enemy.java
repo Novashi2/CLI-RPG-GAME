@@ -36,6 +36,8 @@ public class Enemy extends Entity{
 	else if (type.equals("dragon") || type.equals("Elder Dragon")) setDragon();
 	else if (type.equals("Amalgam")) setAmalgam();
 	else if (type.equals("Golem")) setGolem();
+	else if (type.equals("Slime")) setSlime();
+	else if (type.equals("Werewolf")) setWerewolf();
     }
 
     public void buildName(boolean playerHas){
@@ -67,6 +69,8 @@ public class Enemy extends Entity{
 	else if (type.equals("dragon") || type.equals("Elder Dragon")) dragonAttack(player, rand, console);
 	else if (type.equals("Amalgam")) amalgamAttack(rand, player);
 	else if (type.equals("Golem")) golemAttack(rand, player);
+	else if (type.equals("Slime")) slimeAttack(player, rand);
+	else if (type.equals("Werewolf")) werewolfAttack(player, rand);
 	else if (type.equals("mimic")) {
 	    player.health -= 50;
 	    System.out.println(name + "dealt 50 damage to you.");
@@ -238,14 +242,14 @@ public class Enemy extends Entity{
 		int damage = 30;
 		player.health -= damage;
 		player.poison += 6;
-		System.out.println( "The "+name + " knocks you back and dealt" + damage+" damage. You become poisoned.");
+		System.out.println( "The " + name + " knocks you back and dealt " + damage + " damage. You become poisoned.");
 	}
 
 	public void slimeShot(Entity player) {
 		int damage = 20;
 		player.health -= damage;
 		player.poison += 8;
-		System.out.println("The "+name+" Shoots goop at you and dealt "+damage+"damage. You have been poisoned.");
+		System.out.println("The " + name + " Shoots goop at you and dealt " + damage + " damage. You have been poisoned.");
 	}
 
 	public void slimeAttack(Entity player, Random random) {
