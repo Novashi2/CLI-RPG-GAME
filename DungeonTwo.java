@@ -24,7 +24,7 @@ public class DungeonTwo {
             "\nYou take a step back in disgust and as you do the flesh and bones start to meld into one hideous amalgamation.");
             System.out.println("I don't think this is what you wished for.");
             General.Continue(console);
-            Enemy amalgam = new Enemy("Amalgam", 100);
+            Enemy amalgam = new Enemy("Amalgam", null, null, false);
             General.battle(player, amalgam, random, console);
             String[] amalgamDrops = {"burn potion", "health potion"};
             amalgam.drop(player, random, console, amalgamDrops, false, 1);
@@ -32,26 +32,25 @@ public class DungeonTwo {
             System.out.println("As your coin lands into the basin you notice the statue starts twitching. The twitch gradually becomes more agressive until " + 
             "\nthe statue gradually begins to stand up, detaching itself from the basin. The golem begins to lumber towards you readying an attack.");
             General.Continue(console);
-            Enemy golem = new Enemy("Golem", 150);
+            Enemy golem = new Enemy("Golem", null, null, false);
             General.battle(player, golem, random, console);
             String[] golemDrops = {"poison potion", "health potion"};
             golem.drop(player, random, console, golemDrops, false, 1);
         }
-        System.out.println("Huzzah! you have vanquished the enemy! Though you feel a bit roughed up and in need of healing, your gaze takes you to the basin and the flowing liquid." +
+        System.out.println("You have vanquished the enemy! Though you feel a bit roughed up and in need of healing, your gaze takes you to the basin and the flowing liquid." +
         "\nYou are urged to drink the liquid against your better judgment.");
         System.out.println("You take a sip...");
         General.Continue(console);
-        System.out.println("You feel reinvigorated! You heal 50HP!");
-        player.health += 50; 
-        System.out.println("Your current HP is " + player.health + ".");
-       
-
+        System.out.println("You feel reinvigorated! You heal 100HP!");
+        player.health += 100; 
+        System.out.println("Your current HP is " + player.health + ".\n");
+        
 
         // Progress to Dragon fight
         System.out.println("You find youself surrounded by the souls of the monsters you've slain pushing you down yet another hallway");
         System.out.println("The souls have led you to a small room complete with a desk and a large stone structure");
         System.out.println("A large glowing portal illuminates from the stone structure!");
-        System.out.println("You walk into the portal and find yourself surrounded by gold, and look up to hear the roar of the dragon.");
+        System.out.println("You walk into the portal and find yourself surrounded by gold, and look up to hear the roar of the dragon.\n");
     
     }
 }
