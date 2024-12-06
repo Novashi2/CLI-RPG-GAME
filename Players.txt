@@ -1,0 +1,6 @@
+Jacl 424 4 0 8 18 56
+Peashooter Wand Sword Leech 
+health_potion fire_potion poison_potion general_potion general_potion regeneration_potion fire_potion 
+wRob 397 2 5 0 20 4
+Peashooter Wand Sword 
+dragon_tooth health_potion 

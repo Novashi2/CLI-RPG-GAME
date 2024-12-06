@@ -277,7 +277,6 @@ public class Player extends Entity{
 	
 	// stores the items in an array
 	playerData[2][index] = "";
-	System.out.println("SIZE: " + inventory.size);
 	for (int i = 0; i < inventory.size; i++){
 	    String item = inventory.items[i];
 	    if (item.indexOf(' ') != -1) item = item.replace(" ", "_");
