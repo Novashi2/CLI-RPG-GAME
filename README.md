@@ -2,14 +2,10 @@ Stored here are the files for an in-progress CLI RPG game That will contain cumu
 
 Specific dungeon sections that each member worked on:
 
+Names as they would appear on github or requested by person:
 Blake - 1 
 Jackson - 2 
 Sudoweilder - 3
 Novashi - 4 
 
-Format of variables and objects being printed to the players.txt file:
-name health savePoint poison burn peaShooterAmmo
-abilities(in the format: ability1 ability2 etc...)
-items(similar format as abovee)
-servants(in format: servant1 type  element(if dragon) health poison burn regeneration)
-
+If you would like to run this and play through, simply clone into an available directory and run in any modern IDE with java support or compile and run yourself another way. VS Code, IntelliJ, Eclipse, etc... 
